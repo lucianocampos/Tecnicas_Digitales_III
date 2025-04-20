@@ -1,0 +1,1128 @@
+Version 4.0 HI-TECH Software Intermediate Code
+[t ~ __interrupt . k ]
+[t T1 __interrupt ]
+"332 C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 332:     struct {
+[s S23 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S23 . GPIF INTF T0IF GPIE INTE T0IE PEIE GIE ]
+"342
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 342:     struct {
+[s S24 :2 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 ]
+[n S24 . . TMR0IF . TMR0IE ]
+"331
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 331: typedef union {
+[u S22 `S23 1 `S24 1 ]
+[n S22 . . . ]
+"349
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 349: extern volatile INTCONbits_t INTCONbits __attribute__((address(0x00B)));
+[v _INTCONbits `VS22 ~T0 @X0 0 e@11 ]
+"72
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 72: extern volatile unsigned char TMR0 __attribute__((address(0x001)));
+[v _TMR0 `Vuc ~T0 @X0 0 e@1 ]
+"629
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 629:     struct {
+[s S39 :3 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S39 . PS PSA T0SE T0CS INTEDG nGPPU ]
+"637
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 637:     struct {
+[s S40 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S40 . PS0 PS1 PS2 ]
+"628
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 628: typedef union {
+[u S38 `S39 1 `S40 1 ]
+[n S38 . . . ]
+"643
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 643: extern volatile OPTION_REGbits_t OPTION_REGbits __attribute__((address(0x081)));
+[v _OPTION_REGbits `VS38 ~T0 @X0 0 e@129 ]
+"410
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 410:     struct {
+[s S26 :1 `uc 1 :2 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S26 . TMR1IF . CMIF . ADIF EEIF ]
+"418
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 418:     struct {
+[s S27 :1 `uc 1 ]
+[n S27 . T1IF ]
+"409
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 409: typedef union {
+[u S25 `S26 1 `S27 1 ]
+[n S25 . . . ]
+"422
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 422: extern volatile PIR1bits_t PIR1bits __attribute__((address(0x00C)));
+[v _PIR1bits `VS25 ~T0 @X0 0 e@12 ]
+"3 ./funciones.h
+[; ;./funciones.h: 3: int RECEPCION_UART (void);
+[v _RECEPCION_UART `(i ~T0 @X0 0 ef ]
+"4
+[; ;./funciones.h: 4: void RESPONDER_UART (unsigned char RESPUESTA);
+[v _RESPONDER_UART `(v ~T0 @X0 0 ef1`uc ]
+"505 C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 505:     struct {
+[s S33 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 ]
+[n S33 . TMR1ON TMR1CS nT1SYNC T1OSCEN T1CKPS TMR1GE ]
+"513
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 513:     struct {
+[s S34 :4 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S34 . . T1CKPS0 T1CKPS1 ]
+"504
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 504: typedef union {
+[u S32 `S33 1 `S34 1 ]
+[n S32 . . . ]
+"519
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 519: extern volatile T1CONbits_t T1CONbits __attribute__((address(0x010)));
+[v _T1CONbits `VS32 ~T0 @X0 0 e@16 ]
+"452
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 452: extern volatile unsigned short TMR1 __attribute__((address(0x00E)));
+[v _TMR1 `Vus ~T0 @X0 0 e@14 ]
+"749
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 749:     struct {
+[s S44 :1 `uc 1 :2 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S44 . TMR1IE . CMIE . ADIE EEIE ]
+"757
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 757:     struct {
+[s S45 :1 `uc 1 ]
+[n S45 . T1IE ]
+"748
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 748: typedef union {
+[u S43 `S44 1 `S45 1 ]
+[n S43 . . . ]
+"761
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 761: extern volatile PIE1bits_t PIE1bits __attribute__((address(0x08C)));
+[v _PIE1bits `VS43 ~T0 @X0 0 e@140 ]
+"218
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 218: extern volatile unsigned char GPIO __attribute__((address(0x005)));
+[v _GPIO `Vuc ~T0 @X0 0 e@5 ]
+"224
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 224:     struct {
+[s S18 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S18 . GP0 GP1 GP2 GP3 GP4 GP5 ]
+"232
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 232:     struct {
+[s S19 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S19 . GPIO0 GPIO1 GPIO2 GPIO3 GPIO4 GPIO5 ]
+"223
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 223: typedef union {
+[u S17 `S18 1 `S19 1 ]
+[n S17 . . . ]
+"241
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 241: extern volatile GPIObits_t GPIObits __attribute__((address(0x005)));
+[v _GPIObits `VS17 ~T0 @X0 0 e@5 ]
+"6 ./funciones.h
+[; ;./funciones.h: 6: void Ajustar_PWM (void);
+[v _Ajustar_PWM `(v ~T0 @X0 0 ef ]
+[v F164 `(v ~T0 @X0 1 tf1`ul ]
+"20 C:\Program Files\Microchip\xc8\v3.00\pic\include/builtins.h
+[v __delay `JF164 ~T0 @X0 0 e ]
+[p i __delay ]
+[p mainexit ]
+"699 C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 699:     struct {
+[s S42 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S42 . TRISIO0 TRISIO1 TRISIO2 TRISIO3 TRISIO4 TRISIO5 ]
+"698
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 698: typedef union {
+[u S41 `S42 1 ]
+[n S41 . . ]
+"708
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 708: extern volatile TRISIObits_t TRISIObits __attribute__((address(0x085)));
+[v _TRISIObits `VS41 ~T0 @X0 0 e@133 ]
+"564
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 564: extern volatile unsigned char CMCON __attribute__((address(0x019)));
+[v _CMCON `Vuc ~T0 @X0 0 e@25 ]
+"941
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 941:     struct {
+[s S55 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S55 . IOC0 IOC1 IOC2 IOC3 IOC4 IOC5 ]
+"949
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 949:     struct {
+[s S56 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S56 . IOCB0 IOCB1 IOCB2 IOCB3 IOCB4 IOCB5 ]
+"940
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 940: typedef union {
+[u S54 `S55 1 `S56 1 ]
+[n S54 . . . ]
+"958
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 958: extern volatile IOCbits_t IOCbits __attribute__((address(0x096)));
+[v _IOCbits `VS54 ~T0 @X0 0 e@150 ]
+"118
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 118:     struct {
+[s S12 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 ]
+[n S12 . C DC Z nPD nTO RP IRP ]
+"127
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 127:     struct {
+[s S13 :5 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S13 . . RP0 RP1 ]
+"132
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 132:     struct {
+[s S14 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S14 . CARRY . ZERO ]
+"117
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 117: typedef union {
+[u S11 `S12 1 `S13 1 `S14 1 ]
+[n S11 . . . . ]
+"138
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 138: extern volatile STATUSbits_t STATUSbits __attribute__((address(0x003)));
+[v _STATUSbits `VS11 ~T0 @X0 0 e@3 ]
+"54 C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 54: __asm("INDF equ 00h");
+[; <" INDF equ 00h ;# ">
+"74
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 74: __asm("TMR0 equ 01h");
+[; <" TMR0 equ 01h ;# ">
+"94
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 94: __asm("PCL equ 02h");
+[; <" PCL equ 02h ;# ">
+"114
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 114: __asm("STATUS equ 03h");
+[; <" STATUS equ 03h ;# ">
+"200
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 200: __asm("FSR equ 04h");
+[; <" FSR equ 04h ;# ">
+"220
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 220: __asm("GPIO equ 05h");
+[; <" GPIO equ 05h ;# ">
+"308
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 308: __asm("PCLATH equ 0Ah");
+[; <" PCLATH equ 0Ah ;# ">
+"328
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 328: __asm("INTCON equ 0Bh");
+[; <" INTCON equ 0Bh ;# ">
+"406
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 406: __asm("PIR1 equ 0Ch");
+[; <" PIR1 equ 0Ch ;# ">
+"454
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 454: __asm("TMR1 equ 0Eh");
+[; <" TMR1 equ 0Eh ;# ">
+"461
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 461: __asm("TMR1L equ 0Eh");
+[; <" TMR1L equ 0Eh ;# ">
+"481
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 481: __asm("TMR1H equ 0Fh");
+[; <" TMR1H equ 0Fh ;# ">
+"501
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 501: __asm("T1CON equ 010h");
+[; <" T1CON equ 010h ;# ">
+"566
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 566: __asm("CMCON equ 019h");
+[; <" CMCON equ 019h ;# ">
+"625
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 625: __asm("OPTION_REG equ 081h");
+[; <" OPTION_REG equ 081h ;# ">
+"695
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 695: __asm("TRISIO equ 085h");
+[; <" TRISIO equ 085h ;# ">
+"745
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 745: __asm("PIE1 equ 08Ch");
+[; <" PIE1 equ 08Ch ;# ">
+"793
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 793: __asm("PCON equ 08Eh");
+[; <" PCON equ 08Eh ;# ">
+"827
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 827: __asm("OSCCAL equ 090h");
+[; <" OSCCAL equ 090h ;# ">
+"887
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 887: __asm("WPU equ 095h");
+[; <" WPU equ 095h ;# ">
+"932
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 932: __asm("IOC equ 096h");
+[; <" IOC equ 096h ;# ">
+"937
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 937: __asm("IOCB equ 096h");
+[; <" IOCB equ 096h ;# ">
+"1106
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 1106: __asm("VRCON equ 099h");
+[; <" VRCON equ 099h ;# ">
+"1166
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 1166: __asm("EEDATA equ 09Ah");
+[; <" EEDATA equ 09Ah ;# ">
+"1171
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 1171: __asm("EEDAT equ 09Ah");
+[; <" EEDAT equ 09Ah ;# ">
+"1204
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 1204: __asm("EEADR equ 09Bh");
+[; <" EEADR equ 09Bh ;# ">
+"1224
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 1224: __asm("EECON1 equ 09Ch");
+[; <" EECON1 equ 09Ch ;# ">
+"1262
+[; ;C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h: 1262: __asm("EECON2 equ 09Dh");
+[; <" EECON2 equ 09Dh ;# ">
+"3 ./pic_config.h
+[p x FOSC  =  INTRCIO    ]
+"4
+[p x WDTE  =  ON         ]
+"5
+[p x PWRTE  =  ON        ]
+"6
+[p x MCLRE  =  OFF       ]
+"7
+[p x BOREN  =  ON        ]
+"8
+[p x CP  =  OFF          ]
+"9
+[p x CPD  =  OFF         ]
+"19 ./variables_definiciones.h
+[; ;./variables_definiciones.h: 19: const unsigned char PRECARGA_TMR0_PWM = 185;
+[v _PRECARGA_TMR0_PWM `Cuc ~T0 @X0 1 e ]
+[i _PRECARGA_TMR0_PWM
+-> -> 185 `i `uc
+]
+"21
+[; ;./variables_definiciones.h: 21: volatile unsigned int FLAG_PWM_ENABLE = 0;
+[v _FLAG_PWM_ENABLE `Vui ~T0 @X0 1 e ]
+[i _FLAG_PWM_ENABLE
+-> -> 0 `i `ui
+]
+"23
+[; ;./variables_definiciones.h: 23: volatile unsigned int Contador_PWM = 0;
+[v _Contador_PWM `Vui ~T0 @X0 1 e ]
+[i _Contador_PWM
+-> -> 0 `i `ui
+]
+"24
+[; ;./variables_definiciones.h: 24: volatile unsigned int PWM_DUTY_CYCLE = 0;
+[v _PWM_DUTY_CYCLE `Vui ~T0 @X0 1 e ]
+[i _PWM_DUTY_CYCLE
+-> -> 0 `i `ui
+]
+"25
+[; ;./variables_definiciones.h: 25: const int NIVELES_PWM = 50;
+[v _NIVELES_PWM `Ci ~T0 @X0 1 e ]
+[i _NIVELES_PWM
+-> 50 `i
+]
+"26
+[; ;./variables_definiciones.h: 26: volatile unsigned int FLAG_REFRESCAR_PWM;
+[v _FLAG_REFRESCAR_PWM `Vui ~T0 @X0 1 e ]
+"30
+[; ;./variables_definiciones.h: 30: volatile char DATO_RECIBIDO_UART = 0x00;
+[v _DATO_RECIBIDO_UART `Vuc ~T0 @X0 1 e ]
+[i _DATO_RECIBIDO_UART
+-> -> 0 `i `uc
+]
+"31
+[; ;./variables_definiciones.h: 31: const char DATO_ENVIADO_UART = 'a';
+[v _DATO_ENVIADO_UART `Cuc ~T0 @X0 1 e ]
+[i _DATO_ENVIADO_UART
+-> -> 97 `ui `uc
+]
+"33
+[; ;./variables_definiciones.h: 33: const int UART_PERIOD_HALF = 52;
+[v _UART_PERIOD_HALF `Ci ~T0 @X0 1 e ]
+[i _UART_PERIOD_HALF
+-> 52 `i
+]
+"34
+[; ;./variables_definiciones.h: 34: const int UART_PERIOD_FULL = 165;
+[v _UART_PERIOD_FULL `Ci ~T0 @X0 1 e ]
+[i _UART_PERIOD_FULL
+-> 165 `i
+]
+"36
+[; ;./variables_definiciones.h: 36: volatile unsigned int FLAG_UART = 0;
+[v _FLAG_UART `Vui ~T0 @X0 1 e ]
+[i _FLAG_UART
+-> -> 0 `i `ui
+]
+"37
+[; ;./variables_definiciones.h: 37: volatile unsigned int FLAG_RECEPCION = 0;
+[v _FLAG_RECEPCION `Vui ~T0 @X0 1 e ]
+[i _FLAG_RECEPCION
+-> -> 0 `i `ui
+]
+"38
+[; ;./variables_definiciones.h: 38: volatile unsigned int DESBORDE_TIMER0 = 0;
+[v _DESBORDE_TIMER0 `Vui ~T0 @X0 1 e ]
+[i _DESBORDE_TIMER0
+-> -> 0 `i `ui
+]
+"42
+[; ;./variables_definiciones.h: 42: const long PRECARGA_TMR1_WDT = 3040;
+[v _PRECARGA_TMR1_WDT `Cl ~T0 @X0 1 e ]
+[i _PRECARGA_TMR1_WDT
+-> -> 3040 `i `l
+]
+"43
+[; ;./variables_definiciones.h: 43: const int MAX_REINICIOS_WDT = 236;
+[v _MAX_REINICIOS_WDT `Ci ~T0 @X0 1 e ]
+[i _MAX_REINICIOS_WDT
+-> 236 `i
+]
+"44
+[; ;./variables_definiciones.h: 44: volatile int CONTADOR_REINICIOS_WDT = 0;
+[v _CONTADOR_REINICIOS_WDT `Vi ~T0 @X0 1 e ]
+[i _CONTADOR_REINICIOS_WDT
+-> 0 `i
+]
+"45
+[; ;./variables_definiciones.h: 45: volatile unsigned int WDT_RESET = 0;
+[v _WDT_RESET `Vui ~T0 @X0 1 e ]
+[i _WDT_RESET
+-> -> 0 `i `ui
+]
+[v $root$_isr `(v ~T0 @X0 0 e ]
+"13 main.c
+[; ;main.c: 13: void __attribute__((picinterrupt(("")))) isr(void) {
+[v _isr `(v ~T1 @X0 1 ef ]
+{
+[e :U _isr ]
+[f ]
+"16
+[; ;main.c: 16:     if (INTCONbits.T0IF) {
+[e $ ! != -> . . _INTCONbits 0 2 `i -> 0 `i 74  ]
+{
+"17
+[; ;main.c: 17:         TMR0 = 0;
+[e = _TMR0 -> -> 0 `i `uc ]
+"18
+[; ;main.c: 18:         INTCONbits.T0IF = 0;
+[e = . . _INTCONbits 0 2 -> -> 0 `i `uc ]
+"19
+[; ;main.c: 19:     }
+}
+[e :U 74 ]
+"23
+[; ;main.c: 23:     if (INTCONbits.INTF){
+[e $ ! != -> . . _INTCONbits 0 1 `i -> 0 `i 75  ]
+{
+"29
+[; ;main.c: 29:         __asm("clrwdt");
+[; <" clrwdt ;# ">
+"30
+[; ;main.c: 30:         OPTION_REGbits.PSA = 1;
+[e = . . _OPTION_REGbits 0 1 -> -> 1 `i `uc ]
+"31
+[; ;main.c: 31:         OPTION_REGbits.PS = 0b111;
+[e = . . _OPTION_REGbits 0 0 -> -> 7 `i `uc ]
+"33
+[; ;main.c: 33:         TMR0 = 0;
+[e = _TMR0 -> -> 0 `i `uc ]
+"34
+[; ;main.c: 34:         INTCONbits.T0IF = 0;
+[e = . . _INTCONbits 0 2 -> -> 0 `i `uc ]
+"35
+[; ;main.c: 35:         INTCONbits.T0IE = 1;
+[e = . . _INTCONbits 0 5 -> -> 1 `i `uc ]
+"37
+[; ;main.c: 37:         INTCONbits.GPIF = 0;
+[e = . . _INTCONbits 0 0 -> -> 0 `i `uc ]
+"38
+[; ;main.c: 38:         INTCONbits.GPIE = 0;
+[e = . . _INTCONbits 0 3 -> -> 0 `i `uc ]
+"40
+[; ;main.c: 40:         FLAG_PWM_ENABLE = 0;
+[e = _FLAG_PWM_ENABLE -> -> 0 `i `ui ]
+"41
+[; ;main.c: 41:         PIR1bits.TMR1IF = 0;
+[e = . . _PIR1bits 0 0 -> -> 0 `i `uc ]
+"42
+[; ;main.c: 42:         INTCONbits.PEIE = 0;
+[e = . . _INTCONbits 0 6 -> -> 0 `i `uc ]
+"45
+[; ;main.c: 45:         if (RECEPCION_UART()){
+[e $ ! != ( _RECEPCION_UART ..  -> 0 `i 76  ]
+{
+"46
+[; ;main.c: 46:             RESPONDER_UART(0x1B);
+[e ( _RESPONDER_UART (1 -> -> 27 `i `uc ]
+"47
+[; ;main.c: 47:             FLAG_PWM_ENABLE = 1;
+[e = _FLAG_PWM_ENABLE -> -> 1 `i `ui ]
+"48
+[; ;main.c: 48:             PWM_DUTY_CYCLE = DATO_RECIBIDO_UART;
+[e = _PWM_DUTY_CYCLE -> _DATO_RECIBIDO_UART `ui ]
+"49
+[; ;main.c: 49:         }
+}
+[e :U 76 ]
+"51
+[; ;main.c: 51:         TMR0 = 0;
+[e = _TMR0 -> -> 0 `i `uc ]
+"52
+[; ;main.c: 52:         INTCONbits.T0IF = 0;
+[e = . . _INTCONbits 0 2 -> -> 0 `i `uc ]
+"53
+[; ;main.c: 53:         INTCONbits.T0IE = 0;
+[e = . . _INTCONbits 0 5 -> -> 0 `i `uc ]
+"55
+[; ;main.c: 55:         CONTADOR_REINICIOS_WDT = 0;
+[e = _CONTADOR_REINICIOS_WDT -> 0 `i ]
+"56
+[; ;main.c: 56:         T1CONbits.TMR1CS = 0;
+[e = . . _T1CONbits 0 1 -> -> 0 `i `uc ]
+"57
+[; ;main.c: 57:         T1CONbits.T1CKPS = 0b11;
+[e = . . _T1CONbits 0 4 -> -> 3 `i `uc ]
+"58
+[; ;main.c: 58:         TMR1 = PRECARGA_TMR1_WDT;
+[e = _TMR1 -> _PRECARGA_TMR1_WDT `us ]
+"59
+[; ;main.c: 59:         PIR1bits.TMR1IF = 0;
+[e = . . _PIR1bits 0 0 -> -> 0 `i `uc ]
+"60
+[; ;main.c: 60:         T1CONbits.TMR1ON = 1;
+[e = . . _T1CONbits 0 0 -> -> 1 `i `uc ]
+"61
+[; ;main.c: 61:         PIE1bits.T1IE = 1;
+[e = . . _PIE1bits 1 0 -> -> 1 `i `uc ]
+"63
+[; ;main.c: 63:         INTCONbits.GPIF = 0;
+[e = . . _INTCONbits 0 0 -> -> 0 `i `uc ]
+"64
+[; ;main.c: 64:         INTCONbits.INTF = 0;
+[e = . . _INTCONbits 0 1 -> -> 0 `i `uc ]
+"66
+[; ;main.c: 66:         INTCONbits.PEIE = 1;
+[e = . . _INTCONbits 0 6 -> -> 1 `i `uc ]
+"67
+[; ;main.c: 67:         INTCONbits.GPIE = 1;
+[e = . . _INTCONbits 0 3 -> -> 1 `i `uc ]
+"68
+[; ;main.c: 68:     }
+}
+[e :U 75 ]
+"71
+[; ;main.c: 71:     if (PIR1bits.TMR1IF){
+[e $ ! != -> . . _PIR1bits 0 0 `i -> 0 `i 77  ]
+{
+"78
+[; ;main.c: 78:         TMR1 = PRECARGA_TMR1_WDT;
+[e = _TMR1 -> _PRECARGA_TMR1_WDT `us ]
+"79
+[; ;main.c: 79:         PIR1bits.TMR1IF = 0;
+[e = . . _PIR1bits 0 0 -> -> 0 `i `uc ]
+"81
+[; ;main.c: 81:         if(FLAG_PWM_ENABLE == 1){
+[e $ ! == _FLAG_PWM_ENABLE -> -> 1 `i `ui 78  ]
+{
+"82
+[; ;main.c: 82:             CONTADOR_REINICIOS_WDT++;
+[e ++ _CONTADOR_REINICIOS_WDT -> -> 1 `i `Vi ]
+"84
+[; ;main.c: 84:             if (CONTADOR_REINICIOS_WDT == 200){
+[e $ ! == _CONTADOR_REINICIOS_WDT -> 200 `i 79  ]
+{
+"85
+[; ;main.c: 85:                 RESPONDER_UART(0xee);
+[e ( _RESPONDER_UART (1 -> -> 238 `i `uc ]
+"86
+[; ;main.c: 86:             }
+}
+[e :U 79 ]
+"88
+[; ;main.c: 88:             if (CONTADOR_REINICIOS_WDT == 236){
+[e $ ! == _CONTADOR_REINICIOS_WDT -> 236 `i 80  ]
+{
+"89
+[; ;main.c: 89:                 RESPONDER_UART(0xee);
+[e ( _RESPONDER_UART (1 -> -> 238 `i `uc ]
+"90
+[; ;main.c: 90:             }
+}
+[e :U 80 ]
+"92
+[; ;main.c: 92:             if (CONTADOR_REINICIOS_WDT == 240){
+[e $ ! == _CONTADOR_REINICIOS_WDT -> 240 `i 81  ]
+{
+"93
+[; ;main.c: 93:                 RESPONDER_UART(0xee);
+[e ( _RESPONDER_UART (1 -> -> 238 `i `uc ]
+"94
+[; ;main.c: 94:                 FLAG_PWM_ENABLE = 0;
+[e = _FLAG_PWM_ENABLE -> -> 0 `i `ui ]
+"95
+[; ;main.c: 95:             }
+}
+[e :U 81 ]
+"96
+[; ;main.c: 96:         }
+}
+[e $U 82  ]
+"98
+[; ;main.c: 98:         else
+[e :U 78 ]
+"99
+[; ;main.c: 99:             PIE1bits.TMR1IE = 0;
+[e = . . _PIE1bits 0 0 -> -> 0 `i `uc ]
+[e :U 82 ]
+"100
+[; ;main.c: 100:     }
+}
+[e :U 77 ]
+"104
+[; ;main.c: 104:     if (INTCONbits.GPIF) {
+[e $ ! != -> . . _INTCONbits 0 0 `i -> 0 `i 83  ]
+{
+"109
+[; ;main.c: 109:         volatile unsigned char dummy_reg = GPIO;
+[v _dummy_reg `Vuc ~T0 @X0 1 a ]
+[e = _dummy_reg _GPIO ]
+"110
+[; ;main.c: 110:         INTCONbits.GPIF = 0;
+[e = . . _INTCONbits 0 0 -> -> 0 `i `uc ]
+"112
+[; ;main.c: 112:         if (GPIObits.GP1 == 1 && FLAG_PWM_ENABLE == 1)
+[e $ ! && == -> . . _GPIObits 0 1 `i -> 1 `i == _FLAG_PWM_ENABLE -> -> 1 `i `ui 84  ]
+"113
+[; ;main.c: 113:             Ajustar_PWM();
+[e ( _Ajustar_PWM ..  ]
+[e :U 84 ]
+"114
+[; ;main.c: 114:     }
+}
+[e :U 83 ]
+"115
+[; ;main.c: 115: }
+[e :UE 73 ]
+}
+"121
+[; ;main.c: 121: int RECEPCION_UART (void){
+[v _RECEPCION_UART `(i ~T0 @X0 1 ef ]
+{
+[e :U _RECEPCION_UART ]
+[f ]
+"123
+[; ;main.c: 123:     int desplazamiento_bit = 0;
+[v _desplazamiento_bit `i ~T0 @X0 1 a ]
+[e = _desplazamiento_bit -> 0 `i ]
+"124
+[; ;main.c: 124:     int RECEPCION_EN_PROCESO = 1;
+[v _RECEPCION_EN_PROCESO `i ~T0 @X0 1 a ]
+[e = _RECEPCION_EN_PROCESO -> 1 `i ]
+"125
+[; ;main.c: 125:     int RESULTADO_COMM = 0;
+[v _RESULTADO_COMM `i ~T0 @X0 1 a ]
+[e = _RESULTADO_COMM -> 0 `i ]
+"126
+[; ;main.c: 126:     unsigned char CARACTER_RECIBIDO_UART = 0x00;
+[v _CARACTER_RECIBIDO_UART `uc ~T0 @X0 1 a ]
+[e = _CARACTER_RECIBIDO_UART -> -> 0 `i `uc ]
+"133
+[; ;main.c: 133:     if(GPIObits.GP2 == 0){
+[e $ ! == -> . . _GPIObits 0 2 `i -> 0 `i 86  ]
+{
+"137
+[; ;main.c: 137:         TMR0 = UART_PERIOD_FULL;
+[e = _TMR0 -> _UART_PERIOD_FULL `uc ]
+"138
+[; ;main.c: 138:         while(RECEPCION_EN_PROCESO == 1)
+[e $U 87  ]
+[e :U 88 ]
+"139
+[; ;main.c: 139:         {
+{
+"141
+[; ;main.c: 141:             if(INTCONbits.T0IF){
+[e $ ! != -> . . _INTCONbits 0 2 `i -> 0 `i 90  ]
+{
+"142
+[; ;main.c: 142:                 TMR0 = UART_PERIOD_FULL;
+[e = _TMR0 -> _UART_PERIOD_FULL `uc ]
+"143
+[; ;main.c: 143:                 INTCONbits.T0IF = 0;
+[e = . . _INTCONbits 0 2 -> -> 0 `i `uc ]
+"144
+[; ;main.c: 144:                 if(desplazamiento_bit <8)
+[e $ ! < _desplazamiento_bit -> 8 `i 91  ]
+"145
+[; ;main.c: 145:                     CARACTER_RECIBIDO_UART |= (GPIObits.GP2 << desplazamiento_bit);
+[e =| _CARACTER_RECIBIDO_UART -> << -> . . _GPIObits 0 2 `i _desplazamiento_bit `uc ]
+[e $U 92  ]
+"147
+[; ;main.c: 147:                 else{
+[e :U 91 ]
+{
+"148
+[; ;main.c: 148:                     if (GPIObits.GP2 == 1)
+[e $ ! == -> . . _GPIObits 0 2 `i -> 1 `i 93  ]
+"149
+[; ;main.c: 149:                         RESULTADO_COMM = 1;
+[e = _RESULTADO_COMM -> 1 `i ]
+[e :U 93 ]
+"151
+[; ;main.c: 151:                     RECEPCION_EN_PROCESO = 0;
+[e = _RECEPCION_EN_PROCESO -> 0 `i ]
+"152
+[; ;main.c: 152:                 }
+}
+[e :U 92 ]
+"153
+[; ;main.c: 153:                 desplazamiento_bit++;
+[e ++ _desplazamiento_bit -> 1 `i ]
+"154
+[; ;main.c: 154:             }
+}
+[e :U 90 ]
+"155
+[; ;main.c: 155:         }
+}
+[e :U 87 ]
+"138
+[; ;main.c: 138:         while(RECEPCION_EN_PROCESO == 1)
+[e $ == _RECEPCION_EN_PROCESO -> 1 `i 88  ]
+[e :U 89 ]
+"158
+[; ;main.c: 158:         _delay((unsigned long)((UART_PERIOD_FULL)*(4000000/4000000.0)));
+[e ( __delay (1 -> * -> _UART_PERIOD_FULL `d / -> -> 4000000 `l `d .4000000.0 `ul ]
+"159
+[; ;main.c: 159:         if((RESULTADO_COMM == 1) & (GPIObits.GP2 == 1))
+[e $ ! & == _RESULTADO_COMM -> 1 `i == -> . . _GPIObits 0 2 `i -> 1 `i 94  ]
+"160
+[; ;main.c: 160:             DATO_RECIBIDO_UART= CARACTER_RECIBIDO_UART;
+[e = _DATO_RECIBIDO_UART -> _CARACTER_RECIBIDO_UART `uc ]
+[e $U 95  ]
+"161
+[; ;main.c: 161:         else
+[e :U 94 ]
+"162
+[; ;main.c: 162:             RESULTADO_COMM = 0;
+[e = _RESULTADO_COMM -> 0 `i ]
+[e :U 95 ]
+"163
+[; ;main.c: 163:     }
+}
+[e :U 86 ]
+"167
+[; ;main.c: 167:     return (RESULTADO_COMM);
+[e ) _RESULTADO_COMM ]
+[e $UE 85  ]
+"168
+[; ;main.c: 168: }
+[e :UE 85 ]
+}
+"175
+[; ;main.c: 175: void RESPONDER_UART(unsigned char RESPUESTA)
+[v _RESPONDER_UART `(v ~T0 @X0 1 ef1`uc ]
+"176
+[; ;main.c: 176: {
+{
+[e :U _RESPONDER_UART ]
+"175
+[; ;main.c: 175: void RESPONDER_UART(unsigned char RESPUESTA)
+[v _RESPUESTA `uc ~T0 @X0 1 r1 ]
+"176
+[; ;main.c: 176: {
+[f ]
+"177
+[; ;main.c: 177:     int bit = 0;
+[v _bit `i ~T0 @X0 1 a ]
+[e = _bit -> 0 `i ]
+"178
+[; ;main.c: 178:     int ENVIO_EN_PROCESO = 1;
+[v _ENVIO_EN_PROCESO `i ~T0 @X0 1 a ]
+[e = _ENVIO_EN_PROCESO -> 1 `i ]
+"180
+[; ;main.c: 180:     TMR0 = UART_PERIOD_FULL;
+[e = _TMR0 -> _UART_PERIOD_FULL `uc ]
+"182
+[; ;main.c: 182:     while (ENVIO_EN_PROCESO && bit <= 10) {
+[e $U 97  ]
+[e :U 98 ]
+{
+"183
+[; ;main.c: 183:         while (!INTCONbits.T0IF);
+[e $U 100  ]
+[e :U 101 ]
+[e :U 100 ]
+[e $ ! != -> . . _INTCONbits 0 2 `i -> 0 `i 101  ]
+[e :U 102 ]
+"185
+[; ;main.c: 185:         TMR0 = UART_PERIOD_FULL;
+[e = _TMR0 -> _UART_PERIOD_FULL `uc ]
+"186
+[; ;main.c: 186:         INTCONbits.T0IF = 0;
+[e = . . _INTCONbits 0 2 -> -> 0 `i `uc ]
+"188
+[; ;main.c: 188:         switch (bit) {
+[e $U 104  ]
+{
+"189
+[; ;main.c: 189:             case 0:
+[e :U 105 ]
+"190
+[; ;main.c: 190:                 GPIObits.GP4 = 0;
+[e = . . _GPIObits 0 4 -> -> 0 `i `uc ]
+"191
+[; ;main.c: 191:                 break;
+[e $U 103  ]
+"193
+[; ;main.c: 193:             case 1:
+[e :U 106 ]
+"194
+[; ;main.c: 194:             case 2:
+[e :U 107 ]
+"195
+[; ;main.c: 195:             case 3:
+[e :U 108 ]
+"196
+[; ;main.c: 196:             case 4:
+[e :U 109 ]
+"197
+[; ;main.c: 197:             case 5:
+[e :U 110 ]
+"198
+[; ;main.c: 198:             case 6:
+[e :U 111 ]
+"199
+[; ;main.c: 199:             case 7:
+[e :U 112 ]
+"200
+[; ;main.c: 200:             case 8:
+[e :U 113 ]
+"205
+[; ;main.c: 205:                 GPIObits.GP4 = RESPUESTA & 1;
+[e = . . _GPIObits 0 4 -> & -> _RESPUESTA `i -> 1 `i `uc ]
+"206
+[; ;main.c: 206:                 RESPUESTA >>=1;
+[e =>> _RESPUESTA -> -> 1 `i `uc ]
+"207
+[; ;main.c: 207:                 break;
+[e $U 103  ]
+"209
+[; ;main.c: 209:             case 9:
+[e :U 114 ]
+"210
+[; ;main.c: 210:                 GPIObits.GP4 = 1;
+[e = . . _GPIObits 0 4 -> -> 1 `i `uc ]
+"211
+[; ;main.c: 211:                 break;
+[e $U 103  ]
+"213
+[; ;main.c: 213:             case 10:
+[e :U 115 ]
+"214
+[; ;main.c: 214:                 GPIObits.GP4 = 1;
+[e = . . _GPIObits 0 4 -> -> 1 `i `uc ]
+"215
+[; ;main.c: 215:                 ENVIO_EN_PROCESO = 0;
+[e = _ENVIO_EN_PROCESO -> 0 `i ]
+"216
+[; ;main.c: 216:                 break;
+[e $U 103  ]
+"218
+[; ;main.c: 218:             default:
+[e :U 116 ]
+"219
+[; ;main.c: 219:                 break;
+[e $U 103  ]
+"220
+[; ;main.c: 220:         }
+}
+[e $U 103  ]
+[e :U 104 ]
+[e [\ _bit , $ -> 0 `i 105
+ , $ -> 1 `i 106
+ , $ -> 2 `i 107
+ , $ -> 3 `i 108
+ , $ -> 4 `i 109
+ , $ -> 5 `i 110
+ , $ -> 6 `i 111
+ , $ -> 7 `i 112
+ , $ -> 8 `i 113
+ , $ -> 9 `i 114
+ , $ -> 10 `i 115
+ 116 ]
+[e :U 103 ]
+"221
+[; ;main.c: 221:         bit++;
+[e ++ _bit -> 1 `i ]
+"222
+[; ;main.c: 222:     }
+}
+[e :U 97 ]
+"182
+[; ;main.c: 182:     while (ENVIO_EN_PROCESO && bit <= 10) {
+[e $ && != _ENVIO_EN_PROCESO -> 0 `i <= _bit -> 10 `i 98  ]
+[e :U 99 ]
+"224
+[; ;main.c: 224:     return;
+[e $UE 96  ]
+"225
+[; ;main.c: 225: }
+[e :UE 96 ]
+}
+"230
+[; ;main.c: 230: void Ajustar_PWM (void){
+[v _Ajustar_PWM `(v ~T0 @X0 1 ef ]
+{
+[e :U _Ajustar_PWM ]
+[f ]
+"232
+[; ;main.c: 232:     if (PWM_DUTY_CYCLE < 25)
+[e $ ! < _PWM_DUTY_CYCLE -> -> 25 `i `ui 118  ]
+"233
+[; ;main.c: 233:         PWM_DUTY_CYCLE = 25;
+[e = _PWM_DUTY_CYCLE -> -> 25 `i `ui ]
+[e $U 119  ]
+"235
+[; ;main.c: 235:     else if (PWM_DUTY_CYCLE < 64)
+[e :U 118 ]
+[e $ ! < _PWM_DUTY_CYCLE -> -> 64 `i `ui 120  ]
+"236
+[; ;main.c: 236:         PWM_DUTY_CYCLE = 64;
+[e = _PWM_DUTY_CYCLE -> -> 64 `i `ui ]
+[e $U 121  ]
+"238
+[; ;main.c: 238:     else if (PWM_DUTY_CYCLE < 122)
+[e :U 120 ]
+[e $ ! < _PWM_DUTY_CYCLE -> -> 122 `i `ui 122  ]
+"239
+[; ;main.c: 239:         PWM_DUTY_CYCLE = 122;
+[e = _PWM_DUTY_CYCLE -> -> 122 `i `ui ]
+[e $U 123  ]
+"241
+[; ;main.c: 241:     else if (PWM_DUTY_CYCLE < 192)
+[e :U 122 ]
+[e $ ! < _PWM_DUTY_CYCLE -> -> 192 `i `ui 124  ]
+"242
+[; ;main.c: 242:         PWM_DUTY_CYCLE = 192;
+[e = _PWM_DUTY_CYCLE -> -> 192 `i `ui ]
+[e $U 125  ]
+"244
+[; ;main.c: 244:     else if (PWM_DUTY_CYCLE < 255)
+[e :U 124 ]
+[e $ ! < _PWM_DUTY_CYCLE -> -> 255 `i `ui 126  ]
+"245
+[; ;main.c: 245:         PWM_DUTY_CYCLE = 255;
+[e = _PWM_DUTY_CYCLE -> -> 255 `i `ui ]
+[e $U 127  ]
+"247
+[; ;main.c: 247:     else if (PWM_DUTY_CYCLE == 255)
+[e :U 126 ]
+[e $ ! == _PWM_DUTY_CYCLE -> -> 255 `i `ui 128  ]
+"248
+[; ;main.c: 248:         PWM_DUTY_CYCLE = 0;
+[e = _PWM_DUTY_CYCLE -> -> 0 `i `ui ]
+[e :U 128 ]
+[e :U 127 ]
+[e :U 125 ]
+[e :U 123 ]
+[e :U 121 ]
+[e :U 119 ]
+"250
+[; ;main.c: 250:     return;
+[e $UE 117  ]
+"251
+[; ;main.c: 251: }
+[e :UE 117 ]
+}
+"255
+[; ;main.c: 255: void set_timer_interrupt (unsigned char VALOR_PRECARGA_TIMER){
+[v _set_timer_interrupt `(v ~T0 @X0 1 ef1`uc ]
+{
+[e :U _set_timer_interrupt ]
+[v _VALOR_PRECARGA_TIMER `uc ~T0 @X0 1 r1 ]
+[f ]
+"257
+[; ;main.c: 257:     TMR0 = VALOR_PRECARGA_TIMER;
+[e = _TMR0 _VALOR_PRECARGA_TIMER ]
+"258
+[; ;main.c: 258:     INTCONbits.T0IF = 0;
+[e = . . _INTCONbits 0 2 -> -> 0 `i `uc ]
+"259
+[; ;main.c: 259:     INTCONbits.T0IE = 1;
+[e = . . _INTCONbits 0 5 -> -> 1 `i `uc ]
+"260
+[; ;main.c: 260:     return;
+[e $UE 129  ]
+"261
+[; ;main.c: 261: }
+[e :UE 129 ]
+}
+"265
+[; ;main.c: 265:  void LED_BLINK(int N, int periodo){
+[v _LED_BLINK `(v ~T0 @X0 1 ef2`i`i ]
+{
+[e :U _LED_BLINK ]
+[v _N `i ~T0 @X0 1 r1 ]
+[v _periodo `i ~T0 @X0 1 r2 ]
+[f ]
+"267
+[; ;main.c: 267:     for (int i=0; i<N; i++){
+{
+[v _i `i ~T0 @X0 1 a ]
+[e = _i -> 0 `i ]
+[e $U 134  ]
+[e :U 131 ]
+{
+"268
+[; ;main.c: 268:         GPIObits.GP0 = ~GPIObits.GP0 ;
+[e = . . _GPIObits 0 0 -> ~ -> . . _GPIObits 0 0 `i `uc ]
+"269
+[; ;main.c: 269:         for(int j=0; j<periodo; j++){
+{
+[v _j `i ~T0 @X0 1 a ]
+[e = _j -> 0 `i ]
+[e $U 138  ]
+[e :U 135 ]
+{
+"270
+[; ;main.c: 270:             _delay((unsigned long)((1)*(4000000/4000.0)));
+[e ( __delay (1 -> * -> -> 1 `i `d / -> -> 4000000 `l `d .4000.0 `ul ]
+"271
+[; ;main.c: 271:         }
+}
+[e ++ _j -> 1 `i ]
+[e :U 138 ]
+[e $ < _j _periodo 135  ]
+[e :U 136 ]
+}
+"272
+[; ;main.c: 272:     }
+}
+[e ++ _i -> 1 `i ]
+[e :U 134 ]
+[e $ < _i _N 131  ]
+[e :U 132 ]
+}
+"273
+[; ;main.c: 273:  }
+[e :UE 130 ]
+}
+[v $root$_main `(v ~T0 @X0 0 e ]
+"278
+[; ;main.c: 278: void main(void) {
+[v _main `(v ~T0 @X0 1 ef ]
+{
+[e :U _main ]
+[f ]
+"280
+[; ;main.c: 280:     TRISIObits.TRISIO0=0;
+[e = . . _TRISIObits 0 0 -> -> 0 `i `uc ]
+"281
+[; ;main.c: 281:     TRISIObits.TRISIO1=1;
+[e = . . _TRISIObits 0 1 -> -> 1 `i `uc ]
+"282
+[; ;main.c: 282:     TRISIObits.TRISIO2=1;
+[e = . . _TRISIObits 0 2 -> -> 1 `i `uc ]
+"283
+[; ;main.c: 283:     TRISIObits.TRISIO4=0;
+[e = . . _TRISIObits 0 4 -> -> 0 `i `uc ]
+"285
+[; ;main.c: 285:     CMCON = 0x07;
+[e = _CMCON -> -> 7 `i `uc ]
+"286
+[; ;main.c: 286:     GPIObits.GP0 = 0;
+[e = . . _GPIObits 0 0 -> -> 0 `i `uc ]
+"287
+[; ;main.c: 287:     GPIObits.GP4 = 1;
+[e = . . _GPIObits 0 4 -> -> 1 `i `uc ]
+"292
+[; ;main.c: 292:     OPTION_REGbits.T0CS = 0;
+[e = . . _OPTION_REGbits 0 3 -> -> 0 `i `uc ]
+"293
+[; ;main.c: 293:     TMR0 = 0;
+[e = _TMR0 -> -> 0 `i `uc ]
+"296
+[; ;main.c: 296:     OPTION_REGbits.PSA = 1;
+[e = . . _OPTION_REGbits 0 1 -> -> 1 `i `uc ]
+"297
+[; ;main.c: 297:     OPTION_REGbits.PS = 0b111;
+[e = . . _OPTION_REGbits 0 0 -> -> 7 `i `uc ]
+"301
+[; ;main.c: 301:     INTCONbits.INTE = 1;
+[e = . . _INTCONbits 0 4 -> -> 1 `i `uc ]
+"302
+[; ;main.c: 302:     OPTION_REGbits.INTEDG = 0;
+[e = . . _OPTION_REGbits 0 4 -> -> 0 `i `uc ]
+"303
+[; ;main.c: 303:     INTCONbits.INTF = 0;
+[e = . . _INTCONbits 0 1 -> -> 0 `i `uc ]
+"305
+[; ;main.c: 305:     IOCbits.IOC1 = 1;
+[e = . . _IOCbits 0 1 -> -> 1 `i `uc ]
+"307
+[; ;main.c: 307:     INTCONbits.T0IE = 0;
+[e = . . _INTCONbits 0 5 -> -> 0 `i `uc ]
+"309
+[; ;main.c: 309:     INTCONbits.GIE = 1;
+[e = . . _INTCONbits 0 7 -> -> 1 `i `uc ]
+"310
+[; ;main.c: 310:     INTCONbits.GPIE = 0;
+[e = . . _INTCONbits 0 3 -> -> 0 `i `uc ]
+"313
+[; ;main.c: 313:     int Contador_PWM = 0;
+[v _Contador_PWM `i ~T0 @X0 1 a ]
+[e = _Contador_PWM -> 0 `i ]
+"315
+[; ;main.c: 315:     __asm("clrwdt");
+[; <" clrwdt ;# ">
+"318
+[; ;main.c: 318:     while(1){
+[e :U 141 ]
+{
+"320
+[; ;main.c: 320:         if(FLAG_PWM_ENABLE == 1){
+[e $ ! == _FLAG_PWM_ENABLE -> -> 1 `i `ui 143  ]
+{
+"322
+[; ;main.c: 322:             if(PWM_DUTY_CYCLE == 255)
+[e $ ! == _PWM_DUTY_CYCLE -> -> 255 `i `ui 144  ]
+"323
+[; ;main.c: 323:                 GPIObits.GP0 = 1;
+[e = . . _GPIObits 0 0 -> -> 1 `i `uc ]
+[e $U 145  ]
+"325
+[; ;main.c: 325:             else if(Contador_PWM < PWM_DUTY_CYCLE)
+[e :U 144 ]
+[e $ ! < -> _Contador_PWM `ui _PWM_DUTY_CYCLE 146  ]
+"326
+[; ;main.c: 326:                 GPIObits.GP0 = 1;
+[e = . . _GPIObits 0 0 -> -> 1 `i `uc ]
+[e $U 147  ]
+"327
+[; ;main.c: 327:             else
+[e :U 146 ]
+"328
+[; ;main.c: 328:                 GPIObits.GP0 = 0;
+[e = . . _GPIObits 0 0 -> -> 0 `i `uc ]
+[e :U 147 ]
+[e :U 145 ]
+"330
+[; ;main.c: 330:             if(Contador_PWM < 255)
+[e $ ! < _Contador_PWM -> 255 `i 148  ]
+"331
+[; ;main.c: 331:                 Contador_PWM+=5;
+[e =+ _Contador_PWM -> 5 `i ]
+[e $U 149  ]
+"332
+[; ;main.c: 332:             else
+[e :U 148 ]
+"333
+[; ;main.c: 333:                 Contador_PWM = 0;
+[e = _Contador_PWM -> 0 `i ]
+[e :U 149 ]
+"334
+[; ;main.c: 334:         }
+}
+[e :U 143 ]
+"336
+[; ;main.c: 336:         if (CONTADOR_REINICIOS_WDT < MAX_REINICIOS_WDT)
+[e $ ! < _CONTADOR_REINICIOS_WDT _MAX_REINICIOS_WDT 150  ]
+"337
+[; ;main.c: 337:             __asm("clrwdt");
+[; <" clrwdt ;# ">
+[e :U 150 ]
+"339
+[; ;main.c: 339:         if(STATUSbits.nTO == 0){
+[e $ ! == -> . . _STATUSbits 0 4 `i -> 0 `i 151  ]
+{
+"340
+[; ;main.c: 340:             FLAG_PWM_ENABLE = 0;
+[e = _FLAG_PWM_ENABLE -> -> 0 `i `ui ]
+"341
+[; ;main.c: 341:         }
+}
+[e :U 151 ]
+"342
+[; ;main.c: 342:     }
+}
+[e :U 140 ]
+[e $U 141  ]
+[e :U 142 ]
+"343
+[; ;main.c: 343:     return;
+[e $UE 139  ]
+"344
+[; ;main.c: 344: }
+[e :UE 139 ]
+}

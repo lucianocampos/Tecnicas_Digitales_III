@@ -1,0 +1,1852 @@
+
+
+Microchip MPLAB XC8 Assembler V3.00 build 20241204225717 
+                                                                                               Tue Apr 15 21:19:02 2025
+
+Microchip MPLAB XC8 C Compiler v3.00 (Free license) build 20241204225717 Og1 
+     1                           	processor	12F629
+     2                           	pagewidth 120
+     3                           	opt	flic
+     4                           	psect	strings,global,class=STRING,space=0,delta=2,noexec
+     5                           	psect	cinit,global,class=CODE,space=0,merge=1,delta=2
+     6                           	psect	bssBANK0,global,class=BANK0,space=1,delta=1,noexec
+     7                           	psect	clrtext,global,class=CODE,space=0,delta=2
+     8                           	psect	cstackCOMMON,global,class=COMMON,space=1,delta=1,noexec
+     9                           	psect	cstackBANK0,global,class=BANK0,space=1,delta=1,noexec
+    10                           	psect	maintext,global,class=CODE,space=0,split=1,delta=2
+    11                           	psect	text1,local,class=CODE,space=0,merge=1,delta=2
+    12                           	psect	intentry,global,class=CODE,space=0,delta=2
+    13                           	psect	text2,local,class=CODE,space=0,merge=1,delta=2
+    14                           	psect	text3,local,class=CODE,space=0,merge=1,delta=2
+    15                           	psect	text4,local,class=CODE,space=0,merge=1,delta=2
+    16                           	psect	config,global,abs,ovrld,class=CONFIG,space=4,delta=2,noexec
+    17                           	dabs	1,0x5E,2
+    18     0000                     
+    19                           ; Generated 17/08/2023 GMT
+    20                           ; 
+    21                           ; Copyright © 2023, Microchip Technology Inc. and its subsidiaries ("Microchip")
+    22                           ; All rights reserved.
+    23                           ; 
+    24                           ; This software is developed by Microchip Technology Inc. and its subsidiaries ("Microch
+      +                          ip").
+    25                           ; 
+    26                           ; Redistribution and use in source and binary forms, with or without modification, are
+    27                           ; permitted provided that the following conditions are met:
+    28                           ; 
+    29                           ;     1. Redistributions of source code must retain the above copyright notice, this lis
+      +                          t of
+    30                           ;        conditions and the following disclaimer.
+    31                           ; 
+    32                           ;     2. Redistributions in binary form must reproduce the above copyright notice, this 
+      +                          list
+    33                           ;        of conditions and the following disclaimer in the documentation and/or other
+    34                           ;        materials provided with the distribution. Publication is not required when
+    35                           ;        this file is used in an embedded application.
+    36                           ; 
+    37                           ;     3. Microchip's name may not be used to endorse or promote products derived from th
+      +                          is
+    38                           ;        software without specific prior written permission.
+    39                           ; 
+    40                           ; THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+    41                           ; INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS F
+      +                          OR
+    42                           ; PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL MICROCHIP BE LIABLE FOR ANY DIRECT, INDIREC
+      +                          T,
+    43                           ; INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING BUT NOT LIMITED TO
+    44                           ; PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA OR PROFITS; OR BUSINESS
+    45                           ; INTERRUPTION) HOWSOEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, ST
+      +                          RICT
+    46                           ; LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE U
+      +                          SE OF
+    47                           ; THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+    48                           ; 
+    49                           ; 
+    50                           ; Code-generator required, PIC12F629 Definitions
+    51                           ; 
+    52                           ; SFR Addresses
+    53     0004                     fsr             equ	4
+    54     0004                     fsr0            equ	4
+    55     0000                     indf            equ	0
+    56     0000                     indf0           equ	0
+    57     0002                     pc              equ	2
+    58     0002                     pcl             equ	2
+    59     000A                     pclath          equ	10
+    60     0003                     status          equ	3
+    61     0000                     INDF            equ	0	;# 
+    62     0001                     TMR0            equ	1	;# 
+    63     0002                     PCL             equ	2	;# 
+    64     0003                     STATUS          equ	3	;# 
+    65     0004                     FSR             equ	4	;# 
+    66     0005                     GPIO            equ	5	;# 
+    67     000A                     PCLATH          equ	10	;# 
+    68     000B                     INTCON          equ	11	;# 
+    69     000C                     PIR1            equ	12	;# 
+    70     000E                     TMR1            equ	14	;# 
+    71     000E                     TMR1L           equ	14	;# 
+    72     000F                     TMR1H           equ	15	;# 
+    73     0010                     T1CON           equ	16	;# 
+    74     0019                     CMCON           equ	25	;# 
+    75     0081                     OPTION_REG      equ	129	;# 
+    76     0085                     TRISIO          equ	133	;# 
+    77     008C                     PIE1            equ	140	;# 
+    78     008E                     PCON            equ	142	;# 
+    79     0090                     OSCCAL          equ	144	;# 
+    80     0095                     WPU             equ	149	;# 
+    81     0096                     IOC             equ	150	;# 
+    82     0096                     IOCB            equ	150	;# 
+    83     0099                     VRCON           equ	153	;# 
+    84     009A                     EEDATA          equ	154	;# 
+    85     009A                     EEDAT           equ	154	;# 
+    86     009B                     EEADR           equ	155	;# 
+    87     009C                     EECON1          equ	156	;# 
+    88     009D                     EECON2          equ	157	;# 
+    89     0000                     INDF            equ	0	;# 
+    90     0001                     TMR0            equ	1	;# 
+    91     0002                     PCL             equ	2	;# 
+    92     0003                     STATUS          equ	3	;# 
+    93     0004                     FSR             equ	4	;# 
+    94     0005                     GPIO            equ	5	;# 
+    95     000A                     PCLATH          equ	10	;# 
+    96     000B                     INTCON          equ	11	;# 
+    97     000C                     PIR1            equ	12	;# 
+    98     000E                     TMR1            equ	14	;# 
+    99     000E                     TMR1L           equ	14	;# 
+   100     000F                     TMR1H           equ	15	;# 
+   101     0010                     T1CON           equ	16	;# 
+   102     0019                     CMCON           equ	25	;# 
+   103     0081                     OPTION_REG      equ	129	;# 
+   104     0085                     TRISIO          equ	133	;# 
+   105     008C                     PIE1            equ	140	;# 
+   106     008E                     PCON            equ	142	;# 
+   107     0090                     OSCCAL          equ	144	;# 
+   108     0095                     WPU             equ	149	;# 
+   109     0096                     IOC             equ	150	;# 
+   110     0096                     IOCB            equ	150	;# 
+   111     0099                     VRCON           equ	153	;# 
+   112     009A                     EEDATA          equ	154	;# 
+   113     009A                     EEDAT           equ	154	;# 
+   114     009B                     EEADR           equ	155	;# 
+   115     009C                     EECON1          equ	156	;# 
+   116     009D                     EECON2          equ	157	;# 
+   117                           
+   118                           	psect	strings
+   119     0245                     __pstrings:
+   120     0245                     stringtab:
+   121     0245                     __stringtab:
+   122     0245                     stringcode:	
+   123                           ;	String table - string pointers are 1 byte each
+   124                           
+   125     0245                     stringdir:
+   126     0245  3002               	movlw	high stringdir
+   127     0246  008A               	movwf	10
+   128     0247  0804               	movf	4,w
+   129     0248  0A84               	incf	4,f
+   130     0249  0782               	addwf	2,f
+   131     024A                     __stringbase:
+   132     024A  3400               	retlw	0
+   133     024B                     __end_of__stringtab:
+   134     024B                     _MAX_REINICIOS_WDT:
+   135     024B  34EC               	retlw	236
+   136     024C  3400               	retlw	0
+   137     024D                     __end_of_MAX_REINICIOS_WDT:
+   138     024D                     _UART_PERIOD_HALF:
+   139     024D  3434               	retlw	52
+   140     024E  3400               	retlw	0
+   141     024F                     __end_of_UART_PERIOD_HALF:
+   142     024F                     _NIVELES_PWM:
+   143     024F  3432               	retlw	50
+   144     0250  3400               	retlw	0
+   145     0251                     __end_of_NIVELES_PWM:
+   146     0251                     _DATO_ENVIADO_UART:
+   147     0251  3461               	retlw	97
+   148     0252                     __end_of_DATO_ENVIADO_UART:
+   149     0252                     _PRECARGA_TMR0_PWM:
+   150     0252  34B9               	retlw	185
+   151     0253                     __end_of_PRECARGA_TMR0_PWM:
+   152     0253                     _PRECARGA_TMR1_WDT:
+   153     0253  34E0               	retlw	224
+   154     0254  340B               	retlw	11
+   155     0255  3400               	retlw	0
+   156     0256  3400               	retlw	0
+   157     0257                     __end_of_PRECARGA_TMR1_WDT:
+   158     0257                     _UART_PERIOD_FULL:
+   159     0257  34A5               	retlw	165
+   160     0258  3400               	retlw	0
+   161     0259                     __end_of_UART_PERIOD_FULL:
+   162     000E                     _TMR1           set	14
+   163     0003                     _STATUSbits     set	3
+   164     0019                     _CMCON          set	25
+   165     0005                     _GPIObits       set	5
+   166     0005                     _GPIO           set	5
+   167     0010                     _T1CONbits      set	16
+   168     000C                     _PIR1bits       set	12
+   169     0001                     _TMR0           set	1
+   170     000B                     _INTCONbits     set	11
+   171     0096                     _IOCbits        set	150
+   172     0085                     _TRISIObits     set	133
+   173     008C                     _PIE1bits       set	140
+   174     0081                     _OPTION_REGbits set	129
+   175                           
+   176                           	psect	cinit
+   177     0010                     start_initialization:	
+   178                           ; #config settings
+   179                           
+   180     0010                     __initialization:
+   181                           
+   182                           ; Clear objects allocated to BANK0
+   183     0010  1383               	bcf	3,7	;select IRP bank0
+   184     0011  3034               	movlw	low __pbssBANK0
+   185     0012  0084               	movwf	4
+   186     0013  3047               	movlw	low (__pbssBANK0+19)
+   187     0014  2259               	fcall	clear_ram0
+   188     0015                     end_of_initialization:	
+   189                           ;End of C runtime variable initialization code
+   190                           
+   191     0015                     __end_of__initialization:
+   192     0015  0183               	clrf	3
+   193     0016  298C               	ljmp	_main	;jump to C main() function
+   194                           
+   195                           	psect	bssBANK0
+   196     0034                     __pbssBANK0:
+   197     0034                     _WDT_RESET:
+   198     0034                     	ds	2
+   199     0036                     _CONTADOR_REINICIOS_WDT:
+   200     0036                     	ds	2
+   201     0038                     _DESBORDE_TIMER0:
+   202     0038                     	ds	2
+   203     003A                     _FLAG_RECEPCION:
+   204     003A                     	ds	2
+   205     003C                     _FLAG_UART:
+   206     003C                     	ds	2
+   207     003E                     _FLAG_REFRESCAR_PWM:
+   208     003E                     	ds	2
+   209     0040                     _PWM_DUTY_CYCLE:
+   210     0040                     	ds	2
+   211     0042                     _Contador_PWM:
+   212     0042                     	ds	2
+   213     0044                     _FLAG_PWM_ENABLE:
+   214     0044                     	ds	2
+   215     0046                     _DATO_RECIBIDO_UART:
+   216     0046                     	ds	1
+   217                           
+   218                           	psect	clrtext
+   219     0259                     clear_ram0:	
+   220                           ;	Called with FSR containing the base address, and
+   221                           ;	W with the last address+1
+   222                           
+   223     0259  0064               	clrwdt	;clear the watchdog before getting into this loop
+   224     025A                     clrloop0:
+   225     025A  0180               	clrf	0	;clear RAM location pointed to by FSR
+   226     025B  0A84               	incf	4,f	;increment pointer
+   227     025C  0604               	xorwf	4,w	;XOR with final address
+   228     025D  1903               	btfsc	3,2	;have we reached the end yet?
+   229     025E  3400               	retlw	0	;all done for this memory range, return
+   230     025F  0604               	xorwf	4,w	;XOR again to restore value
+   231     0260  2A5A               	goto	clrloop0	;do the next byte
+   232                           
+   233                           	psect	cstackCOMMON
+   234     0000                     __pcstackCOMMON:
+   235     0000                     ??_Ajustar_PWM:
+   236     0000                     ??_main:	
+   237                           ; 1 bytes @ 0x0
+   238                           
+   239                           
+   240                           	psect	cstackBANK0
+   241     0020                     __pcstackBANK0:	
+   242                           ; 1 bytes @ 0x0
+   243                           
+   244     0020                     ?_RESPONDER_UART:
+   245     0020                     ?_Ajustar_PWM:	
+   246                           ; 1 bytes @ 0x0
+   247                           
+   248     0020                     ?_isr:	
+   249                           ; 1 bytes @ 0x0
+   250                           
+   251     0020                     ?_main:	
+   252                           ; 1 bytes @ 0x0
+   253                           
+   254     0020                     ?_RECEPCION_UART:	
+   255                           ; 1 bytes @ 0x0
+   256                           
+   257     0020                     ??_RESPONDER_UART:	
+   258                           ; 2 bytes @ 0x0
+   259                           
+   260                           
+   261                           ; 1 bytes @ 0x0
+   262     0020                     	ds	1
+   263     0021                     RESPONDER_UART@ENVIO_EN_PROCESO:
+   264                           
+   265                           ; 2 bytes @ 0x1
+   266     0021                     	ds	1
+   267     0022                     ??_RECEPCION_UART:
+   268                           
+   269                           ; 1 bytes @ 0x2
+   270     0022                     	ds	1
+   271     0023                     RESPONDER_UART@RESPUESTA:
+   272                           
+   273                           ; 1 bytes @ 0x3
+   274     0023                     	ds	1
+   275     0024                     RECEPCION_UART@RECEPCION_EN_PROCESO:
+   276     0024                     RESPONDER_UART@bit:	
+   277                           ; 2 bytes @ 0x4
+   278                           
+   279                           
+   280                           ; 2 bytes @ 0x4
+   281     0024                     	ds	2
+   282     0026                     RECEPCION_UART@CARACTER_RECIBIDO_UART:
+   283                           
+   284                           ; 1 bytes @ 0x6
+   285     0026                     	ds	1
+   286     0027                     RECEPCION_UART@desplazamiento_bit:
+   287                           
+   288                           ; 2 bytes @ 0x7
+   289     0027                     	ds	2
+   290     0029                     RECEPCION_UART@RESULTADO_COMM:
+   291                           
+   292                           ; 2 bytes @ 0x9
+   293     0029                     	ds	2
+   294     002B                     ??_isr:
+   295                           
+   296                           ; 1 bytes @ 0xB
+   297     002B                     	ds	6
+   298     0031                     isr@dummy_reg:
+   299                           
+   300                           ; 1 bytes @ 0x11
+   301     0031                     	ds	1
+   302     0032                     main@Contador_PWM:
+   303                           
+   304                           ; 2 bytes @ 0x12
+   305     0032                     	ds	2
+   306                           
+   307                           	psect	maintext
+   308     018C                     __pmaintext:	
+   309 ;;
+   310 ;;Main: autosize = 0, tempsize = 0, incstack = 0, save=0
+   311 ;;
+   312 ;; *************** function _main *****************
+   313 ;; Defined at:
+   314 ;;		line 278 in file "main.c"
+   315 ;; Parameters:    Size  Location     Type
+   316 ;;		None
+   317 ;; Auto vars:     Size  Location     Type
+   318 ;;  Contador_PWM    2   18[BANK0 ] int 
+   319 ;; Return value:  Size  Location     Type
+   320 ;;                  1    wreg      void 
+   321 ;; Registers used:
+   322 ;;		wreg, status,2, status,0, btemp+1
+   323 ;; Tracked objects:
+   324 ;;		On entry : B00/0
+   325 ;;		On exit  : 0/0
+   326 ;;		Unchanged: 0/0
+   327 ;; Data sizes:     COMMON   BANK0
+   328 ;;      Params:         0       0
+   329 ;;      Locals:         0       2
+   330 ;;      Temps:          0       0
+   331 ;;      Totals:         0       2
+   332 ;;Total ram usage:        2 bytes
+   333 ;; Hardware stack levels required when called: 2
+   334 ;; This function calls:
+   335 ;;		Nothing
+   336 ;; This function is called by:
+   337 ;;		Startup code after reset
+   338 ;; This function uses a non-reentrant model
+   339 ;;
+   340                           
+   341     018C                     _main:	
+   342                           ;psect for function _main
+   343                           
+   344     018C                     l1177:	
+   345                           ;incstack = 0
+   346                           ; Regs used in _main: [wreg+status,2+status,0+btemp+1]
+   347                           
+   348                           
+   349                           ;main.c: 280:     TRISIObits.TRISIO0=0;
+   350     018C  1683               	bsf	3,5	;RP0=1, select bank1
+   351     018D  1005               	bcf	5,0	;volatile
+   352                           
+   353                           ;main.c: 281:     TRISIObits.TRISIO1=1;
+   354     018E  1485               	bsf	5,1	;volatile
+   355                           
+   356                           ;main.c: 282:     TRISIObits.TRISIO2=1;
+   357     018F  1505               	bsf	5,2	;volatile
+   358                           
+   359                           ;main.c: 283:     TRISIObits.TRISIO4=0;
+   360     0190  1205               	bcf	5,4	;volatile
+   361                           
+   362                           ;main.c: 285:     CMCON = 0x07;
+   363     0191  3007               	movlw	7
+   364     0192  1283               	bcf	3,5	;RP0=0, select bank0
+   365     0193  0099               	movwf	25	;volatile
+   366                           
+   367                           ;main.c: 286:     GPIObits.GP0 = 0;
+   368     0194  1005               	bcf	5,0	;volatile
+   369                           
+   370                           ;main.c: 287:     GPIObits.GP4 = 1;
+   371     0195  1605               	bsf	5,4	;volatile
+   372                           
+   373                           ;main.c: 292:     OPTION_REGbits.T0CS = 0;
+   374     0196  1683               	bsf	3,5	;RP0=1, select bank1
+   375     0197  1281               	bcf	1,5	;volatile
+   376     0198                     l1179:
+   377                           
+   378                           ;main.c: 293:     TMR0 = 0;
+   379     0198  1283               	bcf	3,5	;RP0=0, select bank0
+   380     0199  0181               	clrf	1	;volatile
+   381     019A                     l1181:
+   382                           
+   383                           ;main.c: 296:     OPTION_REGbits.PSA = 1;
+   384     019A  1683               	bsf	3,5	;RP0=1, select bank1
+   385     019B  1581               	bsf	1,3	;volatile
+   386     019C                     l1183:
+   387                           
+   388                           ;main.c: 297:     OPTION_REGbits.PS = 0b111;
+   389     019C  3007               	movlw	7
+   390     019D  0481               	iorwf	1,f	;volatile
+   391     019E                     l1185:
+   392                           
+   393                           ;main.c: 301:     INTCONbits.INTE = 1;
+   394     019E  160B               	bsf	11,4	;volatile
+   395     019F                     l1187:
+   396                           
+   397                           ;main.c: 302:     OPTION_REGbits.INTEDG = 0;
+   398     019F  1301               	bcf	1,6	;volatile
+   399     01A0                     l1189:
+   400                           
+   401                           ;main.c: 303:     INTCONbits.INTF = 0;
+   402     01A0  108B               	bcf	11,1	;volatile
+   403     01A1                     l1191:
+   404                           
+   405                           ;main.c: 305:     IOCbits.IOC1 = 1;
+   406     01A1  1496               	bsf	22,1	;volatile
+   407     01A2                     l1193:
+   408                           
+   409                           ;main.c: 307:     INTCONbits.T0IE = 0;
+   410     01A2  128B               	bcf	11,5	;volatile
+   411     01A3                     l1195:
+   412                           
+   413                           ;main.c: 309:     INTCONbits.GIE = 1;
+   414     01A3  178B               	bsf	11,7	;volatile
+   415     01A4                     l1197:
+   416                           
+   417                           ;main.c: 310:     INTCONbits.GPIE = 0;
+   418     01A4  118B               	bcf	11,3	;volatile
+   419     01A5                     l1199:
+   420                           
+   421                           ;main.c: 313:     int Contador_PWM = 0;
+   422     01A5  1283               	bcf	3,5	;RP0=0, select bank0
+   423     01A6  01B2               	clrf	main@Contador_PWM
+   424     01A7  01B3               	clrf	main@Contador_PWM+1
+   425     01A8  0064               	clrwdt	;# 
+   426     01A9                     l153:	
+   427                           ;main.c: 318:     while(1){
+   428                           
+   429                           
+   430                           ;main.c: 320:         if(FLAG_PWM_ENABLE == 1){
+   431     01A9  1283               	bcf	3,5	;RP0=0, select bank0
+   432     01AA  0344               	decf	_FLAG_PWM_ENABLE,w	;volatile
+   433     01AB  0445               	iorwf	_FLAG_PWM_ENABLE+1,w	;volatile
+   434     01AC  1D03               	btfss	3,2
+   435     01AD  29AF               	goto	u691
+   436     01AE  29B0               	goto	u690
+   437     01AF                     u691:
+   438     01AF  29DD               	goto	l1215
+   439     01B0                     u690:
+   440     01B0                     l1201:
+   441                           
+   442                           ;main.c: 322:             if(PWM_DUTY_CYCLE == 255)
+   443     01B0  0A40               	incf	_PWM_DUTY_CYCLE,w	;volatile
+   444     01B1  0441               	iorwf	_PWM_DUTY_CYCLE+1,w	;volatile
+   445     01B2  1D03               	btfss	3,2
+   446     01B3  29B5               	goto	u701
+   447     01B4  29B6               	goto	u700
+   448     01B5                     u701:
+   449     01B5  29B8               	goto	l1205
+   450     01B6                     u700:
+   451     01B6                     l1203:
+   452                           
+   453                           ;main.c: 323:                 GPIObits.GP0 = 1;
+   454     01B6  1405               	bsf	5,0	;volatile
+   455     01B7  29C5               	goto	l1209
+   456     01B8                     l1205:
+   457     01B8  0841               	movf	_PWM_DUTY_CYCLE+1,w	;volatile
+   458     01B9  0233               	subwf	main@Contador_PWM+1,w
+   459     01BA  1D03               	skipz
+   460     01BB  29BE               	goto	u715
+   461     01BC  0840               	movf	_PWM_DUTY_CYCLE,w	;volatile
+   462     01BD  0232               	subwf	main@Contador_PWM,w
+   463     01BE                     u715:
+   464     01BE  1803               	skipnc
+   465     01BF  29C1               	goto	u711
+   466     01C0  29C2               	goto	u710
+   467     01C1                     u711:
+   468     01C1  29C4               	goto	l157
+   469     01C2                     u710:
+   470     01C2                     l1207:
+   471                           
+   472                           ;main.c: 326:                 GPIObits.GP0 = 1;
+   473     01C2  1405               	bsf	5,0	;volatile
+   474     01C3  29C5               	goto	l1209
+   475     01C4                     l157:	
+   476                           ;main.c: 327:             else
+   477                           
+   478                           
+   479                           ;main.c: 328:                 GPIObits.GP0 = 0;
+   480     01C4  1005               	bcf	5,0	;volatile
+   481     01C5                     l1209:
+   482                           
+   483                           ;main.c: 330:             if(Contador_PWM < 255)
+   484     01C5  0833               	movf	main@Contador_PWM+1,w
+   485     01C6  3A80               	xorlw	128
+   486     01C7  00DF               	movwf	btemp+1
+   487     01C8  3080               	movlw	128
+   488     01C9  025F               	subwf	btemp+1,w
+   489     01CA  1D03               	skipz
+   490     01CB  29CE               	goto	u725
+   491     01CC  30FF               	movlw	255
+   492     01CD  0232               	subwf	main@Contador_PWM,w
+   493     01CE                     u725:
+   494     01CE  1803               	skipnc
+   495     01CF  29D1               	goto	u721
+   496     01D0  29D2               	goto	u720
+   497     01D1                     u721:
+   498     01D1  29DA               	goto	l1213
+   499     01D2                     u720:
+   500     01D2                     l1211:
+   501                           
+   502                           ;main.c: 331:                 Contador_PWM+=5;
+   503     01D2  3005               	movlw	5
+   504     01D3  1283               	bcf	3,5	;RP0=0, select bank0
+   505     01D4  07B2               	addwf	main@Contador_PWM,f
+   506     01D5  1803               	skipnc
+   507     01D6  0AB3               	incf	main@Contador_PWM+1,f
+   508     01D7  3000               	movlw	0
+   509     01D8  07B3               	addwf	main@Contador_PWM+1,f
+   510     01D9  29DD               	goto	l1215
+   511     01DA                     l1213:
+   512                           
+   513                           ;main.c: 333:                 Contador_PWM = 0;
+   514     01DA  1283               	bcf	3,5	;RP0=0, select bank0
+   515     01DB  01B2               	clrf	main@Contador_PWM
+   516     01DC  01B3               	clrf	main@Contador_PWM+1
+   517     01DD                     l1215:
+   518     01DD  0837               	movf	_CONTADOR_REINICIOS_WDT+1,w	;volatile
+   519     01DE  3A80               	xorlw	128
+   520     01DF  00DF               	movwf	btemp+1
+   521     01E0  3080               	movlw	128
+   522     01E1  025F               	subwf	btemp+1,w
+   523     01E2  1D03               	skipz
+   524     01E3  29E6               	goto	u735
+   525     01E4  30EC               	movlw	236
+   526     01E5  0236               	subwf	_CONTADOR_REINICIOS_WDT,w	;volatile
+   527     01E6                     u735:
+   528     01E6  1803               	skipnc
+   529     01E7  29E9               	goto	u731
+   530     01E8  29EA               	goto	u730
+   531     01E9                     u731:
+   532     01E9  29EB               	goto	l161
+   533     01EA                     u730:
+   534     01EA                     l1217:
+   535     01EA  0064               	clrwdt	;# 
+   536     01EB                     l161:
+   537                           
+   538                           ;main.c: 339:         if(STATUSbits.nTO == 0){
+   539     01EB  1283               	bcf	3,5	;RP0=0, select bank0
+   540     01EC  1A03               	btfsc	3,4	;volatile
+   541     01ED  29EF               	goto	u741
+   542     01EE  29F0               	goto	u740
+   543     01EF                     u741:
+   544     01EF  29A9               	goto	l153
+   545     01F0                     u740:
+   546     01F0                     l1219:
+   547                           
+   548                           ;main.c: 340:             FLAG_PWM_ENABLE = 0;
+   549     01F0  01C4               	clrf	_FLAG_PWM_ENABLE	;volatile
+   550     01F1  01C5               	clrf	_FLAG_PWM_ENABLE+1	;volatile
+   551     01F2  29A9               	goto	l153
+   552     01F3  280F               	ljmp	start
+   553     01F4                     __end_of_main:
+   554                           
+   555                           	psect	text1
+   556     0017                     __ptext1:	
+   557 ;; *************** function _isr *****************
+   558 ;; Defined at:
+   559 ;;		line 13 in file "main.c"
+   560 ;; Parameters:    Size  Location     Type
+   561 ;;		None
+   562 ;; Auto vars:     Size  Location     Type
+   563 ;;  dummy_reg       1   17[BANK0 ] volatile unsigned char 
+   564 ;; Return value:  Size  Location     Type
+   565 ;;                  1    wreg      void 
+   566 ;; Registers used:
+   567 ;;		wreg, fsr0l, fsr0h, status,2, status,0, btemp+1, pclath, cstack
+   568 ;; Tracked objects:
+   569 ;;		On entry : 0/0
+   570 ;;		On exit  : 0/0
+   571 ;;		Unchanged: 0/0
+   572 ;; Data sizes:     COMMON   BANK0
+   573 ;;      Params:         0       0
+   574 ;;      Locals:         0       1
+   575 ;;      Temps:          0       6
+   576 ;;      Totals:         0       7
+   577 ;;Total ram usage:        7 bytes
+   578 ;; Hardware stack levels used: 1
+   579 ;; Hardware stack levels required when called: 1
+   580 ;; This function calls:
+   581 ;;		_Ajustar_PWM
+   582 ;;		_RECEPCION_UART
+   583 ;;		_RESPONDER_UART
+   584 ;; This function is called by:
+   585 ;;		Interrupt level 1
+   586 ;; This function uses a non-reentrant model
+   587 ;;
+   588                           
+   589     0017                     _isr:	
+   590                           ;psect for function _isr
+   591                           
+   592     0017                     i1l1081:
+   593                           
+   594                           ;main.c: 16:     if (INTCONbits.T0IF) {
+   595     0017  1D0B               	btfss	11,2	;volatile
+   596     0018  281A               	goto	u58_21
+   597     0019  281B               	goto	u58_20
+   598     001A                     u58_21:
+   599     001A  281D               	goto	i1l1087
+   600     001B                     u58_20:
+   601     001B                     i1l1083:
+   602                           
+   603                           ;main.c: 17:         TMR0 = 0;
+   604     001B  0181               	clrf	1	;volatile
+   605     001C                     i1l1085:
+   606                           
+   607                           ;main.c: 18:         INTCONbits.T0IF = 0;
+   608     001C  110B               	bcf	11,2	;volatile
+   609     001D                     i1l1087:
+   610                           
+   611                           ;main.c: 23:     if (INTCONbits.INTF){
+   612     001D  1C8B               	btfss	11,1	;volatile
+   613     001E  2820               	goto	u59_21
+   614     001F  2821               	goto	u59_20
+   615     0020                     u59_21:
+   616     0020  285A               	goto	i1l1145
+   617     0021                     u59_20:
+   618     0021                     i1l1089:
+   619     0021  0064               	clrwdt	;# 
+   620                           
+   621                           ;main.c: 30:         OPTION_REGbits.PSA = 1;
+   622     0022  1683               	bsf	3,5	;RP0=1, select bank1
+   623     0023  1581               	bsf	1,3	;volatile
+   624     0024                     i1l1091:
+   625                           
+   626                           ;main.c: 31:         OPTION_REGbits.PS = 0b111;
+   627     0024  3007               	movlw	7
+   628     0025  0481               	iorwf	1,f	;volatile
+   629     0026                     i1l1093:
+   630                           
+   631                           ;main.c: 33:         TMR0 = 0;
+   632     0026  1283               	bcf	3,5	;RP0=0, select bank0
+   633     0027  0181               	clrf	1	;volatile
+   634     0028                     i1l1095:
+   635                           
+   636                           ;main.c: 34:         INTCONbits.T0IF = 0;
+   637     0028  110B               	bcf	11,2	;volatile
+   638     0029                     i1l1097:
+   639                           
+   640                           ;main.c: 35:         INTCONbits.T0IE = 1;
+   641     0029  168B               	bsf	11,5	;volatile
+   642     002A                     i1l1099:
+   643                           
+   644                           ;main.c: 37:         INTCONbits.GPIF = 0;
+   645     002A  100B               	bcf	11,0	;volatile
+   646     002B                     i1l1101:
+   647                           
+   648                           ;main.c: 38:         INTCONbits.GPIE = 0;
+   649     002B  118B               	bcf	11,3	;volatile
+   650     002C                     i1l1103:
+   651                           
+   652                           ;main.c: 40:         FLAG_PWM_ENABLE = 0;
+   653     002C  01C4               	clrf	_FLAG_PWM_ENABLE	;volatile
+   654     002D  01C5               	clrf	_FLAG_PWM_ENABLE+1	;volatile
+   655     002E                     i1l1105:
+   656                           
+   657                           ;main.c: 41:         PIR1bits.TMR1IF = 0;
+   658     002E  100C               	bcf	12,0	;volatile
+   659     002F                     i1l1107:
+   660                           
+   661                           ;main.c: 42:         INTCONbits.PEIE = 0;
+   662     002F  130B               	bcf	11,6	;volatile
+   663     0030                     i1l1109:
+   664                           
+   665                           ;main.c: 45:         if (RECEPCION_UART()){
+   666     0030  20B1               	fcall	_RECEPCION_UART
+   667     0031  1283               	bcf	3,5	;RP0=0, select bank0
+   668     0032  0820               	movf	?_RECEPCION_UART,w
+   669     0033  0421               	iorwf	?_RECEPCION_UART+1,w
+   670     0034  1903               	btfsc	3,2
+   671     0035  2837               	goto	u60_21
+   672     0036  2838               	goto	u60_20
+   673     0037                     u60_21:
+   674     0037  2846               	goto	i1l1117
+   675     0038                     u60_20:
+   676     0038                     i1l1111:
+   677                           
+   678                           ;main.c: 46:             RESPONDER_UART(0x1B);
+   679     0038  301B               	movlw	27
+   680     0039  2122               	fcall	_RESPONDER_UART
+   681     003A                     i1l1113:
+   682                           
+   683                           ;main.c: 47:             FLAG_PWM_ENABLE = 1;
+   684     003A  3001               	movlw	1
+   685     003B  1283               	bcf	3,5	;RP0=0, select bank0
+   686     003C  00C4               	movwf	_FLAG_PWM_ENABLE	;volatile
+   687     003D  3000               	movlw	0
+   688     003E  00C5               	movwf	_FLAG_PWM_ENABLE+1	;volatile
+   689     003F                     i1l1115:
+   690                           
+   691                           ;main.c: 48:             PWM_DUTY_CYCLE = DATO_RECIBIDO_UART;
+   692     003F  0846               	movf	_DATO_RECIBIDO_UART,w	;volatile
+   693     0040  00AB               	movwf	??_isr
+   694     0041  01AC               	clrf	??_isr+1
+   695     0042  082B               	movf	??_isr,w
+   696     0043  00C0               	movwf	_PWM_DUTY_CYCLE	;volatile
+   697     0044  082C               	movf	??_isr+1,w
+   698     0045  00C1               	movwf	_PWM_DUTY_CYCLE+1	;volatile
+   699     0046                     i1l1117:
+   700                           
+   701                           ;main.c: 51:         TMR0 = 0;
+   702     0046  0181               	clrf	1	;volatile
+   703     0047                     i1l1119:
+   704                           
+   705                           ;main.c: 52:         INTCONbits.T0IF = 0;
+   706     0047  110B               	bcf	11,2	;volatile
+   707     0048                     i1l1121:
+   708                           
+   709                           ;main.c: 53:         INTCONbits.T0IE = 0;
+   710     0048  128B               	bcf	11,5	;volatile
+   711     0049                     i1l1123:
+   712                           
+   713                           ;main.c: 55:         CONTADOR_REINICIOS_WDT = 0;
+   714     0049  01B6               	clrf	_CONTADOR_REINICIOS_WDT	;volatile
+   715     004A  01B7               	clrf	_CONTADOR_REINICIOS_WDT+1	;volatile
+   716     004B                     i1l1125:
+   717                           
+   718                           ;main.c: 56:         T1CONbits.TMR1CS = 0;
+   719     004B  1090               	bcf	16,1	;volatile
+   720     004C                     i1l1127:
+   721                           
+   722                           ;main.c: 57:         T1CONbits.T1CKPS = 0b11;
+   723     004C  3030               	movlw	48
+   724     004D  0490               	iorwf	16,f	;volatile
+   725     004E                     i1l1129:
+   726     004E  300B               	movlw	11
+   727     004F  008F               	movwf	15	;volatile
+   728     0050  30E0               	movlw	224
+   729     0051  008E               	movwf	14	;volatile
+   730     0052                     i1l1131:
+   731                           
+   732                           ;main.c: 59:         PIR1bits.TMR1IF = 0;
+   733     0052  100C               	bcf	12,0	;volatile
+   734     0053                     i1l1133:
+   735                           
+   736                           ;main.c: 60:         T1CONbits.TMR1ON = 1;
+   737     0053  1410               	bsf	16,0	;volatile
+   738     0054                     i1l1135:
+   739                           
+   740                           ;main.c: 61:         PIE1bits.T1IE = 1;
+   741     0054  1683               	bsf	3,5	;RP0=1, select bank1
+   742     0055  140C               	bsf	12,0	;volatile
+   743     0056                     i1l1137:
+   744                           
+   745                           ;main.c: 63:         INTCONbits.GPIF = 0;
+   746     0056  100B               	bcf	11,0	;volatile
+   747     0057                     i1l1139:
+   748                           
+   749                           ;main.c: 64:         INTCONbits.INTF = 0;
+   750     0057  108B               	bcf	11,1	;volatile
+   751     0058                     i1l1141:
+   752                           
+   753                           ;main.c: 66:         INTCONbits.PEIE = 1;
+   754     0058  170B               	bsf	11,6	;volatile
+   755     0059                     i1l1143:
+   756                           
+   757                           ;main.c: 67:         INTCONbits.GPIE = 1;
+   758     0059  158B               	bsf	11,3	;volatile
+   759     005A                     i1l1145:
+   760                           
+   761                           ;main.c: 71:     if (PIR1bits.TMR1IF){
+   762     005A  1283               	bcf	3,5	;RP0=0, select bank0
+   763     005B  1C0C               	btfss	12,0	;volatile
+   764     005C  285E               	goto	u61_21
+   765     005D  285F               	goto	u61_20
+   766     005E                     u61_21:
+   767     005E  2893               	goto	i1l76
+   768     005F                     u61_20:
+   769     005F                     i1l1147:
+   770     005F  300B               	movlw	11
+   771     0060  008F               	movwf	15	;volatile
+   772     0061  30E0               	movlw	224
+   773     0062  008E               	movwf	14	;volatile
+   774                           
+   775                           ;main.c: 79:         PIR1bits.TMR1IF = 0;
+   776     0063  100C               	bcf	12,0	;volatile
+   777     0064                     i1l1149:
+   778                           
+   779                           ;main.c: 81:         if(FLAG_PWM_ENABLE == 1){
+   780     0064  0344               	decf	_FLAG_PWM_ENABLE,w	;volatile
+   781     0065  0445               	iorwf	_FLAG_PWM_ENABLE+1,w	;volatile
+   782     0066  1D03               	btfss	3,2
+   783     0067  2869               	goto	u62_21
+   784     0068  286A               	goto	u62_20
+   785     0069                     u62_21:
+   786     0069  2891               	goto	i1l77
+   787     006A                     u62_20:
+   788     006A                     i1l1151:
+   789                           
+   790                           ;main.c: 82:             CONTADOR_REINICIOS_WDT++;
+   791     006A  3001               	movlw	1
+   792     006B  07B6               	addwf	_CONTADOR_REINICIOS_WDT,f	;volatile
+   793     006C  1803               	skipnc
+   794     006D  0AB7               	incf	_CONTADOR_REINICIOS_WDT+1,f	;volatile
+   795     006E  3000               	movlw	0
+   796     006F  07B7               	addwf	_CONTADOR_REINICIOS_WDT+1,f	;volatile
+   797     0070                     i1l1153:
+   798                           
+   799                           ;main.c: 84:             if (CONTADOR_REINICIOS_WDT == 200){
+   800     0070  30C8               	movlw	200
+   801     0071  0636               	xorwf	_CONTADOR_REINICIOS_WDT,w	;volatile
+   802     0072  0437               	iorwf	_CONTADOR_REINICIOS_WDT+1,w	;volatile
+   803     0073  1D03               	btfss	3,2
+   804     0074  2876               	goto	u63_21
+   805     0075  2877               	goto	u63_20
+   806     0076                     u63_21:
+   807     0076  2879               	goto	i1l1157
+   808     0077                     u63_20:
+   809     0077                     i1l1155:
+   810                           
+   811                           ;main.c: 85:                 RESPONDER_UART(0xee);
+   812     0077  30EE               	movlw	238
+   813     0078  2122               	fcall	_RESPONDER_UART
+   814     0079                     i1l1157:
+   815                           
+   816                           ;main.c: 88:             if (CONTADOR_REINICIOS_WDT == 236){
+   817     0079  30EC               	movlw	236
+   818     007A  1283               	bcf	3,5	;RP0=0, select bank0
+   819     007B  0636               	xorwf	_CONTADOR_REINICIOS_WDT,w	;volatile
+   820     007C  0437               	iorwf	_CONTADOR_REINICIOS_WDT+1,w	;volatile
+   821     007D  1D03               	btfss	3,2
+   822     007E  2880               	goto	u64_21
+   823     007F  2881               	goto	u64_20
+   824     0080                     u64_21:
+   825     0080  2883               	goto	i1l1161
+   826     0081                     u64_20:
+   827     0081                     i1l1159:
+   828                           
+   829                           ;main.c: 89:                 RESPONDER_UART(0xee);
+   830     0081  30EE               	movlw	238
+   831     0082  2122               	fcall	_RESPONDER_UART
+   832     0083                     i1l1161:
+   833                           
+   834                           ;main.c: 92:             if (CONTADOR_REINICIOS_WDT == 240){
+   835     0083  30F0               	movlw	240
+   836     0084  1283               	bcf	3,5	;RP0=0, select bank0
+   837     0085  0636               	xorwf	_CONTADOR_REINICIOS_WDT,w	;volatile
+   838     0086  0437               	iorwf	_CONTADOR_REINICIOS_WDT+1,w	;volatile
+   839     0087  1D03               	btfss	3,2
+   840     0088  288A               	goto	u65_21
+   841     0089  288B               	goto	u65_20
+   842     008A                     u65_21:
+   843     008A  2893               	goto	i1l76
+   844     008B                     u65_20:
+   845     008B                     i1l1163:
+   846                           
+   847                           ;main.c: 93:                 RESPONDER_UART(0xee);
+   848     008B  30EE               	movlw	238
+   849     008C  2122               	fcall	_RESPONDER_UART
+   850     008D                     i1l1165:
+   851                           
+   852                           ;main.c: 94:                 FLAG_PWM_ENABLE = 0;
+   853     008D  1283               	bcf	3,5	;RP0=0, select bank0
+   854     008E  01C4               	clrf	_FLAG_PWM_ENABLE	;volatile
+   855     008F  01C5               	clrf	_FLAG_PWM_ENABLE+1	;volatile
+   856     0090  2893               	goto	i1l76
+   857     0091                     i1l77:	
+   858                           ;main.c: 98:         else
+   859                           
+   860                           
+   861                           ;main.c: 99:             PIE1bits.TMR1IE = 0;
+   862     0091  1683               	bsf	3,5	;RP0=1, select bank1
+   863     0092  100C               	bcf	12,0	;volatile
+   864     0093                     i1l76:	
+   865                           ;main.c: 100:     }
+   866                           
+   867                           
+   868                           ;main.c: 104:     if (INTCONbits.GPIF) {
+   869     0093  1C0B               	btfss	11,0	;volatile
+   870     0094  2896               	goto	u66_21
+   871     0095  2897               	goto	u66_20
+   872     0096                     u66_21:
+   873     0096  28A6               	goto	i1l84
+   874     0097                     u66_20:
+   875     0097                     i1l1167:
+   876                           
+   877                           ;main.c: 109:         volatile unsigned char dummy_reg = GPIO;
+   878     0097  1283               	bcf	3,5	;RP0=0, select bank0
+   879     0098  0805               	movf	5,w	;volatile
+   880     0099  00B1               	movwf	isr@dummy_reg	;volatile
+   881     009A                     i1l1169:
+   882                           
+   883                           ;main.c: 110:         INTCONbits.GPIF = 0;
+   884     009A  100B               	bcf	11,0	;volatile
+   885     009B                     i1l1171:
+   886                           
+   887                           ;main.c: 112:         if (GPIObits.GP1 == 1 && FLAG_PWM_ENABLE == 1)
+   888     009B  1C85               	btfss	5,1	;volatile
+   889     009C  289E               	goto	u67_21
+   890     009D  289F               	goto	u67_20
+   891     009E                     u67_21:
+   892     009E  28A6               	goto	i1l84
+   893     009F                     u67_20:
+   894     009F                     i1l1173:
+   895     009F  0344               	decf	_FLAG_PWM_ENABLE,w	;volatile
+   896     00A0  0445               	iorwf	_FLAG_PWM_ENABLE+1,w	;volatile
+   897     00A1  1D03               	btfss	3,2
+   898     00A2  28A4               	goto	u68_21
+   899     00A3  28A5               	goto	u68_20
+   900     00A4                     u68_21:
+   901     00A4  28A6               	goto	i1l84
+   902     00A5                     u68_20:
+   903     00A5                     i1l1175:
+   904                           
+   905                           ;main.c: 113:             Ajustar_PWM();
+   906     00A5  21F4               	fcall	_Ajustar_PWM
+   907     00A6                     i1l84:
+   908     00A6  1283               	bcf	3,5	;RP0=0, select bank0
+   909     00A7  0830               	movf	??_isr+5,w
+   910     00A8  082F               	movf	??_isr+4,w
+   911     00A9  008A               	movwf	10
+   912     00AA  082E               	movf	??_isr+3,w
+   913     00AB  0084               	movwf	4
+   914     00AC  0E2D               	swapf	??_isr+2,w
+   915     00AD  0083               	movwf	3
+   916     00AE  0EDE               	swapf	btemp,f
+   917     00AF  0E5E               	swapf	btemp,w
+   918     00B0  0009               	retfie
+   919     00B1                     __end_of_isr:
+   920                           
+   921                           	psect	intentry
+   922     0004                     __pintentry:	
+   923                           ;incstack = 0
+   924                           ; Regs used in _isr: [wreg-fsr0h+status,2+status,0+btemp+1+pclath+cstack]
+   925                           
+   926     0004                     interrupt_function:
+   927     005E                     saved_w         set	btemp
+   928     0004  00DE               	movwf	btemp
+   929     0005  0E03               	swapf	3,w
+   930     0006  1283               	bcf	3,5	;RP0=0, select bank0
+   931     0007  00AD               	movwf	??_isr+2
+   932     0008  0804               	movf	4,w
+   933     0009  00AE               	movwf	??_isr+3
+   934     000A  080A               	movf	10,w
+   935     000B  00AF               	movwf	??_isr+4
+   936     000C  085F               	movf	btemp+1,w
+   937     000D  00B0               	movwf	??_isr+5
+   938     000E  2817               	ljmp	_isr
+   939                           
+   940                           	psect	text2
+   941     0122                     __ptext2:	
+   942 ;; *************** function _RESPONDER_UART *****************
+   943 ;; Defined at:
+   944 ;;		line 175 in file "main.c"
+   945 ;; Parameters:    Size  Location     Type
+   946 ;;  RESPUESTA       1    wreg     unsigned char 
+   947 ;; Auto vars:     Size  Location     Type
+   948 ;;  RESPUESTA       1    3[BANK0 ] unsigned char 
+   949 ;;  bit             2    4[BANK0 ] int 
+   950 ;;  ENVIO_EN_PRO    2    1[BANK0 ] int 
+   951 ;; Return value:  Size  Location     Type
+   952 ;;                  1    wreg      void 
+   953 ;; Registers used:
+   954 ;;		wreg, fsr0l, fsr0h, status,2, status,0, btemp+1
+   955 ;; Tracked objects:
+   956 ;;		On entry : 0/0
+   957 ;;		On exit  : 0/0
+   958 ;;		Unchanged: 0/0
+   959 ;; Data sizes:     COMMON   BANK0
+   960 ;;      Params:         0       0
+   961 ;;      Locals:         0       5
+   962 ;;      Temps:          0       1
+   963 ;;      Totals:         0       6
+   964 ;;Total ram usage:        6 bytes
+   965 ;; Hardware stack levels used: 1
+   966 ;; This function calls:
+   967 ;;		Nothing
+   968 ;; This function is called by:
+   969 ;;		_isr
+   970 ;; This function uses a non-reentrant model
+   971 ;;
+   972                           
+   973     0122                     _RESPONDER_UART:	
+   974                           ;psect for function _RESPONDER_UART
+   975                           
+   976                           
+   977                           ;incstack = 0
+   978                           ; Regs used in _RESPONDER_UART: [wreg-fsr0h+status,2+status,0+btemp+1]
+   979                           ;RESPONDER_UART@RESPUESTA stored from wreg
+   980     0122  1283               	bcf	3,5	;RP0=0, select bank0
+   981     0123  00A3               	movwf	RESPONDER_UART@RESPUESTA
+   982     0124                     i1l1027:
+   983                           
+   984                           ;main.c: 175: void RESPONDER_UART(unsigned char RESPUESTA);main.c: 176: {;main.c: 177:  
+      +                             int bit = 0;
+   985     0124  01A4               	clrf	RESPONDER_UART@bit
+   986     0125  01A5               	clrf	RESPONDER_UART@bit+1
+   987     0126                     i1l1029:
+   988                           
+   989                           ;main.c: 178:     int ENVIO_EN_PROCESO = 1;
+   990     0126  3001               	movlw	1
+   991     0127  00A1               	movwf	RESPONDER_UART@ENVIO_EN_PROCESO
+   992     0128  3000               	movlw	0
+   993     0129  00A2               	movwf	RESPONDER_UART@ENVIO_EN_PROCESO+1
+   994     012A                     i1l1031:
+   995     012A  30A5               	movlw	165
+   996     012B  0081               	movwf	1	;volatile
+   997                           
+   998                           ;main.c: 182:     while (ENVIO_EN_PROCESO && bit <= 10) {
+   999     012C  2978               	goto	i1l1045
+  1000     012D                     i1l102:
+  1001     012D  1D0B               	btfss	11,2	;volatile
+  1002     012E  2930               	goto	u49_21
+  1003     012F  2931               	goto	u49_20
+  1004     0130                     u49_21:
+  1005     0130  292D               	goto	i1l102
+  1006     0131                     u49_20:
+  1007     0131                     i1l104:
+  1008     0131  30A5               	movlw	165
+  1009     0132  1283               	bcf	3,5	;RP0=0, select bank0
+  1010     0133  0081               	movwf	1	;volatile
+  1011                           
+  1012                           ;main.c: 186:         INTCONbits.T0IF = 0;
+  1013     0134  110B               	bcf	11,2	;volatile
+  1014                           
+  1015                           ;main.c: 188:         switch (bit) {
+  1016     0135  294A               	goto	i1l1041
+  1017     0136                     i1l106:	
+  1018                           ;main.c: 189:             case 0:
+  1019                           
+  1020                           
+  1021                           ;main.c: 190:                 GPIObits.GP4 = 0;
+  1022     0136  1205               	bcf	5,4	;volatile
+  1023                           
+  1024                           ;main.c: 191:                 break;
+  1025     0137  2972               	goto	i1l1043
+  1026     0138                     i1l111:	
+  1027                           ;main.c: 196:             case 4:
+  1028                           
+  1029     0138                     i1l1033:
+  1030                           
+  1031                           ;main.c: 205:                 GPIObits.GP4 = RESPUESTA & 1;
+  1032     0138  0823               	movf	RESPONDER_UART@RESPUESTA,w
+  1033     0139  3901               	andlw	1
+  1034     013A  00A0               	movwf	??_RESPONDER_UART
+  1035     013B  0EA0               	swapf	??_RESPONDER_UART,f
+  1036     013C  0805               	movf	5,w	;volatile
+  1037     013D  0620               	xorwf	??_RESPONDER_UART,w
+  1038     013E  39EF               	andlw	-17
+  1039     013F  0620               	xorwf	??_RESPONDER_UART,w
+  1040     0140  0085               	movwf	5	;volatile
+  1041     0141                     i1l1035:
+  1042                           
+  1043                           ;main.c: 206:                 RESPUESTA >>=1;
+  1044     0141  1003               	clrc
+  1045     0142  0CA3               	rrf	RESPONDER_UART@RESPUESTA,f
+  1046                           
+  1047                           ;main.c: 207:                 break;
+  1048     0143  2972               	goto	i1l1043
+  1049     0144                     i1l116:	
+  1050                           ;main.c: 209:             case 9:
+  1051                           
+  1052                           
+  1053                           ;main.c: 210:                 GPIObits.GP4 = 1;
+  1054     0144  1605               	bsf	5,4	;volatile
+  1055                           
+  1056                           ;main.c: 211:                 break;
+  1057     0145  2972               	goto	i1l1043
+  1058     0146                     i1l117:	
+  1059                           ;main.c: 213:             case 10:
+  1060                           
+  1061                           
+  1062                           ;main.c: 214:                 GPIObits.GP4 = 1;
+  1063     0146  1605               	bsf	5,4	;volatile
+  1064     0147                     i1l1037:
+  1065                           
+  1066                           ;main.c: 215:                 ENVIO_EN_PROCESO = 0;
+  1067     0147  01A1               	clrf	RESPONDER_UART@ENVIO_EN_PROCESO
+  1068     0148  01A2               	clrf	RESPONDER_UART@ENVIO_EN_PROCESO+1
+  1069                           
+  1070                           ;main.c: 216:                 break;
+  1071     0149  2972               	goto	i1l1043
+  1072     014A                     i1l1041:
+  1073                           
+  1074                           ; Switch on 2 bytes has been partitioned into a top level switch of size 1, and 1 sub-sw
+      +                          itches
+  1075                           ; Switch size 1, requested type "simple"
+  1076                           ; Number of cases is 1, Range of values is 0 to 0
+  1077                           ; switch strategies available:
+  1078                           ; Name         Instructions Cycles
+  1079                           ; simple_byte            4     3 (average)
+  1080                           ; direct_byte            7     6 (fixed)
+  1081                           ; jumptable            260     6 (fixed)
+  1082                           ;	Chosen strategy is simple_byte
+  1083     014A  0825               	movf	RESPONDER_UART@bit+1,w
+  1084     014B  3A00               	xorlw	0	; case 0
+  1085     014C  1903               	skipnz
+  1086     014D  294F               	goto	i1l1251
+  1087     014E  2972               	goto	i1l1043
+  1088     014F                     i1l1251:
+  1089                           
+  1090                           ; Switch size 1, requested type "simple"
+  1091                           ; Number of cases is 11, Range of values is 0 to 10
+  1092                           ; switch strategies available:
+  1093                           ; Name         Instructions Cycles
+  1094                           ; direct_byte           17     6 (fixed)
+  1095                           ; simple_byte           34    18 (average)
+  1096                           ; jumptable            260     6 (fixed)
+  1097                           ;	Chosen strategy is simple_byte
+  1098     014F  0824               	movf	RESPONDER_UART@bit,w
+  1099     0150  3A00               	xorlw	0	; case 0
+  1100     0151  1903               	skipnz
+  1101     0152  2936               	goto	i1l106
+  1102     0153  3A01               	xorlw	1	; case 1
+  1103     0154  1903               	skipnz
+  1104     0155  2938               	goto	i1l111
+  1105     0156  3A03               	xorlw	3	; case 2
+  1106     0157  1903               	skipnz
+  1107     0158  2938               	goto	i1l1033
+  1108     0159  3A01               	xorlw	1	; case 3
+  1109     015A  1903               	skipnz
+  1110     015B  2938               	goto	i1l1033
+  1111     015C  3A07               	xorlw	7	; case 4
+  1112     015D  1903               	skipnz
+  1113     015E  2938               	goto	i1l1033
+  1114     015F  3A01               	xorlw	1	; case 5
+  1115     0160  1903               	skipnz
+  1116     0161  2938               	goto	i1l1033
+  1117     0162  3A03               	xorlw	3	; case 6
+  1118     0163  1903               	skipnz
+  1119     0164  2938               	goto	i1l1033
+  1120     0165  3A01               	xorlw	1	; case 7
+  1121     0166  1903               	skipnz
+  1122     0167  2938               	goto	i1l1033
+  1123     0168  3A0F               	xorlw	15	; case 8
+  1124     0169  1903               	skipnz
+  1125     016A  2938               	goto	i1l1033
+  1126     016B  3A01               	xorlw	1	; case 9
+  1127     016C  1903               	skipnz
+  1128     016D  2944               	goto	i1l116
+  1129     016E  3A03               	xorlw	3	; case 10
+  1130     016F  1903               	skipnz
+  1131     0170  2946               	goto	i1l117
+  1132     0171  2972               	goto	i1l1043
+  1133     0172                     i1l1043:
+  1134                           
+  1135                           ;main.c: 221:         bit++;
+  1136     0172  3001               	movlw	1
+  1137     0173  07A4               	addwf	RESPONDER_UART@bit,f
+  1138     0174  1803               	skipnc
+  1139     0175  0AA5               	incf	RESPONDER_UART@bit+1,f
+  1140     0176  3000               	movlw	0
+  1141     0177  07A5               	addwf	RESPONDER_UART@bit+1,f
+  1142     0178                     i1l1045:
+  1143                           
+  1144                           ;main.c: 182:     while (ENVIO_EN_PROCESO && bit <= 10) {
+  1145     0178  0821               	movf	RESPONDER_UART@ENVIO_EN_PROCESO,w
+  1146     0179  0422               	iorwf	RESPONDER_UART@ENVIO_EN_PROCESO+1,w
+  1147     017A  1903               	btfsc	3,2
+  1148     017B  297D               	goto	u50_21
+  1149     017C  297E               	goto	u50_20
+  1150     017D                     u50_21:
+  1151     017D  298B               	goto	i1l122
+  1152     017E                     u50_20:
+  1153     017E                     i1l1047:
+  1154     017E  0825               	movf	RESPONDER_UART@bit+1,w
+  1155     017F  3A80               	xorlw	128
+  1156     0180  00DF               	movwf	btemp+1
+  1157     0181  3080               	movlw	128
+  1158     0182  025F               	subwf	btemp+1,w
+  1159     0183  1D03               	skipz
+  1160     0184  2987               	goto	u51_25
+  1161     0185  300B               	movlw	11
+  1162     0186  0224               	subwf	RESPONDER_UART@bit,w
+  1163     0187                     u51_25:
+  1164     0187  1C03               	skipc
+  1165     0188  298A               	goto	u51_21
+  1166     0189  298B               	goto	u51_20
+  1167     018A                     u51_21:
+  1168     018A  292D               	goto	i1l102
+  1169     018B                     u51_20:
+  1170     018B                     i1l122:
+  1171     018B  0008               	return
+  1172     018C                     __end_of_RESPONDER_UART:
+  1173                           
+  1174                           	psect	text3
+  1175     00B1                     __ptext3:	
+  1176 ;; *************** function _RECEPCION_UART *****************
+  1177 ;; Defined at:
+  1178 ;;		line 121 in file "main.c"
+  1179 ;; Parameters:    Size  Location     Type
+  1180 ;;		None
+  1181 ;; Auto vars:     Size  Location     Type
+  1182 ;;  RESULTADO_CO    2    9[BANK0 ] int 
+  1183 ;;  desplazamien    2    7[BANK0 ] int 
+  1184 ;;  RECEPCION_EN    2    4[BANK0 ] int 
+  1185 ;;  CARACTER_REC    1    6[BANK0 ] unsigned char 
+  1186 ;; Return value:  Size  Location     Type
+  1187 ;;                  2    0[BANK0 ] int 
+  1188 ;; Registers used:
+  1189 ;;		wreg, status,2, status,0, btemp+1
+  1190 ;; Tracked objects:
+  1191 ;;		On entry : 0/0
+  1192 ;;		On exit  : 0/0
+  1193 ;;		Unchanged: 0/0
+  1194 ;; Data sizes:     COMMON   BANK0
+  1195 ;;      Params:         0       2
+  1196 ;;      Locals:         0       7
+  1197 ;;      Temps:          0       2
+  1198 ;;      Totals:         0      11
+  1199 ;;Total ram usage:       11 bytes
+  1200 ;; Hardware stack levels used: 1
+  1201 ;; This function calls:
+  1202 ;;		Nothing
+  1203 ;; This function is called by:
+  1204 ;;		_isr
+  1205 ;; This function uses a non-reentrant model
+  1206 ;;
+  1207                           
+  1208     00B1                     _RECEPCION_UART:	
+  1209                           ;psect for function _RECEPCION_UART
+  1210                           
+  1211     00B1                     i1l989:	
+  1212                           ;incstack = 0
+  1213                           ; Regs used in _RECEPCION_UART: [wreg+status,2+status,0+btemp+1]
+  1214                           
+  1215                           
+  1216                           ;main.c: 123:     int desplazamiento_bit = 0;
+  1217     00B1  1283               	bcf	3,5	;RP0=0, select bank0
+  1218     00B2  01A7               	clrf	RECEPCION_UART@desplazamiento_bit
+  1219     00B3  01A8               	clrf	RECEPCION_UART@desplazamiento_bit+1
+  1220     00B4                     i1l991:
+  1221                           
+  1222                           ;main.c: 124:     int RECEPCION_EN_PROCESO = 1;
+  1223     00B4  3001               	movlw	1
+  1224     00B5  00A4               	movwf	RECEPCION_UART@RECEPCION_EN_PROCESO
+  1225     00B6  3000               	movlw	0
+  1226     00B7  00A5               	movwf	RECEPCION_UART@RECEPCION_EN_PROCESO+1
+  1227     00B8                     i1l993:
+  1228                           
+  1229                           ;main.c: 125:     int RESULTADO_COMM = 0;
+  1230     00B8  01A9               	clrf	RECEPCION_UART@RESULTADO_COMM
+  1231     00B9  01AA               	clrf	RECEPCION_UART@RESULTADO_COMM+1
+  1232     00BA                     i1l995:
+  1233                           
+  1234                           ;main.c: 126:     unsigned char CARACTER_RECIBIDO_UART = 0x00;
+  1235     00BA  01A6               	clrf	RECEPCION_UART@CARACTER_RECIBIDO_UART
+  1236     00BB                     i1l997:
+  1237                           
+  1238                           ;main.c: 133:     if(GPIObits.GP2 == 0){
+  1239     00BB  1905               	btfsc	5,2	;volatile
+  1240     00BC  28BE               	goto	u40_21
+  1241     00BD  28BF               	goto	u40_20
+  1242     00BE                     u40_21:
+  1243     00BE  291D               	goto	i1l1023
+  1244     00BF                     u40_20:
+  1245     00BF                     i1l999:
+  1246     00BF  30A5               	movlw	165
+  1247     00C0  0081               	movwf	1	;volatile
+  1248                           
+  1249                           ;main.c: 138:         while(RECEPCION_EN_PROCESO == 1)
+  1250     00C1  28F7               	goto	i1l1013
+  1251     00C2                     i1l89:
+  1252                           
+  1253                           ;main.c: 139:         {;main.c: 141:             if(INTCONbits.T0IF){
+  1254     00C2  1D0B               	btfss	11,2	;volatile
+  1255     00C3  28C5               	goto	u41_21
+  1256     00C4  28C6               	goto	u41_20
+  1257     00C5                     u41_21:
+  1258     00C5  28F7               	goto	i1l1013
+  1259     00C6                     u41_20:
+  1260     00C6                     i1l1001:
+  1261     00C6  30A5               	movlw	165
+  1262     00C7  0081               	movwf	1	;volatile
+  1263                           
+  1264                           ;main.c: 143:                 INTCONbits.T0IF = 0;
+  1265     00C8  110B               	bcf	11,2	;volatile
+  1266     00C9                     i1l1003:
+  1267                           
+  1268                           ;main.c: 144:                 if(desplazamiento_bit <8)
+  1269     00C9  0828               	movf	RECEPCION_UART@desplazamiento_bit+1,w
+  1270     00CA  3A80               	xorlw	128
+  1271     00CB  00DF               	movwf	btemp+1
+  1272     00CC  3080               	movlw	128
+  1273     00CD  025F               	subwf	btemp+1,w
+  1274     00CE  1D03               	skipz
+  1275     00CF  28D2               	goto	u42_25
+  1276     00D0  3008               	movlw	8
+  1277     00D1  0227               	subwf	RECEPCION_UART@desplazamiento_bit,w
+  1278     00D2                     u42_25:
+  1279     00D2  1803               	skipnc
+  1280     00D3  28D5               	goto	u42_21
+  1281     00D4  28D6               	goto	u42_20
+  1282     00D5                     u42_21:
+  1283     00D5  28E6               	goto	i1l91
+  1284     00D6                     u42_20:
+  1285     00D6                     i1l1005:
+  1286                           
+  1287                           ;main.c: 145:                     CARACTER_RECIBIDO_UART |= (GPIObits.GP2 << desplazamie
+      +                          nto_bit);
+  1288     00D6  1283               	bcf	3,5	;RP0=0, select bank0
+  1289     00D7  0C05               	rrf	5,w	;volatile
+  1290     00D8  00A2               	movwf	??_RECEPCION_UART
+  1291     00D9  0C22               	rrf	??_RECEPCION_UART,w
+  1292     00DA  3901               	andlw	1
+  1293     00DB  00A3               	movwf	??_RECEPCION_UART+1
+  1294     00DC  0A27               	incf	RECEPCION_UART@desplazamiento_bit,w
+  1295     00DD  28E0               	goto	u43_24
+  1296     00DE                     u43_25:
+  1297     00DE  1003               	clrc
+  1298     00DF  0DA3               	rlf	??_RECEPCION_UART+1,f
+  1299     00E0                     u43_24:
+  1300     00E0  3EFF               	addlw	-1
+  1301     00E1  1D03               	skipz
+  1302     00E2  28DE               	goto	u43_25
+  1303     00E3  0823               	movf	??_RECEPCION_UART+1,w
+  1304     00E4  04A6               	iorwf	RECEPCION_UART@CARACTER_RECIBIDO_UART,f
+  1305     00E5  28F1               	goto	i1l1011
+  1306     00E6                     i1l91:	
+  1307                           ;main.c: 147:                 else{
+  1308                           
+  1309                           
+  1310                           ;main.c: 148:                     if (GPIObits.GP2 == 1)
+  1311     00E6  1283               	bcf	3,5	;RP0=0, select bank0
+  1312     00E7  1D05               	btfss	5,2	;volatile
+  1313     00E8  28EA               	goto	u44_21
+  1314     00E9  28EB               	goto	u44_20
+  1315     00EA                     u44_21:
+  1316     00EA  28EF               	goto	i1l1009
+  1317     00EB                     u44_20:
+  1318     00EB                     i1l1007:
+  1319                           
+  1320                           ;main.c: 149:                         RESULTADO_COMM = 1;
+  1321     00EB  3001               	movlw	1
+  1322     00EC  00A9               	movwf	RECEPCION_UART@RESULTADO_COMM
+  1323     00ED  3000               	movlw	0
+  1324     00EE  00AA               	movwf	RECEPCION_UART@RESULTADO_COMM+1
+  1325     00EF                     i1l1009:
+  1326                           
+  1327                           ;main.c: 151:                     RECEPCION_EN_PROCESO = 0;
+  1328     00EF  01A4               	clrf	RECEPCION_UART@RECEPCION_EN_PROCESO
+  1329     00F0  01A5               	clrf	RECEPCION_UART@RECEPCION_EN_PROCESO+1
+  1330     00F1                     i1l1011:
+  1331                           
+  1332                           ;main.c: 153:                 desplazamiento_bit++;
+  1333     00F1  3001               	movlw	1
+  1334     00F2  07A7               	addwf	RECEPCION_UART@desplazamiento_bit,f
+  1335     00F3  1803               	skipnc
+  1336     00F4  0AA8               	incf	RECEPCION_UART@desplazamiento_bit+1,f
+  1337     00F5  3000               	movlw	0
+  1338     00F6  07A8               	addwf	RECEPCION_UART@desplazamiento_bit+1,f
+  1339     00F7                     i1l1013:
+  1340                           
+  1341                           ;main.c: 138:         while(RECEPCION_EN_PROCESO == 1)
+  1342     00F7  0324               	decf	RECEPCION_UART@RECEPCION_EN_PROCESO,w
+  1343     00F8  0425               	iorwf	RECEPCION_UART@RECEPCION_EN_PROCESO+1,w
+  1344     00F9  1903               	btfsc	3,2
+  1345     00FA  28FC               	goto	u45_21
+  1346     00FB  28FD               	goto	u45_20
+  1347     00FC                     u45_21:
+  1348     00FC  28C2               	goto	i1l89
+  1349     00FD                     u45_20:
+  1350     00FD                     i1l1015:
+  1351                           
+  1352                           ;main.c: 158:         _delay((unsigned long)((UART_PERIOD_FULL)*(4000000/4000000.0)));
+  1353     00FD  3036               	movlw	54
+  1354     00FE  00A2               	movwf	??_RECEPCION_UART
+  1355     00FF                     u75_27:
+  1356     00FF  0BA2               	decfsz	??_RECEPCION_UART,f
+  1357     0100  28FF               	goto	u75_27
+  1358     0101  2902               	nop2
+  1359     0102                     i1l1017:
+  1360                           
+  1361                           ;main.c: 159:         if((RESULTADO_COMM == 1) & (GPIObits.GP2 == 1))
+  1362     0102  1283               	bcf	3,5	;RP0=0, select bank0
+  1363     0103  1905               	btfsc	5,2	;volatile
+  1364     0104  2906               	goto	u46_21
+  1365     0105  2908               	goto	u46_20
+  1366     0106                     u46_21:
+  1367     0106  3001               	movlw	1
+  1368     0107  2909               	goto	u46_22
+  1369     0108                     u46_20:
+  1370     0108  3000               	movlw	0
+  1371     0109                     u46_22:
+  1372     0109  00A2               	movwf	??_RECEPCION_UART
+  1373     010A  0329               	decf	RECEPCION_UART@RESULTADO_COMM,w
+  1374     010B  042A               	iorwf	RECEPCION_UART@RESULTADO_COMM+1,w
+  1375     010C  1903               	btfsc	3,2
+  1376     010D  290F               	goto	u47_21
+  1377     010E  2911               	goto	u47_20
+  1378     010F                     u47_21:
+  1379     010F  3001               	movlw	1
+  1380     0110  2912               	goto	u47_22
+  1381     0111                     u47_20:
+  1382     0111  3000               	movlw	0
+  1383     0112                     u47_22:
+  1384     0112  0522               	andwf	??_RECEPCION_UART,w
+  1385     0113  3800               	iorlw	0
+  1386     0114  1903               	skipnz
+  1387     0115  2917               	goto	u48_21
+  1388     0116  2918               	goto	u48_20
+  1389     0117                     u48_21:
+  1390     0117  291B               	goto	i1l1021
+  1391     0118                     u48_20:
+  1392     0118                     i1l1019:
+  1393                           
+  1394                           ;main.c: 160:             DATO_RECIBIDO_UART= CARACTER_RECIBIDO_UART;
+  1395     0118  0826               	movf	RECEPCION_UART@CARACTER_RECIBIDO_UART,w
+  1396     0119  00C6               	movwf	_DATO_RECIBIDO_UART	;volatile
+  1397     011A  291D               	goto	i1l1023
+  1398     011B                     i1l1021:
+  1399                           
+  1400                           ;main.c: 162:             RESULTADO_COMM = 0;
+  1401     011B  01A9               	clrf	RECEPCION_UART@RESULTADO_COMM
+  1402     011C  01AA               	clrf	RECEPCION_UART@RESULTADO_COMM+1
+  1403     011D                     i1l1023:
+  1404                           
+  1405                           ;main.c: 167:     return (RESULTADO_COMM);
+  1406     011D  082A               	movf	RECEPCION_UART@RESULTADO_COMM+1,w
+  1407     011E  00A1               	movwf	?_RECEPCION_UART+1
+  1408     011F  0829               	movf	RECEPCION_UART@RESULTADO_COMM,w
+  1409     0120  00A0               	movwf	?_RECEPCION_UART
+  1410     0121                     i1l97:
+  1411     0121  0008               	return
+  1412     0122                     __end_of_RECEPCION_UART:
+  1413                           
+  1414                           	psect	text4
+  1415     01F4                     __ptext4:	
+  1416 ;; *************** function _Ajustar_PWM *****************
+  1417 ;; Defined at:
+  1418 ;;		line 230 in file "main.c"
+  1419 ;; Parameters:    Size  Location     Type
+  1420 ;;		None
+  1421 ;; Auto vars:     Size  Location     Type
+  1422 ;;		None
+  1423 ;; Return value:  Size  Location     Type
+  1424 ;;                  1    wreg      void 
+  1425 ;; Registers used:
+  1426 ;;		wreg, status,2, status,0
+  1427 ;; Tracked objects:
+  1428 ;;		On entry : 0/0
+  1429 ;;		On exit  : 0/0
+  1430 ;;		Unchanged: 0/0
+  1431 ;; Data sizes:     COMMON   BANK0
+  1432 ;;      Params:         0       0
+  1433 ;;      Locals:         0       0
+  1434 ;;      Temps:          0       0
+  1435 ;;      Totals:         0       0
+  1436 ;;Total ram usage:        0 bytes
+  1437 ;; Hardware stack levels used: 1
+  1438 ;; This function calls:
+  1439 ;;		Nothing
+  1440 ;; This function is called by:
+  1441 ;;		_isr
+  1442 ;; This function uses a non-reentrant model
+  1443 ;;
+  1444                           
+  1445     01F4                     _Ajustar_PWM:	
+  1446                           ;psect for function _Ajustar_PWM
+  1447                           
+  1448     01F4                     i1l1055:	
+  1449                           ;incstack = 0
+  1450                           ; Regs used in _Ajustar_PWM: [wreg+status,2+status,0]
+  1451                           
+  1452                           
+  1453                           ;main.c: 232:     if (PWM_DUTY_CYCLE < 25)
+  1454     01F4  3000               	movlw	0
+  1455     01F5  1283               	bcf	3,5	;RP0=0, select bank0
+  1456     01F6  0241               	subwf	_PWM_DUTY_CYCLE+1,w	;volatile
+  1457     01F7  3019               	movlw	25
+  1458     01F8  1903               	skipnz
+  1459     01F9  0240               	subwf	_PWM_DUTY_CYCLE,w	;volatile
+  1460     01FA  1803               	skipnc
+  1461     01FB  29FD               	goto	u52_21
+  1462     01FC  29FE               	goto	u52_20
+  1463     01FD                     u52_21:
+  1464     01FD  2A03               	goto	i1l1059
+  1465     01FE                     u52_20:
+  1466     01FE                     i1l1057:
+  1467                           
+  1468                           ;main.c: 233:         PWM_DUTY_CYCLE = 25;
+  1469     01FE  3019               	movlw	25
+  1470     01FF  00C0               	movwf	_PWM_DUTY_CYCLE	;volatile
+  1471     0200  3000               	movlw	0
+  1472     0201  00C1               	movwf	_PWM_DUTY_CYCLE+1	;volatile
+  1473     0202  2A44               	goto	i1l136
+  1474     0203                     i1l1059:
+  1475     0203  3000               	movlw	0
+  1476     0204  0241               	subwf	_PWM_DUTY_CYCLE+1,w	;volatile
+  1477     0205  3040               	movlw	64
+  1478     0206  1903               	skipnz
+  1479     0207  0240               	subwf	_PWM_DUTY_CYCLE,w	;volatile
+  1480     0208  1803               	skipnc
+  1481     0209  2A0B               	goto	u53_21
+  1482     020A  2A0C               	goto	u53_20
+  1483     020B                     u53_21:
+  1484     020B  2A11               	goto	i1l1063
+  1485     020C                     u53_20:
+  1486     020C                     i1l1061:
+  1487                           
+  1488                           ;main.c: 236:         PWM_DUTY_CYCLE = 64;
+  1489     020C  3040               	movlw	64
+  1490     020D  00C0               	movwf	_PWM_DUTY_CYCLE	;volatile
+  1491     020E  3000               	movlw	0
+  1492     020F  00C1               	movwf	_PWM_DUTY_CYCLE+1	;volatile
+  1493     0210  2A44               	goto	i1l136
+  1494     0211                     i1l1063:
+  1495     0211  3000               	movlw	0
+  1496     0212  0241               	subwf	_PWM_DUTY_CYCLE+1,w	;volatile
+  1497     0213  307A               	movlw	122
+  1498     0214  1903               	skipnz
+  1499     0215  0240               	subwf	_PWM_DUTY_CYCLE,w	;volatile
+  1500     0216  1803               	skipnc
+  1501     0217  2A19               	goto	u54_21
+  1502     0218  2A1A               	goto	u54_20
+  1503     0219                     u54_21:
+  1504     0219  2A1F               	goto	i1l1067
+  1505     021A                     u54_20:
+  1506     021A                     i1l1065:
+  1507                           
+  1508                           ;main.c: 239:         PWM_DUTY_CYCLE = 122;
+  1509     021A  307A               	movlw	122
+  1510     021B  00C0               	movwf	_PWM_DUTY_CYCLE	;volatile
+  1511     021C  3000               	movlw	0
+  1512     021D  00C1               	movwf	_PWM_DUTY_CYCLE+1	;volatile
+  1513     021E  2A44               	goto	i1l136
+  1514     021F                     i1l1067:
+  1515     021F  3000               	movlw	0
+  1516     0220  0241               	subwf	_PWM_DUTY_CYCLE+1,w	;volatile
+  1517     0221  30C0               	movlw	192
+  1518     0222  1903               	skipnz
+  1519     0223  0240               	subwf	_PWM_DUTY_CYCLE,w	;volatile
+  1520     0224  1803               	skipnc
+  1521     0225  2A27               	goto	u55_21
+  1522     0226  2A28               	goto	u55_20
+  1523     0227                     u55_21:
+  1524     0227  2A2D               	goto	i1l1071
+  1525     0228                     u55_20:
+  1526     0228                     i1l1069:
+  1527                           
+  1528                           ;main.c: 242:         PWM_DUTY_CYCLE = 192;
+  1529     0228  30C0               	movlw	192
+  1530     0229  00C0               	movwf	_PWM_DUTY_CYCLE	;volatile
+  1531     022A  3000               	movlw	0
+  1532     022B  00C1               	movwf	_PWM_DUTY_CYCLE+1	;volatile
+  1533     022C  2A44               	goto	i1l136
+  1534     022D                     i1l1071:
+  1535     022D  3000               	movlw	0
+  1536     022E  0241               	subwf	_PWM_DUTY_CYCLE+1,w	;volatile
+  1537     022F  30FF               	movlw	255
+  1538     0230  1903               	skipnz
+  1539     0231  0240               	subwf	_PWM_DUTY_CYCLE,w	;volatile
+  1540     0232  1803               	skipnc
+  1541     0233  2A35               	goto	u56_21
+  1542     0234  2A36               	goto	u56_20
+  1543     0235                     u56_21:
+  1544     0235  2A3B               	goto	i1l1075
+  1545     0236                     u56_20:
+  1546     0236                     i1l1073:
+  1547                           
+  1548                           ;main.c: 245:         PWM_DUTY_CYCLE = 255;
+  1549     0236  30FF               	movlw	255
+  1550     0237  00C0               	movwf	_PWM_DUTY_CYCLE	;volatile
+  1551     0238  3000               	movlw	0
+  1552     0239  00C1               	movwf	_PWM_DUTY_CYCLE+1	;volatile
+  1553     023A  2A44               	goto	i1l136
+  1554     023B                     i1l1075:
+  1555     023B  0A40               	incf	_PWM_DUTY_CYCLE,w	;volatile
+  1556     023C  0441               	iorwf	_PWM_DUTY_CYCLE+1,w	;volatile
+  1557     023D  1D03               	btfss	3,2
+  1558     023E  2A40               	goto	u57_21
+  1559     023F  2A41               	goto	u57_20
+  1560     0240                     u57_21:
+  1561     0240  2A44               	goto	i1l130
+  1562     0241                     u57_20:
+  1563     0241                     i1l1077:
+  1564                           
+  1565                           ;main.c: 248:         PWM_DUTY_CYCLE = 0;
+  1566     0241  01C0               	clrf	_PWM_DUTY_CYCLE	;volatile
+  1567     0242  01C1               	clrf	_PWM_DUTY_CYCLE+1	;volatile
+  1568     0243  2A44               	goto	i1l136
+  1569     0244                     i1l130:
+  1570     0244                     i1l136:
+  1571     0244  0008               	return
+  1572     0245                     __end_of_Ajustar_PWM:
+  1573     0000                     ___latbits      equ	0
+  1574     005E                     btemp           set	94	;btemp
+  1575     005E                     wtemp0          set	94
+  1576                           
+  1577                           	psect	config
+  1578                           
+  1579                           ;Config register CONFIG @ 0x2007
+  1580                           ;	Oscillator Selection bits
+  1581                           ;	FOSC = INTRCIO, INTOSC oscillator: I/O function on GP4/OSC2/CLKOUT pin, I/O function o
+      +                          n GP5/OSC1/CLKIN
+  1582                           ;	Watchdog Timer Enable bit
+  1583                           ;	WDTE = ON, WDT enabled
+  1584                           ;	Power-Up Timer Enable bit
+  1585                           ;	PWRTE = ON, PWRT enabled
+  1586                           ;	GP3/MCLR pin function select
+  1587                           ;	MCLRE = OFF, GP3/MCLR pin function is digital I/O, MCLR internally tied to VDD
+  1588                           ;	Brown-out Detect Enable bit
+  1589                           ;	BOREN = ON, BOD enabled
+  1590                           ;	Code Protection bit
+  1591                           ;	CP = OFF, Program Memory code protection is disabled
+  1592                           ;	Data Code Protection bit
+  1593                           ;	CPD = OFF, Data memory code protection is disabled
+  1594     2007                     	org	8199
+  1595     2007  31CC               	dw	12748
+
+Data Sizes:
+    Strings     0
+    Constant    14
+    Data        0
+    BSS         19
+    Persistent  0
+    Stack       0
+
+Auto Spaces:
+    Space          Size  Autos    Used
+    COMMON            0      0       0
+    BANK0            62     20      39
+
+Pointer List with Targets:
+
+    None.
+
+Critical Paths under _main in COMMON
+
+    None.
+
+Critical Paths under _isr in COMMON
+
+    None.
+
+Critical Paths under _main in BANK0
+
+    None.
+
+Critical Paths under _isr in BANK0
+
+    _isr->_RECEPCION_UART
+
+Call Graph Tables:
+
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (0) _main                                                 2     2      0      47
+                                             18 BANK0      2     2      0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 0
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (1) _isr                                                  7     7      0     243
+                                             11 BANK0      7     7      0
+                        _Ajustar_PWM
+                     _RECEPCION_UART
+                     _RESPONDER_UART
+ ---------------------------------------------------------------------------------
+ (2) _RESPONDER_UART                                       6     6      0     101
+                                              0 BANK0      6     6      0
+ ---------------------------------------------------------------------------------
+ (2) _RECEPCION_UART                                      11     9      2     141
+                                              0 BANK0     11     9      2
+ ---------------------------------------------------------------------------------
+ (2) _Ajustar_PWM                                          0     0      0       0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 2
+ ---------------------------------------------------------------------------------
+
+ Call Graph Graphs:
+
+ _main (ROOT)
+
+ _isr (ROOT)
+   _Ajustar_PWM
+   _RECEPCION_UART
+   _RESPONDER_UART
+
+Address spaces:
+Name               Size   Autos  Total    Usage
+BITCOMMON            0      0       0      0.0%
+BITBANK0            62      0       0      0.0%
+COMMON               0      0       0      0.0%
+BANK0               62     20      39     62.9%
+STACK                0      0       0      0.0%
+DATA                 0      0      39      0.0%
+
+
+Microchip Technology PIC Macro Assembler V3.00 build 20241204225717 
+Symbol Table                                                                                   Tue Apr 15 21:19:02 2025
+
+                                   pc 0002                                    fsr 0004  
+                                 l161 01EB                                   l153 01A9  
+                                 l157 01C4                                   u700 01B6  
+                                 u701 01B5                                   u710 01C2  
+                                 u711 01C1                                   u720 01D2  
+                                 u721 01D1                                   u730 01EA  
+                                 u731 01E9                                   u715 01BE  
+                                 u740 01F0                                   u741 01EF  
+                                 u725 01CE                                   u735 01E6  
+                                 u690 01B0                                   u691 01AF  
+                                 _isr 0017                                   fsr0 0004  
+                                 indf 0000                __end_of_RESPONDER_UART 018C  
+                                l1201 01B0                                  l1211 01D2  
+                                l1203 01B6                                  l1213 01DA  
+                                l1205 01B8                                  l1207 01C2  
+                                l1215 01DD                                  l1217 01EA  
+                                l1209 01C5                                  l1219 01F0  
+                                l1181 019A                                  l1191 01A1  
+                                l1183 019C                                  l1193 01A2  
+                                l1185 019E                                  l1177 018C  
+                                l1195 01A3                                  l1187 019F  
+                                l1179 0198                                  l1197 01A4  
+                                l1189 01A0                                  l1199 01A5  
+                                ?_isr 0020                                  _GPIO 0005  
+                                i1l91 00E6                                  i1l84 00A6  
+                                i1l76 0093                                  i1l77 0091  
+                                i1l97 0121                                  i1l89 00C2  
+                                _TMR0 0001                                  _TMR1 000E  
+                                _main 018C                                  btemp 005E  
+                                start 000F                   __end_of_Ajustar_PWM 0245  
+                               ??_isr 002B                                 ?_main 0020  
+                               _CMCON 0019  RECEPCION_UART@CARACTER_RECIBIDO_UART 0026  
+                               i1l102 012D                                 i1l111 0138  
+                               i1l104 0131                                 i1l130 0244  
+                               i1l122 018B                                 i1l106 0136  
+                               i1l116 0144                                 i1l117 0146  
+                               i1l136 0244                                 i1l991 00B4  
+                               i1l993 00B8                                 i1l995 00BA  
+                               i1l997 00BB                                 i1l989 00B1  
+                               i1l999 00BF                                 u40_20 00BF  
+                               u40_21 00BE                                 u41_20 00C6  
+                               u41_21 00C5                                 u42_20 00D6  
+                               u50_20 017E                                 u42_21 00D5  
+                               u50_21 017D                                 u42_25 00D2  
+                               u51_20 018B                                 u51_21 018A  
+                               u43_24 00E0                                 u43_25 00DE  
+                               u51_25 0187                                 u52_20 01FE  
+                               u44_20 00EB                                 u60_20 0038  
+                               u52_21 01FD                                 u44_21 00EA  
+                               u60_21 0037                                 u53_20 020C  
+                               u45_20 00FD                                 u61_20 005F  
+                               u53_21 020B                                 u45_21 00FC  
+                               u61_21 005E                                 u54_20 021A  
+                               u46_20 0108                                 u62_20 006A  
+                               u54_21 0219                                 u46_21 0106  
+                               u62_21 0069                                 u46_22 0109  
+                               u55_20 0228                                 u47_20 0111  
+                               u63_20 0077                                 u55_21 0227  
+                               u47_21 010F                                 u63_21 0076  
+                               u47_22 0112                                 u56_20 0236  
+                               u48_20 0118                                 u64_20 0081  
+                               u56_21 0235                                 u48_21 0117  
+                               u64_21 0080                                 u57_20 0241  
+                               u49_20 0131                                 u65_20 008B  
+                               u57_21 0240                                 u49_21 0130  
+                               u65_21 008A                                 u66_20 0097  
+                               u58_20 001B                                 u66_21 0096  
+                               u58_21 001A                                 u67_20 009F  
+                               u59_20 0021                                 u67_21 009E  
+                               u59_21 0020                                 u75_27 00FF  
+                               u68_20 00A5                                 u68_21 00A4  
+                     ?_RESPONDER_UART 0020                                 pclath 000A  
+                               status 0003                                 wtemp0 005E  
+                     __initialization 0010                          __end_of_main 01F4  
+                              ??_main 0000                                i1l1001 00C6  
+                    _UART_PERIOD_HALF 024D                                i1l1011 00F1  
+                              i1l1003 00C9                                i1l1021 011B  
+                              i1l1005 00D6                                i1l1013 00F7  
+                              i1l1101 002B                                i1l1015 00FD  
+                              i1l1007 00EB                                i1l1023 011D  
+                              i1l1031 012A                                i1l1111 0038  
+                              i1l1103 002C                                i1l1017 0102  
+                              i1l1009 00EF                                i1l1033 0138  
+                              i1l1041 014A                                i1l1121 0048  
+                              i1l1113 003A                                i1l1105 002E  
+                              i1l1019 0118                                i1l1035 0141  
+                              i1l1043 0172                                i1l1027 0124  
+                              i1l1131 0052                                i1l1123 0049  
+                              i1l1115 003F                                i1l1107 002F  
+                              i1l1061 020C                                i1l1037 0147  
+                              i1l1045 0178                                i1l1029 0126  
+                              i1l1141 0058                                i1l1133 0053  
+                              i1l1125 004B                                i1l1117 0046  
+                              i1l1109 0030                                i1l1071 022D  
+                              i1l1063 0211                                i1l1055 01F4  
+                              i1l1047 017E                                i1l1151 006A  
+                              i1l1143 0059                                i1l1135 0054  
+                              i1l1127 004C                                i1l1119 0047  
+                              i1l1073 0236                                i1l1065 021A  
+                              i1l1057 01FE                                i1l1161 0083  
+                              i1l1153 0070                                i1l1137 0056  
+                              i1l1129 004E                                i1l1145 005A  
+                              i1l1081 0017                                i1l1075 023B  
+                              i1l1067 021F                                i1l1059 0203  
+                              i1l1251 014F                                i1l1171 009B  
+                              i1l1163 008B                                i1l1155 0077  
+                              i1l1147 005F                                i1l1139 0057  
+                              i1l1091 0024                                i1l1083 001B  
+                              i1l1077 0241                                i1l1069 0228  
+                              i1l1173 009F                                i1l1165 008D  
+                              i1l1157 0079                                i1l1149 0064  
+                              i1l1093 0026                                i1l1085 001C  
+                              i1l1175 00A5                                i1l1167 0097  
+                              i1l1159 0081                                i1l1095 0028  
+                              i1l1087 001D                                i1l1169 009A  
+                              i1l1097 0029                                i1l1089 0021  
+                              i1l1099 002A                           _Ajustar_PWM 01F4  
+                    _UART_PERIOD_FULL 0257                        _FLAG_RECEPCION 003A  
+                      _RECEPCION_UART 00B1                                saved_w 005E  
+             __end_of__initialization 0015                        __pcstackCOMMON 0000  
+              __end_of_RECEPCION_UART 0122                      main@Contador_PWM 0032  
+                      _OPTION_REGbits 0081                            __pbssBANK0 0034  
+                          __pmaintext 018C                            __pintentry 0004  
+                    ??_RESPONDER_UART 0020                       ?_RECEPCION_UART 0020  
+                   _PRECARGA_TMR0_PWM 0252                     _PRECARGA_TMR1_WDT 0253  
+                             _IOCbits 0096                    _FLAG_REFRESCAR_PWM 003E  
+                        isr@dummy_reg 0031                            __stringtab 0245  
+            __end_of_UART_PERIOD_HALF 024F                             _FLAG_UART 003C  
+            __end_of_UART_PERIOD_FULL 0259             __end_of_PRECARGA_TMR0_PWM 0253  
+           __end_of_PRECARGA_TMR1_WDT 0257                               __ptext1 0017  
+                             __ptext2 0122                               __ptext3 00B1  
+                             __ptext4 01F4                             _T1CONbits 0010  
+                        _Contador_PWM 0042                    _DATO_RECIBIDO_UART 0046  
+                             clrloop0 025A          RECEPCION_UART@RESULTADO_COMM 0029  
+                end_of_initialization 0015                          ?_Ajustar_PWM 0020  
+      RESPONDER_UART@ENVIO_EN_PROCESO 0021                             _WDT_RESET 0034  
+                     _FLAG_PWM_ENABLE 0044               RESPONDER_UART@RESPUESTA 0023  
+                 start_initialization 0010                     _MAX_REINICIOS_WDT 024B  
+                         __end_of_isr 00B1                     _DATO_ENVIADO_UART 0251  
+    RECEPCION_UART@desplazamiento_bit 0027                      ??_RECEPCION_UART 0022  
+           __end_of_MAX_REINICIOS_WDT 024D                             ___latbits 0000  
+                       __pcstackBANK0 0020             __end_of_DATO_ENVIADO_UART 0252  
+                           __pstrings 0245                   __end_of_NIVELES_PWM 0251  
+                   interrupt_function 0004                              _GPIObits 0005  
+                           clear_ram0 0259                       _DESBORDE_TIMER0 0038  
+                            _PIE1bits 008C                              _PIR1bits 000C  
+                         __stringbase 024A                _CONTADOR_REINICIOS_WDT 0036  
+                  __end_of__stringtab 024B                           _NIVELES_PWM 024F  
+  RECEPCION_UART@RECEPCION_EN_PROCESO 0024                            _INTCONbits 000B  
+                            intlevel1 0000                             stringcode 0245  
+                   RESPONDER_UART@bit 0024                              stringdir 0245  
+                            stringtab 0245                        _PWM_DUTY_CYCLE 0040  
+                      _RESPONDER_UART 0122                         ??_Ajustar_PWM 0000  
+                          _STATUSbits 0003                            _TRISIObits 0085  

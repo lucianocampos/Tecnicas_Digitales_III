@@ -1,0 +1,229 @@
+[p GLOBOPT AUTOSTATIC IEEE_DBL IEEE_FLT PIC14 PICREGULAR PICMID ]
+[d version 1.1 ]
+[d edition pro ]
+[d chip 12F629 ]
+[d frameptr 0 ]
+"10 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\sprcadd.c
+[v ___fladd __fladd `(d  1 e 4 0 ]
+"4 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\common\Umul8_16.c
+[v __Umul8_16 _Umul8_16 `(ui  1 e 2 0 ]
+"6 C:\Program Files\Microchip\xc8\v3.00\pic\sources\c99\pic\__eeprom.c
+[v ___eecpymem __eecpymem `(v  1 e 1 0 ]
+"39
+[v ___memcpyee __memcpyee `(v  1 e 1 0 ]
+"13 D:\Mis Documentos\GitLab\Facultad\tecnicas_digitales_iii\Practico\TP1\TD3_TP1.X\main.c
+[v _isr isr `II(v  1 e 1 0 ]
+"121
+[v _RECEPCION_UART RECEPCION_UART `(i  1 e 2 0 ]
+"175
+[v _RESPONDER_UART RESPONDER_UART `(v  1 e 1 0 ]
+"230
+[v _Ajustar_PWM Ajustar_PWM `(v  1 e 1 0 ]
+"278
+[v _main main `(v  1 e 1 0 ]
+"21 D:\Mis Documentos\GitLab\Facultad\tecnicas_digitales_iii\Practico\TP1\TD3_TP1.X/variables_definiciones.h
+[v _FLAG_PWM_ENABLE FLAG_PWM_ENABLE `VEui  1 e 2 0 ]
+"23
+[v _Contador_PWM Contador_PWM `VEui  1 e 2 0 ]
+"24
+[v _PWM_DUTY_CYCLE PWM_DUTY_CYCLE `VEui  1 e 2 0 ]
+"26
+[v _FLAG_REFRESCAR_PWM FLAG_REFRESCAR_PWM `VEui  1 e 2 0 ]
+"30
+[v _DATO_RECIBIDO_UART DATO_RECIBIDO_UART `VEuc  1 e 1 0 ]
+"36
+[v _FLAG_UART FLAG_UART `VEui  1 e 2 0 ]
+"37
+[v _FLAG_RECEPCION FLAG_RECEPCION `VEui  1 e 2 0 ]
+"38
+[v _DESBORDE_TIMER0 DESBORDE_TIMER0 `VEui  1 e 2 0 ]
+"44
+[v _CONTADOR_REINICIOS_WDT CONTADOR_REINICIOS_WDT `VEi  1 e 2 0 ]
+"45
+[v _WDT_RESET WDT_RESET `VEui  1 e 2 0 ]
+"72 C:/Program Files/Microchip/MPLABX/v6.25/packs/Microchip/PIC10-12Fxxx_DFP/1.7.178/xc8\pic\include\proc/pic12f629.h
+[v _TMR0 TMR0 `VEuc  1 e 1 @1 ]
+[s S254 . 1 `uc 1 C 1 0 :1:0 
+`uc 1 DC 1 0 :1:1 
+`uc 1 Z 1 0 :1:2 
+`uc 1 nPD 1 0 :1:3 
+`uc 1 nTO 1 0 :1:4 
+`uc 1 RP 1 0 :2:5 
+`uc 1 IRP 1 0 :1:7 
+]
+"138
+[s S262 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 RP0 1 0 :1:5 
+`uc 1 RP1 1 0 :1:6 
+]
+[s S266 . 1 `uc 1 CARRY 1 0 :1:0 
+`uc 1 . 1 0 :1:1 
+`uc 1 ZERO 1 0 :1:2 
+]
+[u S270 . 1 `S254 1 . 1 0 `S262 1 . 1 0 `S266 1 . 1 0 ]
+[v _STATUSbits STATUSbits `VES270  1 e 1 @3 ]
+"218
+[v _GPIO GPIO `VEuc  1 e 1 @5 ]
+[s S162 . 1 `uc 1 GP0 1 0 :1:0 
+`uc 1 GP1 1 0 :1:1 
+`uc 1 GP2 1 0 :1:2 
+`uc 1 GP3 1 0 :1:3 
+`uc 1 GP4 1 0 :1:4 
+`uc 1 GP5 1 0 :1:5 
+]
+"241
+[s S169 . 1 `uc 1 GPIO0 1 0 :1:0 
+`uc 1 GPIO1 1 0 :1:1 
+`uc 1 GPIO2 1 0 :1:2 
+`uc 1 GPIO3 1 0 :1:3 
+`uc 1 GPIO4 1 0 :1:4 
+`uc 1 GPIO5 1 0 :1:5 
+]
+[u S176 . 1 `S162 1 . 1 0 `S169 1 . 1 0 ]
+[v _GPIObits GPIObits `VES176  1 e 1 @5 ]
+[s S22 . 1 `uc 1 GPIF 1 0 :1:0 
+`uc 1 INTF 1 0 :1:1 
+`uc 1 T0IF 1 0 :1:2 
+`uc 1 GPIE 1 0 :1:3 
+`uc 1 INTE 1 0 :1:4 
+`uc 1 T0IE 1 0 :1:5 
+`uc 1 PEIE 1 0 :1:6 
+`uc 1 GIE 1 0 :1:7 
+]
+"349
+[s S31 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 TMR0IF 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 TMR0IE 1 0 :1:5 
+]
+[u S36 . 1 `S22 1 . 1 0 `S31 1 . 1 0 ]
+[v _INTCONbits INTCONbits `VES36  1 e 1 @11 ]
+[s S81 . 1 `uc 1 TMR1IF 1 0 :1:0 
+`uc 1 . 1 0 :2:1 
+`uc 1 CMIF 1 0 :1:3 
+`uc 1 . 1 0 :2:4 
+`uc 1 ADIF 1 0 :1:6 
+`uc 1 EEIF 1 0 :1:7 
+]
+"422
+[s S88 . 1 `uc 1 T1IF 1 0 :1:0 
+]
+[u S90 . 1 `S81 1 . 1 0 `S88 1 . 1 0 ]
+[v _PIR1bits PIR1bits `VES90  1 e 1 @12 ]
+"452
+[v _TMR1 TMR1 `VEus  1 e 2 @14 ]
+[s S112 . 1 `uc 1 TMR1ON 1 0 :1:0 
+`uc 1 TMR1CS 1 0 :1:1 
+`uc 1 nT1SYNC 1 0 :1:2 
+`uc 1 T1OSCEN 1 0 :1:3 
+`uc 1 T1CKPS 1 0 :2:4 
+`uc 1 TMR1GE 1 0 :1:6 
+]
+"519
+[s S119 . 1 `uc 1 . 1 0 :4:0 
+`uc 1 T1CKPS0 1 0 :1:4 
+`uc 1 T1CKPS1 1 0 :1:5 
+]
+[u S123 . 1 `S112 1 . 1 0 `S119 1 . 1 0 ]
+[v _T1CONbits T1CONbits `VES123  1 e 1 @16 ]
+"564
+[v _CMCON CMCON `VEuc  1 e 1 @25 ]
+[s S55 . 1 `uc 1 PS 1 0 :3:0 
+`uc 1 PSA 1 0 :1:3 
+`uc 1 T0SE 1 0 :1:4 
+`uc 1 T0CS 1 0 :1:5 
+`uc 1 INTEDG 1 0 :1:6 
+`uc 1 nGPPU 1 0 :1:7 
+]
+"643
+[s S62 . 1 `uc 1 PS0 1 0 :1:0 
+`uc 1 PS1 1 0 :1:1 
+`uc 1 PS2 1 0 :1:2 
+]
+[u S66 . 1 `S55 1 . 1 0 `S62 1 . 1 0 ]
+[v _OPTION_REGbits OPTION_REGbits `VES66  1 e 1 @129 ]
+[s S204 . 1 `uc 1 TRISIO0 1 0 :1:0 
+`uc 1 TRISIO1 1 0 :1:1 
+`uc 1 TRISIO2 1 0 :1:2 
+`uc 1 TRISIO3 1 0 :1:3 
+`uc 1 TRISIO4 1 0 :1:4 
+`uc 1 TRISIO5 1 0 :1:5 
+]
+"708
+[u S211 . 1 `S204 1 . 1 0 ]
+[v _TRISIObits TRISIObits `VES211  1 e 1 @133 ]
+[s S139 . 1 `uc 1 TMR1IE 1 0 :1:0 
+`uc 1 . 1 0 :2:1 
+`uc 1 CMIE 1 0 :1:3 
+`uc 1 . 1 0 :2:4 
+`uc 1 ADIE 1 0 :1:6 
+`uc 1 EEIE 1 0 :1:7 
+]
+"761
+[s S146 . 1 `uc 1 T1IE 1 0 :1:0 
+]
+[u S148 . 1 `S139 1 . 1 0 `S146 1 . 1 0 ]
+[v _PIE1bits PIE1bits `VES148  1 e 1 @140 ]
+[s S222 . 1 `uc 1 IOC0 1 0 :1:0 
+`uc 1 IOC1 1 0 :1:1 
+`uc 1 IOC2 1 0 :1:2 
+`uc 1 IOC3 1 0 :1:3 
+`uc 1 IOC4 1 0 :1:4 
+`uc 1 IOC5 1 0 :1:5 
+]
+"958
+[s S229 . 1 `uc 1 IOCB0 1 0 :1:0 
+`uc 1 IOCB1 1 0 :1:1 
+`uc 1 IOCB2 1 0 :1:2 
+`uc 1 IOCB3 1 0 :1:3 
+`uc 1 IOCB4 1 0 :1:4 
+`uc 1 IOCB5 1 0 :1:5 
+]
+[u S236 . 1 `S222 1 . 1 0 `S229 1 . 1 0 ]
+[v _IOCbits IOCbits `VES236  1 e 1 @150 ]
+"278 D:\Mis Documentos\GitLab\Facultad\tecnicas_digitales_iii\Practico\TP1\TD3_TP1.X\main.c
+[v _main main `(v  1 e 1 0 ]
+{
+"313
+[v main@Contador_PWM Contador_PWM `i  1 a 2 18 ]
+"344
+} 0
+"13
+[v _isr isr `II(v  1 e 1 0 ]
+{
+"109
+[v isr@dummy_reg dummy_reg `VEuc  1 a 1 17 ]
+"115
+} 0
+"175
+[v _RESPONDER_UART RESPONDER_UART `(v  1 e 1 0 ]
+{
+[v RESPONDER_UART@RESPUESTA RESPUESTA `uc  1 p 1 wreg ]
+"177
+[v RESPONDER_UART@bit bit `i  1 a 2 4 ]
+"178
+[v RESPONDER_UART@ENVIO_EN_PROCESO ENVIO_EN_PROCESO `i  1 a 2 1 ]
+"175
+[v RESPONDER_UART@RESPUESTA RESPUESTA `uc  1 p 1 wreg ]
+"177
+[v RESPONDER_UART@RESPUESTA RESPUESTA `uc  1 p 1 3 ]
+"225
+} 0
+"121
+[v _RECEPCION_UART RECEPCION_UART `(i  1 e 2 0 ]
+{
+"125
+[v RECEPCION_UART@RESULTADO_COMM RESULTADO_COMM `i  1 a 2 9 ]
+"123
+[v RECEPCION_UART@desplazamiento_bit desplazamiento_bit `i  1 a 2 7 ]
+"124
+[v RECEPCION_UART@RECEPCION_EN_PROCESO RECEPCION_EN_PROCESO `i  1 a 2 4 ]
+"126
+[v RECEPCION_UART@CARACTER_RECIBIDO_UART CARACTER_RECIBIDO_UART `uc  1 a 1 6 ]
+"168
+} 0
+"230
+[v _Ajustar_PWM Ajustar_PWM `(v  1 e 1 0 ]
+{
+"251
+} 0
