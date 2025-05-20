@@ -1,6 +1,8 @@
 Notas:
 
-1.Se podra visualizar lo siguiente como ejemplo:
+1.Conexiones: SPI1 y PA4 como OUTPUT para control del NSS chip Select 
+
+2.Se podra visualizar lo siguiente como ejemplo:
 
 Sistema iniciado correctamente!
 
