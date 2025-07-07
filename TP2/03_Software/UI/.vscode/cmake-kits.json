@@ -1,0 +1,12 @@
+[
+  {
+    "name": "MinGW 64-bit with Qt",
+    "compilers": {
+      "C": "C:/mingw64/bin/gcc.exe",
+      "CXX": "C:/mingw64/bin/g++.exe"
+    },
+    "environmentVariables": {
+      "CMAKE_PREFIX_PATH": "C:/Qt/6.9.1/mingw_64/lib/cmake"
+    }
+  }
+]

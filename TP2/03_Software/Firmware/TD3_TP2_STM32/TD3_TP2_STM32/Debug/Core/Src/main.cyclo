@@ -1,0 +1,15 @@
+../Core/Src/main.c:87:10:calcular_crc	4
+../Core/Src/main.c:108:7:RS485_Transmit	2
+../Core/Src/main.c:119:7:HAL_UART_RxCpltCallback	3
+../Core/Src/main.c:136:6:main	1
+../Core/Src/main.c:234:6:SystemClock_Config	4
+../Core/Src/main.c:281:13:MX_ADC1_Init	4
+../Core/Src/main.c:336:13:MX_SPI2_Init	2
+../Core/Src/main.c:374:13:MX_TIM3_Init	5
+../Core/Src/main.c:427:13:MX_USART1_UART_Init	2
+../Core/Src/main.c:460:13:MX_USART3_UART_Init	2
+../Core/Src/main.c:493:13:MX_GPIO_Init	1
+../Core/Src/main.c:548:6:StartEntradasTask	2
+../Core/Src/main.c:593:6:StartUartTask	3
+../Core/Src/main.c:639:6:StartDefaultTask	1
+../Core/Src/main.c:659:6:Error_Handler	1
