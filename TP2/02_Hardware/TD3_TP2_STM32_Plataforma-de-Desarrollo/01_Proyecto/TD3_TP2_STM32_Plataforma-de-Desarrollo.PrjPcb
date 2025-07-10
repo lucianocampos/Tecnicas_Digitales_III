@@ -1176,11 +1176,28 @@ UpdateToLatestRevision=1
 PartTypes=0
 
 [NetInfos]
-Net1=NetName=MODBUS_TP|NetColor=clWhite
-Net2=NetName=uC_DIN_01|NetColor=$008E8145
-Net3=NetName=uC_DIN_02|NetColor=$008E8145
-Net4=NetName=uC_DIN_03|NetColor=$008E8145
-Net5=NetName=uC_MODBUS_TP|NetColor=clFuchsia
+Net1=NetName=+5Vin|NetColor=$000000CC
+Net2=NetName=MODBUS_TP|NetColor=clWhite
+Net3=NetName=uC_ADC_AN-01|NetColor=$008E8145
+Net4=NetName=uC_ADC_AN-02|NetColor=$008E8145
+Net5=NetName=uC_ADC_AN-03|NetColor=$008E8145
+Net6=NetName=uC_DIN_01|NetColor=$008E8145
+Net7=NetName=uC_DIN_02|NetColor=$008E8145
+Net8=NetName=uC_DIN_03|NetColor=$008E8145
+Net9=NetName=uC_DOUT-01|NetColor=$00C37C8E
+Net10=NetName=uC_DOUT-02|NetColor=$00C37C8E
+Net11=NetName=uC_DOUT-03|NetColor=$00C37C8E
+Net12=NetName=uC_MODBUS_RX|NetColor=$00471B74
+Net13=NetName=uC_MODBUS_TP|NetColor=$00471B74
+Net14=NetName=uC_MODBUS_TX|NetColor=$00471B74
+Net15=NetName=uC_PWM_01|NetColor=$0032C2F1
+Net16=NetName=uC_PWM_02|NetColor=$0032C2F1
+Net17=NetName=uC_SPI-CS|NetColor=$004FA86A
+Net18=NetName=uC_SPI-SCL|NetColor=$004FA86A
+Net19=NetName=uC_SPI-SDA|NetColor=$004FA86A
+Net20=NetName=uC_SPI-SDO|NetColor=$004FA86A
+Net21=NetName=uC_UART_RX|NetColor=clBlue
+Net22=NetName=uC_UART_TX|NetColor=clBlue
 
 [Comparison Options]
 ComparisonOptions0=Kind=Net|MinPercent=75|MinMatch=3|ShowMatch=0|UseName=-1|InclAllRules=0
