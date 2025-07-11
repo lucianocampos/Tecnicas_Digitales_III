@@ -1188,8 +1188,8 @@ Net9=NetName=uC_DOUT-01|NetColor=$00C37C8E
 Net10=NetName=uC_DOUT-02|NetColor=$00C37C8E
 Net11=NetName=uC_DOUT-03|NetColor=$00C37C8E
 Net12=NetName=uC_MODBUS_RX|NetColor=$00471B74
-Net13=NetName=uC_MODBUS_TP|NetColor=$00471B74
-Net14=NetName=uC_MODBUS_TX|NetColor=$00471B74
+Net13=NetName=uC_MODBUS_TP|NetColor=$00D6A7B4
+Net14=NetName=uC_MODBUS_TX|NetColor=$00E8C59F
 Net15=NetName=uC_PWM_01|NetColor=$0032C2F1
 Net16=NetName=uC_PWM_02|NetColor=$0032C2F1
 Net17=NetName=uC_SPI-CS|NetColor=$004FA86A
