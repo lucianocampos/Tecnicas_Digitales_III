@@ -1,0 +1,6 @@
+../Core/Src/freertos.c:99:6:vApplicationGetIdleTaskMemory	24	static
+../Core/Src/freertos.c:113:6:MX_FREERTOS_Init	136	static
+../Core/Src/freertos.c:171:6:StartDefaultTask	16	static
+../Core/Src/freertos.c:189:6:StartUart_TTL_Task	48	static
+../Core/Src/freertos.c:265:6:StartReadInputsTask	16	static
+../Core/Src/freertos.c:291:6:StartLeerADC	24	static
