@@ -20,6 +20,7 @@
 #include "main.h"
 #include "cmsis_os.h"
 #include "adc.h"
+#include "dma.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -47,6 +48,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+
+volatile uint16_t adc_valores[3];  // valores de los canales analógicos
 
 /* USER CODE END PV */
 
@@ -91,6 +94,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_USART1_UART_Init();
   MX_TIM3_Init();
   MX_TIM2_Init();
@@ -110,10 +114,8 @@ int main(void)
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);  // PA7. Salida PWM_02
 
   //HAL_TIM_Base_Start(&htim2);
-  HAL_ADC_Start(&hadc1);
 
-
-//  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adc_valores, 3);
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adc_valores, 3);
 
   /* USER CODE END 2 */
 

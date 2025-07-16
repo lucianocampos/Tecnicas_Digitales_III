@@ -55,7 +55,7 @@
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
 
-uint16_t adc_valores[3];
+//uint16_t adc_valores[3];
 
 extern volatile bool procesar_trama_recibida;
 extern TIM_HandleTypeDef htim3;
@@ -294,36 +294,19 @@ void StartLeerADC(void const * argument)
   /* Infinite loop */
 
 	for (;;)
-	  {
-		  for (int i = 0; i < 3; i++) {
-		        if (HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY) == HAL_OK) {
-		            adc_valores[i] = HAL_ADC_GetValue(&hadc1);
-		            HAL_GPIO_TogglePin(led_GPIO_Port, led_Pin);
-		        }
-		    }
+	{
+		osMutexWait(MensajeDeSalidaMutexHandle, osWaitForever);			// Protección de variable compartida
 
-		    osMutexWait(MensajeDeSalidaMutexHandle, osWaitForever);
+		for (int i = 0; i < 3; i++) {									// Carga de valores
+			mensaje_de_salida[2*i + 1] = adc_valores[i] & 0xFF;
+		    mensaje_de_salida[2*i + 2] = (adc_valores[i] >> 8) & 0xFF;
+		    HAL_GPIO_TogglePin(led_GPIO_Port, led_Pin);
+		}
 
-		    for (int i = 0; i < 3; i++) {
-		        mensaje_de_salida[2*i + 1] = adc_valores[i] & 0xFF;
-		        mensaje_de_salida[2*i + 2] = (adc_valores[i] >> 8) & 0xFF;
-		    }
+		osMutexRelease(MensajeDeSalidaMutexHandle);
 
-		    osMutexRelease(MensajeDeSalidaMutexHandle);
-
-		    osDelay(100);
-	    /*mensaje_de_salida[1] = (uint8_t)(adc_valores[0] & 0xFF);       	// AN_01 LSB
-	    mensaje_de_salida[2] = (uint8_t)((adc_valores[0] >> 8) & 0xFF); // AN_01 MSB
-
-	    mensaje_de_salida[3] = (uint8_t)(adc_valores[1] & 0xFF);       	// AN_02 LSB
-	    mensaje_de_salida[4] = (uint8_t)((adc_valores[1] >> 8) & 0xFF); // AN_02 MSB
-
-	    mensaje_de_salida[5] = (uint8_t)(adc_valores[2] & 0xFF);       	// AN_03 LSB
-	    mensaje_de_salida[6] = (uint8_t)((adc_valores[2] >> 8) & 0xFF); // AN_03 MSB
-
-	    osMutexRelease(MensajeDeSalidaMutexHandle);
-	    osDelay(10);*/
-	  }
+		osDelay(100);
+	}
   /* USER CODE END StartLeerADC */
 }
 

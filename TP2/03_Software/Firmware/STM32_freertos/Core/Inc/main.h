@@ -78,7 +78,8 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN Private defines */
 
-//extern uint16_t adc_valores[3];
+extern volatile uint16_t adc_valores[3];	// variable para guardar valores de los canales analógicos
+
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
