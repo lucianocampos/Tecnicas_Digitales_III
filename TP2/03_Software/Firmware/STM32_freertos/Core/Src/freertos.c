@@ -35,6 +35,9 @@
 
 #include "adc.h"
 
+#include "spi.h"
+#include "bmp280_spi.h"		// Sensor BMP280
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -74,6 +77,7 @@ osThreadId defaultTaskHandle;
 osThreadId Uart_TTL_TaskHandle;
 osThreadId ReadInputsTaskHandle;
 osThreadId LeerADCHandle;
+osThreadId LeerBMP280Handle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -86,6 +90,7 @@ void StartDefaultTask(void const * argument);
 void StartUart_TTL_Task(void const * argument);
 void StartReadInputsTask(void const * argument);
 void StartLeerADC(void const * argument);
+void StartLeerBMP280(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -154,6 +159,10 @@ void MX_FREERTOS_Init(void) {
   /* definition and creation of LeerADC */
   osThreadDef(LeerADC, StartLeerADC, osPriorityNormal, 0, 256);
   LeerADCHandle = osThreadCreate(osThread(LeerADC), NULL);
+
+  /* definition and creation of LeerBMP280 */
+  osThreadDef(LeerBMP280, StartLeerBMP280, osPriorityLow, 0, 256);
+  LeerBMP280Handle = osThreadCreate(osThread(LeerBMP280), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -300,7 +309,7 @@ void StartLeerADC(void const * argument)
 		for (int i = 0; i < 3; i++) {									// Carga de valores
 			mensaje_de_salida[2*i + 1] = adc_valores[i] & 0xFF;
 		    mensaje_de_salida[2*i + 2] = (adc_valores[i] >> 8) & 0xFF;
-		    HAL_GPIO_TogglePin(led_GPIO_Port, led_Pin);
+		    //HAL_GPIO_TogglePin(led_GPIO_Port, led_Pin);
 		}
 
 		osMutexRelease(MensajeDeSalidaMutexHandle);
@@ -308,6 +317,45 @@ void StartLeerADC(void const * argument)
 		osDelay(100);
 	}
   /* USER CODE END StartLeerADC */
+}
+
+/* USER CODE BEGIN Header_StartLeerBMP280 */
+/**
+* @brief Function implementing the LeerBMP280 thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartLeerBMP280 */
+void StartLeerBMP280(void const * argument)
+{
+  /* USER CODE BEGIN StartLeerBMP280 */
+  /* Infinite loop */
+
+	float temperatura;
+	float presion;
+	uint32_t presion_entero;
+
+  BMP280_SPI_Init(&hspi2, SPI_NSS_GPIO_Port, SPI_NSS_Pin);
+
+  for(;;)
+  {
+	  temperatura = BMP280_ReadTemperature();
+	  presion = BMP280_ReadPressure();
+	  presion_entero = (uint32_t)presion;
+
+	  osMutexWait(MensajeDeSalidaMutexHandle, osWaitForever);			// Protección de variable compartida
+
+	  mensaje_de_salida[8] = (uint8_t)temperatura;
+	  mensaje_de_salida[9] = (presion_entero >> 8) & 0xFF;
+	  mensaje_de_salida[10] = presion_entero & 0xFF;
+
+	  osMutexRelease(MensajeDeSalidaMutexHandle);
+	  HAL_GPIO_TogglePin(led_GPIO_Port, led_Pin);
+
+	  osDelay(50);
+
+  }
+  /* USER CODE END StartLeerBMP280 */
 }
 
 /* Private application code --------------------------------------------------*/
