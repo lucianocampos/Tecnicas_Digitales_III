@@ -12,9 +12,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    // Rango 0–255 en sliders
-    ui->sldPWM1->setRange(0, 255);
-    ui->sldPWM2->setRange(0, 255);
+    // Rango 0–1024 en sliders
+    ui->sldPWM1->setRange(0, 1024);
+    ui->sldPWM2->setRange(0, 1024);
 
     // Puertos y baudrates
     for (const QSerialPortInfo &p : QSerialPortInfo::availablePorts())
@@ -148,14 +148,22 @@ void MainWindow::sendControlFrame() {
     serial->setFlowControl(QSerialPort::HardwareControl);
     serial->setRequestToSend(true);
 
+    quint16 pwm1 = ui->sldPWM1->value();
+    quint16 pwm2 = ui->sldPWM2->value();
+
+
     QByteArray f;
     f.append(char(0x02));
     quint8 m = (ui->chkOut1->isChecked()?1:0)
                |(ui->chkOut2->isChecked()?2:0)
                |(ui->chkOut3->isChecked()?4:0);
     f.append(char(m));
-    f.append(char(ui->sldPWM1->value()));
-    f.append(char(ui->sldPWM2->value()));
+    f.append(char(pwm1 & 0xFF));        // Byte bajo
+    f.append(char((pwm1 >> 8) & 0xFF)); // Byte alto
+    f.append(char(pwm2 & 0xFF));        // Byte bajo
+    f.append(char((pwm2 >> 8) & 0xFF)); // Byte alto
+    //f.append(char(ui->sldPWM1->value()));
+    //f.append(char(ui->sldPWM2->value()));
     f.append(char(computeCRC8(f)));
 
     serial->write(f);
