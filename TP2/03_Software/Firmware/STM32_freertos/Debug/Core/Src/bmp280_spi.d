@@ -1,4 +1,4 @@
-Core/Src/bmp280_spi.o: ../Core/Src/bmp280_spi.c \
+Core/Src/bmp280_spi.o: ../Core/Src/bmp280_spi.c ../Core/Inc/bmp280_spi.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h \
  ../Core/Inc/stm32f1xx_hal_conf.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h \
@@ -27,7 +27,8 @@ Core/Src/bmp280_spi.o: ../Core/Src/bmp280_spi.c \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h \
- ../Core/Inc/bmp280_spi.h ../Core/Inc/gpio.h ../Core/Inc/main.h
+ ../Core/Inc/gpio.h ../Core/Inc/main.h
+../Core/Inc/bmp280_spi.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 ../Core/Inc/stm32f1xx_hal_conf.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h:
@@ -56,6 +57,5 @@ Core/Src/bmp280_spi.o: ../Core/Src/bmp280_spi.c \
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h:
-../Core/Inc/bmp280_spi.h:
 ../Core/Inc/gpio.h:
 ../Core/Inc/main.h:

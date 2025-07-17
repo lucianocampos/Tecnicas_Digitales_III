@@ -9,6 +9,10 @@
 #define BMP280_SPI_H_
 
 #include "stm32f1xx_hal.h"
+#include <stdbool.h>  // <- requerido para el tipo bool
+
+// Timeout estándar para todas las operaciones SPI
+#define BMP280_SPI_TIMEOUT 100  // ms
 
 // Registros BMP280
 #define BMP280_REG_ID         	0xD0
@@ -20,7 +24,6 @@
 #define BMP280_REG_CALIB_START 	0x88
 
 // Estructura para guardar la calibración
-
 typedef struct {
     uint16_t dig_T1;
     int16_t  dig_T2;
@@ -38,10 +41,8 @@ typedef struct {
 } BMP280_CalibData;
 
 // Funciones públicas
-
-void BMP280_SPI_Init(SPI_HandleTypeDef *hspi, GPIO_TypeDef *cs_port, uint16_t cs_pin);
+bool  BMP280_SPI_Init(SPI_HandleTypeDef *hspi, GPIO_TypeDef *cs_port, uint16_t cs_pin);
 float BMP280_ReadTemperature(void);
 float BMP280_ReadPressure(void);
 
 #endif /* BMP280_SPI_H_ */
-

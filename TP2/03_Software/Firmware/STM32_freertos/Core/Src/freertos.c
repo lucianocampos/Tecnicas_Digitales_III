@@ -149,7 +149,7 @@ void MX_FREERTOS_Init(void) {
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* definition and creation of Uart_TTL_Task */
-  osThreadDef(Uart_TTL_Task, StartUart_TTL_Task, osPriorityAboveNormal, 0, 256);
+  osThreadDef(Uart_TTL_Task, StartUart_TTL_Task, osPriorityAboveNormal, 0, 384);
   Uart_TTL_TaskHandle = osThreadCreate(osThread(Uart_TTL_Task), NULL);
 
   /* definition and creation of ReadInputsTask */
@@ -200,7 +200,7 @@ void StartUart_TTL_Task(void const * argument)
   /* USER CODE BEGIN StartUart_TTL_Task */
   /* Infinite loop */
 	  uint8_t trama_recibida_copia_local[LONGITUD_CADENA_CONTROL];
-	  const TickType_t timeout = pdMS_TO_TICKS(10000); // Espera máxima para recibir respuesta
+	  const TickType_t timeout = pdMS_TO_TICKS(1000); // Espera máxima para recibir respuesta
 	  TickType_t espera_inicio;
 
 	  uint8_t trama[12] = {
@@ -219,7 +219,7 @@ void StartUart_TTL_Task(void const * argument)
 	  {
 		  osMutexWait(MensajeDeSalidaMutexHandle, osWaitForever);	// Permitir lectura de la variable mensaje_de_salida
 
-		  for(int i=1; i<8; i++)
+		  for(int i=1; i<11; i++)
 			  trama[i] = mensaje_de_salida[i];
 
 		  osMutexRelease(MensajeDeSalidaMutexHandle);
@@ -229,8 +229,7 @@ void StartUart_TTL_Task(void const * argument)
 
 		  // Envío de los datos
 		  osMutexWait(transmisionMutex, osWaitForever);
-		  //HAL_UART_Transmit(&huart1, (uint8_t*)"Hola Mundo\r\n", 12, HAL_MAX_DELAY);
-		  HAL_UART_Transmit(&huart1, (const uint8_t*)trama, sizeof(trama), HAL_MAX_DELAY);
+		  HAL_UART_Transmit(&huart1, (const uint8_t*)trama, sizeof(trama), 100);
 		  osMutexRelease(transmisionMutex);
 		  //HAL_GPIO_TogglePin(led_GPIO_Port, led_Pin);
 
@@ -259,7 +258,7 @@ void StartUart_TTL_Task(void const * argument)
 		  }
 
 
-		  osDelay(50);  // Intervalo entre ciclos (puede ser menor o mayor)
+		  osDelay(10);  // Intervalo entre ciclos (puede ser menor o mayor)
 	  }
   /* USER CODE END StartUart_TTL_Task */
 }
@@ -285,7 +284,7 @@ void StartReadInputsTask(void const * argument)
 	  mensaje_de_salida [7] |= !HAL_GPIO_ReadPin(DIN_03_GPIO_Port, DIN_03_Pin) << 2;
 
 	  osMutexRelease(MensajeDeSalidaMutexHandle);
-    osDelay(1);
+    osDelay(100);
   }
   /* USER CODE END StartReadInputsTask */
 }
@@ -314,7 +313,7 @@ void StartLeerADC(void const * argument)
 
 		osMutexRelease(MensajeDeSalidaMutexHandle);
 
-		osDelay(100);
+		osDelay(50);
 	}
   /* USER CODE END StartLeerADC */
 }
@@ -325,15 +324,16 @@ void StartLeerADC(void const * argument)
 * @param argument: Not used
 * @retval None
 */
-/* USER CODE END Header_StartLeerBMP280 */
+/* USER CODE END Header_StartLeerBMP280*/
 void StartLeerBMP280(void const * argument)
 {
-  /* USER CODE BEGIN StartLeerBMP280 */
-  /* Infinite loop */
+  /* USER CODE BEGIN StartLeerBMP280
+   Infinite loop */
 
 	float temperatura;
 	float presion;
 	uint32_t presion_entero;
+	uint8_t temp_u8 = 0;
 
   BMP280_SPI_Init(&hspi2, SPI_NSS_GPIO_Port, SPI_NSS_Pin);
 
@@ -345,14 +345,15 @@ void StartLeerBMP280(void const * argument)
 
 	  osMutexWait(MensajeDeSalidaMutexHandle, osWaitForever);			// Protección de variable compartida
 
-	  mensaje_de_salida[8] = (uint8_t)temperatura;
+	  temp_u8 = (uint8_t)temperatura;
+	  mensaje_de_salida[8]  = temp_u8;
 	  mensaje_de_salida[9] = (presion_entero >> 8) & 0xFF;
 	  mensaje_de_salida[10] = presion_entero & 0xFF;
 
 	  osMutexRelease(MensajeDeSalidaMutexHandle);
 	  HAL_GPIO_TogglePin(led_GPIO_Port, led_Pin);
 
-	  osDelay(50);
+	  osDelay(500);
 
   }
   /* USER CODE END StartLeerBMP280 */
