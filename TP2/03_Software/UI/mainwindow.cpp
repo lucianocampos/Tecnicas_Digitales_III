@@ -76,6 +76,8 @@ void MainWindow::on_btnConnect_clicked() {
             ui->statusbar->showMessage("No se pudo abrir puerto", 3000);
             return;
         }
+        //serial->setRequestToSend(true);
+        serial->setDataTerminalReady(true);
         ui->btnConnect->setText("Desconectar");
         ui->statusbar->showMessage("Conectado a " + serial->portName(), 2000);
 
@@ -145,9 +147,10 @@ quint8 MainWindow::computeCRC8(const QByteArray &d) {
 
 void MainWindow::sendControlFrame() {
     if(mode!=CommMode::RS485||!serial->isOpen()) return;
-    serial->setFlowControl(QSerialPort::HardwareControl);
-    serial->setRequestToSend(true);
-
+    serial->setDataTerminalReady(true);
+    //serial->setFlowControl(QSerialPort::HardwareControl);
+    //serial->setRequestToSend(true);
+    //serial->setFlowControl(QSerialPort::NoFlowControl);
     quint16 pwm1 = ui->sldPWM1->value();
     quint16 pwm2 = ui->sldPWM2->value();
 
@@ -162,15 +165,21 @@ void MainWindow::sendControlFrame() {
     f.append(char((pwm1 >> 8) & 0xFF)); // Byte alto
     f.append(char(pwm2 & 0xFF));        // Byte bajo
     f.append(char((pwm2 >> 8) & 0xFF)); // Byte alto
-    //f.append(char(ui->sldPWM1->value()));
-    //f.append(char(ui->sldPWM2->value()));
+
     f.append(char(computeCRC8(f)));
 
-    serial->write(f);
-    serial->flush();
-    serial->waitForBytesWritten(50);
+    qint64 escritos = serial->write(f);
+    if (escritos == -1) {
+        ui->statusbar->showMessage("Error al escribir: " + serial->errorString(), 3000);
+        return;
+    }
+    // Espera hasta 100 ms que termine de vaciar el buffer
+    if (!serial->waitForBytesWritten(100)) {
+        ui->statusbar->showMessage("Timeout de escritura: " + serial->errorString(), 3000);
+    }
 
-    serial->setRequestToSend(false);
+
+    //serial->setRequestToSend(false);
     serial->setFlowControl(QSerialPort::NoFlowControl);
 
     ui->lblValPWM1->setText(QString::number(ui->sldPWM1->value()));
