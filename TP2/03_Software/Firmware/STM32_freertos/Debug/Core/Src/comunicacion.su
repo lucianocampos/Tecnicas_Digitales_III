@@ -1,2 +1,2 @@
-../Core/Src/comunicacion.c:28:6:HAL_UART_RxCpltCallback	24	static
-../Core/Src/comunicacion.c:50:9:calcular_crc	24	static
+../Core/Src/comunicacion.c:36:6:HAL_UART_RxCpltCallback	32	static,ignoring_inline_asm
+../Core/Src/comunicacion.c:101:9:calcular_crc	24	static

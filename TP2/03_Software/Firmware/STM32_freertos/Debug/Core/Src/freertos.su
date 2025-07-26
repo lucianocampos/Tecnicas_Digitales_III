@@ -1,7 +1,8 @@
-../Core/Src/freertos.c:104:6:vApplicationGetIdleTaskMemory	24	static
-../Core/Src/freertos.c:118:6:MX_FREERTOS_Init	168	static
-../Core/Src/freertos.c:180:6:StartDefaultTask	16	static
-../Core/Src/freertos.c:198:6:StartUart_TTL_Task	48	static
-../Core/Src/freertos.c:273:6:StartReadInputsTask	16	static
-../Core/Src/freertos.c:299:6:StartLeerADC	24	static
-../Core/Src/freertos.c:328:6:StartLeerBMP280	32	static
+../Core/Src/freertos.c:123:6:vApplicationGetIdleTaskMemory	24	static
+../Core/Src/freertos.c:137:6:MX_FREERTOS_Init	248	static
+../Core/Src/freertos.c:215:6:StartDefaultTask	16	static
+../Core/Src/freertos.c:233:6:Start_EnvioUart_Task	32	static
+../Core/Src/freertos.c:307:6:StartReadInputsTask	16	static
+../Core/Src/freertos.c:333:6:StartLeerADC	24	static
+../Core/Src/freertos.c:361:6:StartLeerBMP280	32	static
+../Core/Src/freertos.c:399:6:Start_LeerUart	32	static

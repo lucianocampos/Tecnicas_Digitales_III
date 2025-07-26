@@ -12,8 +12,16 @@
 
 //  VARIABLES ------------------------------------------------------------------------
 
-volatile bool procesar_trama_recibida = false;	// Bandera para procesar datos recibidos una vez validados los datos con el CRC-8
-volatile uint8_t trama_recibida[LONGITUD_CADENA_CONTROL];			// trama recibida validada con CRC para manejo de salidas.
+volatile bool procesar_trama_recibida_uart_ttl = false;		// Bandera para procesar datos recibidos una vez validados los datos con el CRC-8
+volatile bool procesar_trama_recibida_uart_rs485 = false;	// Bandera para procesar datos recibidos una vez validados los datos con el CRC-8
+
+volatile uint8_t trama_recibida_uart_ttl[LONGITUD_CADENA_CONTROL];	// trama recibida validada con CRC para manejo de salidas.
+volatile uint8_t trama_recibida_uart_rs485[LONGITUD_CADENA_CONTROL];	// trama recibida validada con CRC para manejo de salidas.
+
+volatile MasterPort_t master_port = MASTER_NONE;
+volatile TickType_t   last_cmd_tick = 0;
+
+volatile uint8_t active_frame[LONGITUD_CADENA_CONTROL];
 
 
 /** RECEPCIÓN Y VALIDACIÓN DE DATOS --------------------------------------------------
@@ -27,19 +35,62 @@ volatile uint8_t trama_recibida[LONGITUD_CADENA_CONTROL];			// trama recibida va
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-    if (huart->Instance == USART1)
-    {
-        uint8_t crc_calculado = calcular_crc((const uint8_t *)trama_recibida, LONGITUD_CADENA_CONTROL-1);
-        if (crc_calculado == trama_recibida[LONGITUD_CADENA_CONTROL-1]) {
-            procesar_trama_recibida = true;
+    BaseType_t  xHigherPriorityTaskWoken = pdFALSE;
+    TickType_t  now = xTaskGetTickCountFromISR();
+    uint8_t     crc;
+
+    if (huart->Instance == USART1) {  								// Puerto TTL prioritario
+        crc = calcular_crc((const uint8_t *)trama_recibida_uart_ttl,
+                           (uint8_t)(LONGITUD_CADENA_CONTROL - 1));
+        if (crc == trama_recibida_uart_ttl[LONGITUD_CADENA_CONTROL - 1]) {
+
+            memcpy((void *)active_frame, (const void *)trama_recibida_uart_ttl, LONGITUD_CADENA_CONTROL);
+
+            master_port   = MASTER_TTL;
+            last_cmd_tick = now;
         }
-        else{
-        	procesar_trama_recibida = false;
-        }
-        HAL_UART_Receive_IT(&huart1, (uint8_t *)trama_recibida, sizeof(trama_recibida));
+
+        HAL_UART_Receive_IT(&huart1, (uint8_t *)trama_recibida_uart_ttl, (uint16_t)LONGITUD_CADENA_CONTROL);
     }
+
+    else if (huart->Instance == USART3) {  // RS485 solo si TTL caducó
+        crc = calcular_crc((const uint8_t *)trama_recibida_uart_rs485,
+                           (uint8_t)(LONGITUD_CADENA_CONTROL - 1));
+        if (	crc == trama_recibida_uart_rs485[LONGITUD_CADENA_CONTROL - 1] &&
+        		(master_port != MASTER_TTL ||
+        		(now - last_cmd_tick) > pdMS_TO_TICKS(CONTROL_TIMEOUT_MS))){
+
+        	memcpy((void *)active_frame, (const void *)trama_recibida_uart_rs485, (size_t)LONGITUD_CADENA_CONTROL);
+
+            master_port   = MASTER_RS485;
+            last_cmd_tick = now;
+        }
+
+        HAL_UART_Receive_IT(&huart3, (uint8_t *)trama_recibida_uart_rs485, (uint16_t)LONGITUD_CADENA_CONTROL);
+    }
+
+    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 }
 
+/*{
+	uint8_t crc_calculado;
+
+    if ( huart->Instance == USART1 )
+    {
+        crc_calculado = calcular_crc((const uint8_t *)trama_recibida_uart_ttl, LONGITUD_CADENA_CONTROL-1);
+        procesar_trama_recibida_uart_ttl = (crc_calculado == trama_recibida_uart_ttl[LONGITUD_CADENA_CONTROL - 1]);
+        osMessagePut(UART_TTL_RX_Queue, (uint32_t)trama_recibida_uart_ttl, 0);
+        HAL_UART_Receive_IT(&huart1, (uint8_t *)trama_recibida_uart_ttl, LONGITUD_CADENA_CONTROL);
+    }
+
+    else if (huart->Instance == USART3)
+    {
+    	crc_calculado = calcular_crc((const uint8_t *)trama_recibida_uart_rs485, LONGITUD_CADENA_CONTROL - 1);
+    	procesar_trama_recibida_uart_rs485 = (crc_calculado == trama_recibida_uart_rs485[LONGITUD_CADENA_CONTROL - 1]);
+        osMessagePut(UART_RS485_RX_Queue, (uint32_t)trama_recibida_uart_rs485, 0);
+    	HAL_UART_Receive_IT(&huart3, (uint8_t *)trama_recibida_uart_rs485, LONGITUD_CADENA_CONTROL);
+    }
+}*/
 
 
 /* VALIDACIÓN DE DATOS : CALCULO DE CRC ------------------------------------------------
@@ -47,7 +98,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
  *		 validar tramas recibidas
  */
 
-uint8_t calcular_crc(const uint8_t *trama_recibida, uint8_t length) {
+uint8_t calcular_crc(const volatile uint8_t *trama_recibida, uint8_t length) {
     uint8_t crc = CRC_CLAVE;  // Palabra clave
 
     for (uint8_t i = 0; i < length; i++) {

@@ -101,6 +101,7 @@ int main(void)
   MX_TIM2_Init();
   MX_ADC1_Init();
   MX_SPI2_Init();
+  MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
 
 //  TIM2->CR2 &= ~TIM_CR2_MMS;
@@ -110,15 +111,26 @@ int main(void)
 //  ADC1->CR2 |= ADC_EXTERNALTRIGCONV_T2_CC2;
 
 
-  HAL_UART_Receive_IT(&huart1, (uint8_t *)trama_recibida, sizeof(trama_recibida));
+  HAL_UART_Receive_IT(&huart1, (uint8_t *)trama_recibida_uart_ttl, sizeof(trama_recibida_uart_ttl));	// UART_TTL
+  HAL_UART_Receive_IT(&huart3, (uint8_t *)trama_recibida_uart_rs485, sizeof(trama_recibida_uart_rs485));	// UART_RS485
 
-  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);  // PA6. Salida PWM_01
-  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);  // PA7. Salida PWM_02
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);  	// PA6. Salida PWM_01
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);  	// PA7. Salida PWM_02
 
   //HAL_TIM_Base_Start(&htim2);
 
   HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adc_valores, 3);
 
+  /*for(int i=0; i<8; i++)
+  {
+	HAL_GPIO_TogglePin(led_GPIO_Port, led_Pin);
+	HAL_Delay(100);
+  }
+
+  HAL_GPIO_WritePin(led_GPIO_Port, led_Pin, GPIO_PIN_SET);
+  HAL_Delay(2000);*/
+
+  HAL_GPIO_WritePin(RS485_DE_GPIO_Port, RS485_DE_Pin, GPIO_PIN_RESET);
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in cmsis_os2.c) */
