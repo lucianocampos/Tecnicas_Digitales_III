@@ -29,6 +29,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "comunicacion.h"
+#include "stm32f1xx_hal.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -121,6 +122,8 @@ int main(void)
 
   HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adc_valores, 3);
 
+
+  // HeartBeat con led integrado
   /*for(int i=0; i<8; i++)
   {
 	HAL_GPIO_TogglePin(led_GPIO_Port, led_Pin);
@@ -131,6 +134,7 @@ int main(void)
   HAL_Delay(2000);*/
 
   HAL_GPIO_WritePin(RS485_DE_GPIO_Port, RS485_DE_Pin, GPIO_PIN_RESET);
+
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in cmsis_os2.c) */

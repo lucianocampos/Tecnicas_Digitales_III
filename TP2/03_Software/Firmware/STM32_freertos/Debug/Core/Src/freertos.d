@@ -44,8 +44,7 @@ Core/Src/freertos.o: ../Core/Src/freertos.c \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
- ../Core/Inc/usart.h ../Core/Inc/main.h ../Core/Src/comunicacion.h \
- ../Middlewares/Third_Party/FreeRTOS/Source/include/freertos.h \
+ ../Core/Src/comunicacion.h ../Core/Inc/usart.h ../Core/Inc/main.h \
  ../Core/Inc/adc.h ../Core/Inc/spi.h ../Core/Inc/bmp280_spi.h
 ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h:
 ../Core/Inc/FreeRTOSConfig.h:
@@ -93,10 +92,9 @@ Core/Src/freertos.o: ../Core/Src/freertos.c \
 ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
+../Core/Src/comunicacion.h:
 ../Core/Inc/usart.h:
 ../Core/Inc/main.h:
-../Core/Src/comunicacion.h:
-../Middlewares/Third_Party/FreeRTOS/Source/include/freertos.h:
 ../Core/Inc/adc.h:
 ../Core/Inc/spi.h:
 ../Core/Inc/bmp280_spi.h:

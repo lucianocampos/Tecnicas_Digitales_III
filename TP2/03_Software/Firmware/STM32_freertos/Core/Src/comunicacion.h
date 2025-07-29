@@ -8,28 +8,25 @@
 #ifndef SRC_COMUNICACION_H_
 #define SRC_COMUNICACION_H_
 
-#define CRC_CLAVE 0x00							// Palabra clave del CRC-8
-#define LONGITUD_CADENA_CONTROL 7				// Longitud en bytes de la cadena de control recibida por la bluepill
-
-#define CONTROL_TIMEOUT_MS 5000
-
 
 // Librerias ---------------------------------------------------------------
 
+#include "cmsis_os.h"
+#include "stm32f1xx_hal.h"
+
+#include <stdint.h>
 #include <stdbool.h>
 #include <stdio.h>
-#include <stdint.h>
+
 #include <string.h>
-#include "cmsis_os.h"
-#include "freertos.h"
 
-// Variables ---------------------------------------------------------------
+// Defines -----------------------------------------------------------------
 
-extern volatile uint8_t trama_recibida_uart_ttl[LONGITUD_CADENA_CONTROL];
-extern volatile uint8_t trama_recibida_uart_rs485[LONGITUD_CADENA_CONTROL];
+#define CRC_CLAVE 0x00							// Palabra clave del CRC-8
+#define LONGITUD_CADENA_CONTROL 7				// Longitud en bytes de la cadena de control recibida por la bluepill
 
-extern osMessageQId UART_TTL_RX_Queue;
-extern osMessageQId UART_RS485_RX_Queue;
+#define CONTROL_TIMEOUT_MS 10000
+#define HEADER_TRAMA 0X02
 
 typedef enum {									// Arbitraje de bus maestro
     MASTER_NONE   = 0,
@@ -37,13 +34,24 @@ typedef enum {									// Arbitraje de bus maestro
     MASTER_RS485  = 2
 } MasterPort_t;
 
+
+// Variables ---------------------------------------------------------------
+
 extern volatile MasterPort_t master_port;
-extern volatile TickType_t last_cmd_tick;
 extern volatile uint8_t active_frame[LONGITUD_CADENA_CONTROL];
+
+extern osMessageQId UART_TTL_RX_Queue;
+extern osMessageQId UART_RS485_RX_Queue;
+
+extern volatile uint8_t trama_recibida_uart_ttl[LONGITUD_CADENA_CONTROL];
+extern volatile uint8_t trama_recibida_uart_rs485[LONGITUD_CADENA_CONTROL];
+
+extern osTimerId TimerUARTHandle;
 
 
 // Funciones ---------------------------------------------------------------
 
 uint8_t calcular_crc(const volatile uint8_t *, uint8_t);
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef*);
 
 #endif /* SRC_COMUNICACION_H_ */

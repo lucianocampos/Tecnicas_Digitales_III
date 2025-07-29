@@ -1,2 +1,2 @@
-../Core/Src/comunicacion.c:36:6:HAL_UART_RxCpltCallback	8
-../Core/Src/comunicacion.c:101:9:calcular_crc	4
+../Core/Src/comunicacion.c:34:6:HAL_UART_RxCpltCallback	3
+../Core/Src/comunicacion.c:58:9:calcular_crc	4
