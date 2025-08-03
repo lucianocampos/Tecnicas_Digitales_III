@@ -81,8 +81,7 @@ osMutexDef(MensajeDeSalida);
 
 osMutexId  busDatosSalidasMutex;  		// Mutex para arbitraje entre uart TTL y RS485
 
-osMessageQId UART_TTL_RX_Queue;			// Cola para puerto UART TTL
-osMessageQId UART_RS485_RX_Queue;		// Cola para puerto UART TTL
+QueueHandle_t UART_RX_Queue;			// Cola para puerto UART API FreeRTOS
 
 
 /* USER CODE END Variables */
@@ -92,7 +91,6 @@ osThreadId ReadInputsTaskHandle;
 osThreadId LeerADCHandle;
 osThreadId LeerBMP280Handle;
 osThreadId LeerUARTHandle;
-osTimerId TimerUARTHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -107,15 +105,11 @@ void StartReadInputsTask(void const * argument);
 void StartLeerADC(void const * argument);
 void StartLeerBMP280(void const * argument);
 void Start_LeerUart(void const * argument);
-void CallbackTimerUART(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /* GetIdleTaskMemory prototype (linked to static allocation support) */
 void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize );
-
-/* GetTimerTaskMemory prototype (linked to static allocation support) */
-void vApplicationGetTimerTaskMemory( StaticTask_t **ppxTimerTaskTCBBuffer, StackType_t **ppxTimerTaskStackBuffer, uint32_t *pulTimerTaskStackSize );
 
 /* USER CODE BEGIN GET_IDLE_TASK_MEMORY */
 static StaticTask_t xIdleTaskTCBBuffer;
@@ -129,19 +123,6 @@ void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackTy
   /* place for user code */
 }
 /* USER CODE END GET_IDLE_TASK_MEMORY */
-
-/* USER CODE BEGIN GET_TIMER_TASK_MEMORY */
-static StaticTask_t xTimerTaskTCBBuffer;
-static StackType_t xTimerStack[configTIMER_TASK_STACK_DEPTH];
-
-void vApplicationGetTimerTaskMemory( StaticTask_t **ppxTimerTaskTCBBuffer, StackType_t **ppxTimerTaskStackBuffer, uint32_t *pulTimerTaskStackSize )
-{
-  *ppxTimerTaskTCBBuffer = &xTimerTaskTCBBuffer;
-  *ppxTimerTaskStackBuffer = &xTimerStack[0];
-  *pulTimerTaskStackSize = configTIMER_TASK_STACK_DEPTH;
-  /* place for user code */
-}
-/* USER CODE END GET_TIMER_TASK_MEMORY */
 
 /**
   * @brief  FreeRTOS initialization
@@ -164,11 +145,12 @@ void MX_FREERTOS_Init(void) {
 	osMutexDef(busDatosSalidasMutex);
 	busDatosSalidasMutex  = osMutexCreate(osMutex(busDatosSalidasMutex));	// Mutex para UART
 
-	osMessageQDef(UART_TTL_RX_Queue, 4, uint8_t*);							// Cola para arbitraje de puertos UART
-	UART_TTL_RX_Queue = osMessageCreate(osMessageQ(UART_TTL_RX_Queue), NULL);
+	UART_RX_Queue = xQueueCreate( 64, sizeof(uint32_t));
+	if (UART_RX_Queue == NULL)
+	{
+		HAL_GPIO_WritePin(led_GPIO_Port, led_Pin, GPIO_PIN_RESET);
+	}
 
-	osMessageQDef(UART_RS485_RX_Queue, 4, uint8_t*);						// Cola para arbitraje de puertos UART
-	UART_RS485_RX_Queue = osMessageCreate(osMessageQ(UART_RS485_RX_Queue), NULL);
 
   /* USER CODE END RTOS_MUTEX */
 
@@ -176,14 +158,8 @@ void MX_FREERTOS_Init(void) {
   /* add semaphores, ... */
   /* USER CODE END RTOS_SEMAPHORES */
 
-  /* Create the timer(s) */
-  /* definition and creation of TimerUART */
-  osTimerDef(TimerUART, CallbackTimerUART);
-  TimerUARTHandle = osTimerCreate(osTimer(TimerUART), osTimerOnce, NULL);
-
   /* USER CODE BEGIN RTOS_TIMERS */
-  master_port = MASTER_TTL;
-  osTimerStart(TimerUARTHandle, CONTROL_TIMEOUT_MS);
+
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
 
@@ -213,7 +189,7 @@ void MX_FREERTOS_Init(void) {
   LeerBMP280Handle = osThreadCreate(osThread(LeerBMP280), NULL);
 
   /* definition and creation of LeerUART */
-  osThreadDef(LeerUART, Start_LeerUart, osPriorityHigh, 0, 512);
+  osThreadDef(LeerUART, Start_LeerUart, osPriorityHigh, 0, 384);
   LeerUARTHandle = osThreadCreate(osThread(LeerUART), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
@@ -257,64 +233,95 @@ void Start_EnvioUart_Task(void const * argument)
 
 	uint8_t trama[12] = {0};
 	uint8_t i, ReintentarEnvio = 0;
+	uint32_t start_tick;
+
+	const uint32_t TC_TIMEOUT_MS = 10;
+	const uint32_t BUS_FREE_TIMEOUT_MS = 5;
+
+
 
 
   for(;;)
   {
 	  osMutexWait(MensajeDeSalidaMutexHandle, osWaitForever);	// Permitir lectura de la variable mensaje_de_salida
 
-		for(i=0; i<11; i++)
+	  for(i=0; i<11; i++)
 			trama[i] = mensaje_de_salida[i];
 
-		osMutexRelease(MensajeDeSalidaMutexHandle);
+	  osMutexRelease(MensajeDeSalidaMutexHandle);
 
-		trama[11] = calcular_crc(trama, 11);
-
-
-		// Envío de los datos. Número de reintentos automáticos = 10
-
-		osMutexWait(transmisionMutex, osWaitForever);
+	  trama[11] = calcular_crc(trama, 11);
 
 
-		// UART TTL
+	  // Envío de los datos. Número de reintentos automáticos = 10
 
-		if(master_port == MASTER_TTL)
-		{
-			for (ReintentarEnvio = 0; ReintentarEnvio < 10; ReintentarEnvio++) {
-				status_uart_ttl = HAL_UART_Transmit(&huart1, trama, sizeof(trama), 500);
-				if (status_uart_ttl == HAL_OK) break;
-			}
-		}
+	  osMutexWait(transmisionMutex, osWaitForever);
 
-		else if (master_port == MASTER_RS485)
-		{
-			// UART RS485
-			HAL_GPIO_WritePin(RS485_DE_GPIO_Port, RS485_DE_Pin, GPIO_PIN_SET);
+	  // UART TTL
 
-			for (ReintentarEnvio = 0; ReintentarEnvio < 10; ReintentarEnvio++) {
-				status_uart_rs485 = HAL_UART_Transmit(&huart3, trama, sizeof(trama), 500);
-				if (status_uart_rs485 == HAL_OK) break;
-			}
+	  for (ReintentarEnvio = 0; ReintentarEnvio < 10; ReintentarEnvio++)
+	  {
+		  status_uart_ttl = HAL_UART_Transmit(&huart1, trama, sizeof(trama), 50);
+		  if (status_uart_ttl  == HAL_OK)
+			  break;
+	  }
 
-			HAL_GPIO_WritePin(RS485_DE_GPIO_Port, RS485_DE_Pin, GPIO_PIN_RESET);
-		}
-/*
-		// LED ERROR
-		if (status_uart_ttl!= HAL_OK || status_uart_rs485 != HAL_OK) {
-			for(i=0; i<5; i++){
-				HAL_GPIO_TogglePin(led_GPIO_Port, led_Pin);
-				osDelay(500);
-			}
+	  // UART RS485. Envio con polling
 
-			HAL_GPIO_WritePin(led_GPIO_Port, led_Pin, GPIO_PIN_SET);
+	  __HAL_UART_CLEAR_FLAG(&huart3, UART_FLAG_TC);  // limpia cualquier TC anterior
+
+	  uint32_t t0  = HAL_GetTick();
+	  while (!busIdle && (HAL_GetTick() - t0 < BUS_FREE_TIMEOUT_MS))
+	  {
+		  osDelay(1);
+	  }
+	  busIdle = false;
+
+	  for (ReintentarEnvio = 0; ReintentarEnvio < 5; ReintentarEnvio++)
+	  {
+		  HAL_GPIO_WritePin(RS485_DE_GPIO_Port, RS485_DE_Pin, GPIO_PIN_SET);
+
+		  status_uart_rs485 = HAL_UART_Transmit(&huart3, trama, sizeof(trama), 50);
+
+		  if( status_uart_rs485== HAL_OK)
+		  {
+
+			  start_tick = HAL_GetTick();
+			  while (!__HAL_UART_GET_FLAG(&huart3, UART_FLAG_TC))
+			  {
+				  if((HAL_GetTick() - start_tick) >= TC_TIMEOUT_MS)
+				  {
+					  break;
+				  }
+			  }
+
+			  HAL_GPIO_WritePin(RS485_DE_GPIO_Port, RS485_DE_Pin, GPIO_PIN_RESET);
+			  break;
+		  }
+
+		  // Leer SR y DR para limpiar posibles residuos (eco) en RX
+		  (void) huart3.Instance->SR;
+		  (void) huart3.Instance->DR;
+
+		  break;
+	  }
+
+	  	  // LED ERROR
+	  /*if (status_uart_ttl!= HAL_OK || status_uart_rs485 != HAL_OK)
+	  {
+		  for(i=0; i<5; i++)
+		  {
+			  HAL_GPIO_TogglePin(led_GPIO_Port, led_Pin);
+			  osDelay(500);
+		  }
+
+		  HAL_GPIO_WritePin(led_GPIO_Port, led_Pin, GPIO_PIN_SET);
 		}*/
 
 		status_uart_ttl = status_uart_rs485 = HAL_ERROR;
-
 		osMutexRelease(transmisionMutex);
 
-
-    osDelay(20);
+    osDelay(200);
   }
   /* USER CODE END Start_EnvioUart_Task */
 }
@@ -329,19 +336,19 @@ void Start_EnvioUart_Task(void const * argument)
 void StartReadInputsTask(void const * argument)
 {
   /* USER CODE BEGIN StartReadInputsTask */
-  /* Infinite loop */
-  for(;;)
-  {
-	  osMutexWait(MensajeDeSalidaMutexHandle, osWaitForever); 	// Permitir escritura de la variable mensaje_de_salida
+	/* Infinite loop */
+	for(;;)
+	{
+		osMutexWait(MensajeDeSalidaMutexHandle, osWaitForever); 	// Permitir escritura de la variable mensaje_de_salida
 
-	  mensaje_de_salida [7] = 0;
-	  mensaje_de_salida [7] |= !HAL_GPIO_ReadPin(DIN_01_GPIO_Port, DIN_01_Pin);
-	  mensaje_de_salida [7] |= !HAL_GPIO_ReadPin(DIN_02_GPIO_Port, DIN_02_Pin) << 1;
-	  mensaje_de_salida [7] |= !HAL_GPIO_ReadPin(DIN_03_GPIO_Port, DIN_03_Pin) << 2;
+		mensaje_de_salida [7] = 0;
+		mensaje_de_salida [7] |= !HAL_GPIO_ReadPin(DIN_01_GPIO_Port, DIN_01_Pin);
+		mensaje_de_salida [7] |= !HAL_GPIO_ReadPin(DIN_02_GPIO_Port, DIN_02_Pin) << 1;
+		mensaje_de_salida [7] |= !HAL_GPIO_ReadPin(DIN_03_GPIO_Port, DIN_03_Pin) << 2;
 
-	  osMutexRelease(MensajeDeSalidaMutexHandle);
-    osDelay(250);
-  }
+		osMutexRelease(MensajeDeSalidaMutexHandle);
+		osDelay(250);
+	}
   /* USER CODE END StartReadInputsTask */
 }
 
@@ -361,13 +368,13 @@ void StartLeerADC(void const * argument)
 	{
 		osMutexWait(MensajeDeSalidaMutexHandle, osWaitForever);			// Protección de variable compartida
 
-		for (int i = 0; i < 3; i++) {									// Carga de valores
+		for (int i = 0; i < 3; i++)
+		{									// Carga de valores
 			mensaje_de_salida[2*i + 1] = adc_valores[i] & 0xFF;
 		    mensaje_de_salida[2*i + 2] = (adc_valores[i] >> 8) & 0xFF;
 		}
 
 		osMutexRelease(MensajeDeSalidaMutexHandle);
-
 		osDelay(50);
 	}
   /* USER CODE END StartLeerADC */
@@ -383,7 +390,7 @@ void StartLeerADC(void const * argument)
 void StartLeerBMP280(void const * argument)
 {
   /* USER CODE BEGIN StartLeerBMP280 */
-  /* Infinite loop */
+	/* Infinite loop */
 	float temperatura;
 	float presion;
 	uint32_t presion_entero;
@@ -422,105 +429,43 @@ void Start_LeerUart(void const * argument)
 {
   /* USER CODE BEGIN Start_LeerUart */
 
-	osEvent   evt;
 	uint8_t  *frame, *local;
-	osMessageQId procQueue, flushQueue;
+	uint32_t ptr;
 
 
 	    for (;;) {
 
-	    	// Determinación del puerto es maestro (se vacía el otro)
-
-	    	if (master_port == MASTER_TTL)
+	    	while (xQueueReceive(UART_RX_Queue, &ptr, portMAX_DELAY) == pdPASS)
 	    	{
-	    		procQueue  = UART_TTL_RX_Queue;
-	    	    flushQueue = UART_RS485_RX_Queue;
+	    		frame = (uint8_t*) ptr;
+
+	    	    if (calcular_crc(frame, LONGITUD_CADENA_CONTROL - 1) == frame[LONGITUD_CADENA_CONTROL - 1])
+	    	    {
+	    	    	memcpy((void*)active_frame, frame, LONGITUD_CADENA_CONTROL);
+	    	        local = (uint8_t*)active_frame;
+
+	    	        HAL_GPIO_TogglePin(led_GPIO_Port, led_Pin);
+
+	    	        // Salidas digitales
+	    	        HAL_GPIO_WritePin(DOUT_01_GPIO_Port, DOUT_01_Pin, (local[1] & 0x01) ? GPIO_PIN_SET : GPIO_PIN_RESET);
+	    	        HAL_GPIO_WritePin(DOUT_02_GPIO_Port, DOUT_02_Pin, (local[1] & 0x02) ? GPIO_PIN_SET : GPIO_PIN_RESET);
+	    	        HAL_GPIO_WritePin(DOUT_03_GPIO_Port, DOUT_03_Pin, (local[1] & 0x04) ? GPIO_PIN_SET : GPIO_PIN_RESET);
+
+	    	        // Salidas PWM
+	    	        __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, local[2] | (local[3] << 8));
+	    	        __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, local[4] | (local[5] << 8));
+
+	    	        // 🧹 Limpiar la cola de cualquier basura anterior
+	    	        while (xQueueReceive(UART_RX_Queue, &ptr, 0) == pdPASS);
+
+	    	        break;
+	    	    }
 	    	}
-	    	else if (master_port == MASTER_RS485)
-	    	{
-	    		procQueue  = UART_RS485_RX_Queue;
-	    	    flushQueue = UART_TTL_RX_Queue;
-	    	}
-	    	else
-	    	{
-	    		// Arranque inicial: por defecto TTL maestro
-	    	    procQueue  = UART_TTL_RX_Queue;
-	    	    flushQueue = UART_RS485_RX_Queue;
-	    	    master_port = MASTER_TTL;
-	    	}
 
-	    	// Vaciado de la cola del puerto no-maestro
-	    	while ((evt = osMessageGet(flushQueue, 0)).status == osEventMessage)
-	    	{
-	    	// descartar los mensajes
-	    	}
-
-
-
-	    	evt = osMessageGet(procQueue, CONTROL_TIMEOUT_MS);
-	        if (evt.status == osEventMessage)
-	        {
-	            frame = (uint8_t*)evt.value.v;
-	            /* Validar encabezado 0x02 y CRC8 */
-	            if (frame[0] == HEADER_TRAMA &&
-	                calcular_crc(frame, LONGITUD_CADENA_CONTROL - 1) == frame[LONGITUD_CADENA_CONTROL - 1])
-	            {
-	            	// Copiar Trama valida
-	                memcpy((void*)active_frame, frame, LONGITUD_CADENA_CONTROL);
-
-	                // Asignar maestro según cola
-	                master_port = (procQueue == UART_TTL_RX_Queue)? MASTER_TTL : MASTER_RS485;
-	                // Reiniciar watchdog UART
-	                osTimerStop(TimerUARTHandle);
-	                osTimerStart(TimerUARTHandle, CONTROL_TIMEOUT_MS);
-	            }
-	        }
-
-	    	// Actualizar salidas según active_frame
-
-	        if (master_port != MASTER_NONE) {
-
-	        	local = (uint8_t *)active_frame;
-
-	        	// Salidas digitales
-
-	            HAL_GPIO_WritePin(DOUT_01_GPIO_Port, DOUT_01_Pin, (local[1] & 0x01) ? GPIO_PIN_SET : GPIO_PIN_RESET);
-	            HAL_GPIO_WritePin(DOUT_02_GPIO_Port, DOUT_02_Pin, (local[1] & 0x02) ? GPIO_PIN_SET : GPIO_PIN_RESET);
-	            HAL_GPIO_WritePin(DOUT_03_GPIO_Port, DOUT_03_Pin, (local[1] & 0x04) ? GPIO_PIN_SET : GPIO_PIN_RESET);
-
-
-	            // Salidas PWM
-
-	            __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, local[2] | (local[3] << 8));
-	            __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, local[4] | (local[5] << 8));
-	        }
-
-	        osDelay(5);
+	    	osDelay(1);
 	    }
 
   /* USER CODE END Start_LeerUart */
-}
-
-/* CallbackTimerUART function */
-__weak void CallbackTimerUART(void const * argument)
-{
-  /* USER CODE BEGIN CallbackTimerUART */
-
-	if(master_port == MASTER_TTL)
-	{
-		master_port = MASTER_RS485;
-		HAL_GPIO_WritePin(led_GPIO_Port, led_Pin, GPIO_PIN_RESET);
-	}
-
-	else
-	{
-		master_port = MASTER_TTL;
-		HAL_GPIO_WritePin(led_GPIO_Port, led_Pin, GPIO_PIN_SET);
-	}
-
-	osTimerStart(TimerUARTHandle, CONTROL_TIMEOUT_MS);
-
-  /* USER CODE END CallbackTimerUART */
 }
 
 /* Private application code --------------------------------------------------*/

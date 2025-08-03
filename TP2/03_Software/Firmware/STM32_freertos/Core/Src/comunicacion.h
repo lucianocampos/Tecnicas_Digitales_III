@@ -25,28 +25,27 @@
 #define CRC_CLAVE 0x00							// Palabra clave del CRC-8
 #define LONGITUD_CADENA_CONTROL 7				// Longitud en bytes de la cadena de control recibida por la bluepill
 
-#define CONTROL_TIMEOUT_MS 10000
+#define CONTROL_TIMEOUT_MS 100
 #define HEADER_TRAMA 0X02
-
-typedef enum {									// Arbitraje de bus maestro
-    MASTER_NONE   = 0,
-    MASTER_TTL    = 1,
-    MASTER_RS485  = 2
-} MasterPort_t;
 
 
 // Variables ---------------------------------------------------------------
 
-extern volatile MasterPort_t master_port;
 extern volatile uint8_t active_frame[LONGITUD_CADENA_CONTROL];
 
-extern osMessageQId UART_TTL_RX_Queue;
-extern osMessageQId UART_RS485_RX_Queue;
+//extern osMessageQId UART_TTL_RX_Queue;
+//extern osMessageQId UART_RS485_RX_Queue;
+extern QueueHandle_t UART_RX_Queue;
 
 extern volatile uint8_t trama_recibida_uart_ttl[LONGITUD_CADENA_CONTROL];
 extern volatile uint8_t trama_recibida_uart_rs485[LONGITUD_CADENA_CONTROL];
 
 extern osTimerId TimerUARTHandle;
+
+extern volatile bool busIdle;
+
+extern volatile uint8_t trama_rs485_pool[][LONGITUD_CADENA_CONTROL];
+extern uint8_t pool_index;
 
 
 // Funciones ---------------------------------------------------------------

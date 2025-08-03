@@ -112,8 +112,9 @@ int main(void)
 //  ADC1->CR2 |= ADC_EXTERNALTRIGCONV_T2_CC2;
 
 
-  HAL_UART_Receive_IT(&huart1, (uint8_t *)trama_recibida_uart_ttl, sizeof(trama_recibida_uart_ttl));	// UART_TTL
-  HAL_UART_Receive_IT(&huart3, (uint8_t *)trama_recibida_uart_rs485, sizeof(trama_recibida_uart_rs485));	// UART_RS485
+  HAL_UART_Receive_IT(&huart1, (uint8_t *)trama_recibida_uart_ttl, LONGITUD_CADENA_CONTROL);	// UART_TTL
+  HAL_UART_Receive_IT(&huart3, (uint8_t *)trama_rs485_pool[0], LONGITUD_CADENA_CONTROL);	// UART_RS485
+  pool_index = 1;
 
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);  	// PA6. Salida PWM_01
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);  	// PA7. Salida PWM_02
