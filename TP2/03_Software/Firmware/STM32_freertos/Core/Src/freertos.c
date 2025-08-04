@@ -62,7 +62,7 @@
 
 extern TIM_HandleTypeDef htim3;
 
-uint8_t mensaje_de_salida[11] = {
+uint8_t mensaje_de_salida[LONGITUD_TRAMA_TX] = {
 	      0x02,        // Byte 0 - Inicio
 	      0x01, 0xA2,  // Byte 1-2
 	      0x01, 0xAA,  // Byte 3-4
@@ -70,7 +70,9 @@ uint8_t mensaje_de_salida[11] = {
 	      0x07,        // Byte 7
 	      0x0F,        // Byte 8
 	      0x01,		   // Byte 9
-		  0x00   	   // CRC (CRC calculado de bytes 0-10)
+		  0x01,		   // Byte 10
+		  0x00,   	   // CRC-16 LSB
+		  0x00   	   // CRC-16 MSB
 	  };
 
 
@@ -231,92 +233,71 @@ void Start_EnvioUart_Task(void const * argument)
 
 	HAL_StatusTypeDef status_uart_ttl = HAL_ERROR, status_uart_rs485 = HAL_ERROR;
 
-	uint8_t trama[12] = {0};
+	uint8_t trama[LONGITUD_TRAMA_TX] = {0};
 	uint8_t i, ReintentarEnvio = 0;
 	uint32_t start_tick;
 
 	const uint32_t TC_TIMEOUT_MS = 10;
 	const uint32_t BUS_FREE_TIMEOUT_MS = 5;
 
-
-
-
   for(;;)
   {
 	  osMutexWait(MensajeDeSalidaMutexHandle, osWaitForever);	// Permitir lectura de la variable mensaje_de_salida
 
-	  for(i=0; i<11; i++)
+	  for(i=0; i< LONGITUD_DATOS_TX; i++)
 			trama[i] = mensaje_de_salida[i];
+
+	  uint16_t crc = calcular_crc16(trama, LONGITUD_DATOS_TX); // 10 = HEADER + 9 bytes útiles
+	  trama[POS_CRC_LSB_TX] = crc & 0xFF;        				// LSB
+	  trama[POS_CRC_MSB_TX] = (crc >> 8) & 0xFF; 				// MSB
 
 	  osMutexRelease(MensajeDeSalidaMutexHandle);
 
-	  trama[11] = calcular_crc(trama, 11);
-
-
 	  // Envío de los datos. Número de reintentos automáticos = 10
-
 	  osMutexWait(transmisionMutex, osWaitForever);
 
 	  // UART TTL
-
-	  for (ReintentarEnvio = 0; ReintentarEnvio < 10; ReintentarEnvio++)
-	  {
-		  status_uart_ttl = HAL_UART_Transmit(&huart1, trama, sizeof(trama), 50);
-		  if (status_uart_ttl  == HAL_OK)
-			  break;
+	  if( modo_protocolo == MODO_TTL){
+		  for (ReintentarEnvio = 0; ReintentarEnvio < 10; ReintentarEnvio++){
+			  status_uart_ttl = HAL_UART_Transmit(&huart1, trama, LONGITUD_TRAMA_TX, CONTROL_TIMEOUT_MS);
+			  if (status_uart_ttl  == HAL_OK)
+				  break;
+		  }
 	  }
+	  else{	// MODBUS
 
-	  // UART RS485. Envio con polling
+		  __HAL_UART_CLEAR_FLAG(&huart3, UART_FLAG_TC);  // limpia cualquier TC anterior
 
-	  __HAL_UART_CLEAR_FLAG(&huart3, UART_FLAG_TC);  // limpia cualquier TC anterior
+		  uint32_t t0  = HAL_GetTick();
+		  while (!busIdle && (HAL_GetTick() - t0 < BUS_FREE_TIMEOUT_MS)){
+			  osDelay(1);
+		  }
+		  busIdle = false;
 
-	  uint32_t t0  = HAL_GetTick();
-	  while (!busIdle && (HAL_GetTick() - t0 < BUS_FREE_TIMEOUT_MS))
-	  {
-		  osDelay(1);
-	  }
-	  busIdle = false;
-
-	  for (ReintentarEnvio = 0; ReintentarEnvio < 5; ReintentarEnvio++)
-	  {
-		  HAL_GPIO_WritePin(RS485_DE_GPIO_Port, RS485_DE_Pin, GPIO_PIN_SET);
-
-		  status_uart_rs485 = HAL_UART_Transmit(&huart3, trama, sizeof(trama), 50);
-
-		  if( status_uart_rs485== HAL_OK)
-		  {
-
-			  start_tick = HAL_GetTick();
-			  while (!__HAL_UART_GET_FLAG(&huart3, UART_FLAG_TC))
+		  for (ReintentarEnvio = 0; ReintentarEnvio < 5; ReintentarEnvio++)  {
+			  HAL_GPIO_WritePin(RS485_DE_GPIO_Port, RS485_DE_Pin, GPIO_PIN_SET);
+			  status_uart_rs485 = HAL_UART_Transmit(&huart3, trama, sizeof(trama), 50);
+			  if( status_uart_rs485== HAL_OK)
 			  {
-				  if((HAL_GetTick() - start_tick) >= TC_TIMEOUT_MS)
+
+				  start_tick = HAL_GetTick();
+				  while (!__HAL_UART_GET_FLAG(&huart3, UART_FLAG_TC))
 				  {
-					  break;
+					  if((HAL_GetTick() - start_tick) >= TC_TIMEOUT_MS)
+					  {
+						  break;
+					  }
 				  }
+
+				  HAL_GPIO_WritePin(RS485_DE_GPIO_Port, RS485_DE_Pin, GPIO_PIN_RESET);
+				  break;
 			  }
 
-			  HAL_GPIO_WritePin(RS485_DE_GPIO_Port, RS485_DE_Pin, GPIO_PIN_RESET);
-			  break;
+			  // Leer SR y DR para limpiar posibles residuos (eco) en RX
+			  (void) huart3.Instance->SR;
+			  (void) huart3.Instance->DR;
 		  }
-
-		  // Leer SR y DR para limpiar posibles residuos (eco) en RX
-		  (void) huart3.Instance->SR;
-		  (void) huart3.Instance->DR;
-
-		  break;
 	  }
-
-	  	  // LED ERROR
-	  /*if (status_uart_ttl!= HAL_OK || status_uart_rs485 != HAL_OK)
-	  {
-		  for(i=0; i<5; i++)
-		  {
-			  HAL_GPIO_TogglePin(led_GPIO_Port, led_Pin);
-			  osDelay(500);
-		  }
-
-		  HAL_GPIO_WritePin(led_GPIO_Port, led_Pin, GPIO_PIN_SET);
-		}*/
 
 		status_uart_ttl = status_uart_rs485 = HAL_ERROR;
 		osMutexRelease(transmisionMutex);
@@ -439,9 +420,12 @@ void Start_LeerUart(void const * argument)
 	    	{
 	    		frame = (uint8_t*) ptr;
 
-	    	    if (calcular_crc(frame, LONGITUD_CADENA_CONTROL - 1) == frame[LONGITUD_CADENA_CONTROL - 1])
+	    		uint16_t crc_recv = frame[POS_CRC_LSB_RX] | (frame[POS_CRC_MSB_RX] << 8);
+	    		uint16_t crc_calc = calcular_crc16(frame, LONGITUD_DATOS_RX);
+
+	    	    if (crc_recv == crc_calc)
 	    	    {
-	    	    	memcpy((void*)active_frame, frame, LONGITUD_CADENA_CONTROL);
+	    	    	memcpy((void*)active_frame, frame, LONGITUD_TRAMA_RX );
 	    	        local = (uint8_t*)active_frame;
 
 	    	        HAL_GPIO_TogglePin(led_GPIO_Port, led_Pin);

@@ -69,6 +69,8 @@ void Error_Handler(void);
 #define PWM_01_GPIO_Port GPIOA
 #define PWM_02_Pin GPIO_PIN_7
 #define PWM_02_GPIO_Port GPIOA
+#define TTL_MODBUS_Pin GPIO_PIN_0
+#define TTL_MODBUS_GPIO_Port GPIOB
 #define RS485_DE_Pin GPIO_PIN_1
 #define RS485_DE_GPIO_Port GPIOB
 #define RS485_TX_Pin GPIO_PIN_10

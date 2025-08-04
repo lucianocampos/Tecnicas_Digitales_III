@@ -22,7 +22,6 @@
 
 /* USER CODE BEGIN 0 */
 #include "comunicacion.h"
-extern volatile bool procesar_trama_recibida;	// variable para decodificación de trama recibida. Fuente: freertos.c
 
 /* USER CODE END 0 */
 

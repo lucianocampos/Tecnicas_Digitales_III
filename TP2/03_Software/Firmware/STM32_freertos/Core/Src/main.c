@@ -105,15 +105,18 @@ int main(void)
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
 
-//  TIM2->CR2 &= ~TIM_CR2_MMS;
-//  TIM2->CR2 |= TIM_CR2_MMS_1;  				// MMS = 010: Update Event como TRGO para el ADC
+  if(HAL_GPIO_ReadPin(TTL_MODBUS_GPIO_Port, TTL_MODBUS_Pin) == GPIO_PIN_SET)	// SELECCIÓN DE PUERTO UART
+	  modo_protocolo = MODO_TTL;
+  else
+	  modo_protocolo = MODO_MODBUS;
 
-//  ADC1->CR2 &= ~ADC_CR2_EXTSEL;				// Cambiar trigger del ADC a TIM2_TRGO
-//  ADC1->CR2 |= ADC_EXTERNALTRIGCONV_T2_CC2;
+  if (modo_protocolo == MODO_TTL) {
+      HAL_UART_Receive_IT(&huart1, (uint8_t *)trama_recibida_uart_ttl, LONGITUD_TRAMA_RX);
+  }
 
-
-  HAL_UART_Receive_IT(&huart1, (uint8_t *)trama_recibida_uart_ttl, LONGITUD_CADENA_CONTROL);	// UART_TTL
-  HAL_UART_Receive_IT(&huart3, (uint8_t *)trama_rs485_pool[0], LONGITUD_CADENA_CONTROL);	// UART_RS485
+  else { // MODBUS
+      HAL_UART_Receive_IT(&huart3, (uint8_t *)trama_rs485_pool[0], LONGITUD_TRAMA_RX);
+  }
   pool_index = 1;
 
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);  	// PA6. Salida PWM_01
