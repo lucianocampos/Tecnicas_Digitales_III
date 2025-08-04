@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QSerialPort>
 #include <QTimer>
+#include <QByteArray>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -11,20 +12,21 @@ QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
+
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
-    void on_btnConnect_clicked();
     void on_cbMode_currentIndexChanged(int idx);
     void onBaudRateChanged(const QString &baud);
+    void on_btnConnect_clicked();
     void readSerialData();
-    void onPollTimeout();
     void handleError(QSerialPort::SerialPortError err);
-    void on_chkOut1_toggled(bool);
-    void on_chkOut2_toggled(bool);
-    void on_chkOut3_toggled(bool);
+    void onPollTimeout();
+    void on_chkOut1_toggled(bool checked);
+    void on_chkOut2_toggled(bool checked);
+    void on_chkOut3_toggled(bool checked);
     void on_sldPWM1_valueChanged(int value);
     void on_sldPWM2_valueChanged(int value);
 

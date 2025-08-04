@@ -3,6 +3,21 @@
 #include <QSerialPortInfo>
 #include <QDebug>
 
+// Compute CRC16 (polynomial 0xA001, initial 0xFFFF) for STM32 frames
+static quint16 computeCRC16(const QByteArray &data) {
+    quint16 crc = 0xFFFF;
+    for (quint8 b : data) {
+        crc ^= static_cast<quint16>(b);
+        for (int i = 0; i < 8; ++i) {
+            if (crc & 0x0001)
+                crc = (crc >> 1) ^ 0xA001;
+            else
+                crc >>= 1;
+        }
+    }
+    return crc;
+}
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -19,7 +34,7 @@ MainWindow::MainWindow(QWidget *parent)
     // Puertos y baudrates
     for (const QSerialPortInfo &p : QSerialPortInfo::availablePorts())
         ui->cbPort->addItem(p.portName());
-    ui->cbBaudRate->addItems({ "9600","19200","38400","57600","115200" });
+    ui->cbBaudRate->addItems({"9600","19200","38400","57600","115200"});
 
     // Conexiones
     connect(ui->cbMode, QOverload<int>::of(&QComboBox::currentIndexChanged),
@@ -34,7 +49,8 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 MainWindow::~MainWindow() {
-    if (serial->isOpen()) serial->close();
+    if (serial->isOpen())
+        serial->close();
     delete ui;
 }
 
@@ -76,7 +92,6 @@ void MainWindow::on_btnConnect_clicked() {
             ui->statusbar->showMessage("No se pudo abrir puerto", 3000);
             return;
         }
-        //serial->setRequestToSend(true);
         serial->setDataTerminalReady(true);
         ui->btnConnect->setText("Desconectar");
         ui->statusbar->showMessage("Conectado a " + serial->portName(), 2000);
@@ -91,7 +106,9 @@ void MainWindow::on_btnConnect_clicked() {
 void MainWindow::handleError(QSerialPort::SerialPortError err) {
     if (err == QSerialPort::ResourceError) {
         ui->statusbar->showMessage("¡Error crítico! " + serial->errorString(), 5000);
-        serial->close(); pollTimer->stop(); ui->btnConnect->setText("Conectar");
+        serial->close();
+        pollTimer->stop();
+        ui->btnConnect->setText("Conectar");
     } else {
         ui->statusbar->showMessage(serial->errorString(), 3000);
     }
@@ -99,25 +116,33 @@ void MainWindow::handleError(QSerialPort::SerialPortError err) {
 
 void MainWindow::readSerialData() {
     recvBuffer.append(serial->readAll());
-    while (recvBuffer.size() >= 12) {
-        if (quint8(recvBuffer[0]) != 0x02) { recvBuffer.remove(0,1); continue; }
-        QByteArray frame = recvBuffer.left(12);
-        if (computeCRC8(frame.left(11)) == quint8(frame[11])) {
+    // La Blue Pill envía tramas de 13 bytes: 1 header + 11 datos + 2 CRC16
+    while (recvBuffer.size() >= 13) {
+        if (static_cast<quint8>(recvBuffer[0]) != 0x02) {
+            recvBuffer.remove(0, 1);
+            continue;
+        }
+        QByteArray frame = recvBuffer.left(13);
+        quint16 crc_recv = static_cast<quint8>(frame[11])
+                         | (static_cast<quint8>(frame[12]) << 8);
+        if (computeCRC16(frame.left(11)) == crc_recv) {
             processFrame(frame);
-            recvBuffer.remove(0,12);
+            recvBuffer.remove(0, 13);
         } else {
-            recvBuffer.remove(0,1);
-            ui->statusbar->showMessage("CRC Error",2000);
+            recvBuffer.remove(0, 1);
+            ui->statusbar->showMessage("CRC Error", 2000);
         }
     }
 }
 
 void MainWindow::processFrame(const QByteArray &f) {
-    quint16 a0 = quint8(f[1]) | (quint8(f[2])<<8);
-    quint16 a1 = quint8(f[3]) | (quint8(f[4])<<8);
-    quint16 a2 = quint8(f[5]) | (quint8(f[6])<<8);
-    quint8 inp = quint8(f[7]); qint8 t = qint8(f[8]);
-    quint16 p = (quint8(f[9])<<8) | quint8(f[10]);
+    // Extracción según protocolo STM32 (13 bytes)
+    quint16 a0 = static_cast<quint8>(f[1]) | (static_cast<quint8>(f[2]) << 8);
+    quint16 a1 = static_cast<quint8>(f[3]) | (static_cast<quint8>(f[4]) << 8);
+    quint16 a2 = static_cast<quint8>(f[5]) | (static_cast<quint8>(f[6]) << 8);
+    quint8  inp = static_cast<quint8>(f[7]);
+    qint8   t   = static_cast<qint8>(f[8]);
+    quint16 p   = (static_cast<quint8>(f[9]) << 8) | static_cast<quint8>(f[10]);
 
     ui->lcdADC0->display(a0);
     ui->lcdADC1->display(a1);
@@ -125,74 +150,50 @@ void MainWindow::processFrame(const QByteArray &f) {
     ui->lcdTemp->display(t);
     ui->lcdPress->display(p);
 
-    auto setLed=[&](QLabel*L,bool on){
-        L->setStyleSheet(on?"background-color:green;":"background-color:red;");
+    auto setLed = [&](QLabel *L, bool on) {
+        L->setStyleSheet(on ? "background-color:green;" : "background-color:red;");
     };
-    setLed(ui->ledInput1, inp&1);
-    setLed(ui->ledInput2, inp&2);
-    setLed(ui->ledInput3, inp&4);
+    setLed(ui->ledInput1, inp & 0x01);
+    setLed(ui->ledInput2, inp & 0x02);
+    setLed(ui->ledInput3, inp & 0x04);
 
+    // Mostrar raw hex
     QString hex;
-    for (auto b : f) hex += QString("%1 ").arg(quint8(b),2,16,QLatin1Char('0'));
+    for (auto b : f)
+        hex += QString("%1 ").arg(static_cast<quint8>(b), 2, 16, QLatin1Char('0'));
     ui->txtRawData->append(hex.trimmed().toUpper());
 }
 
-quint8 MainWindow::computeCRC8(const QByteArray &d) {
-    quint8 crc=0;
-    for(auto b:d){ crc^=quint8(b);
-        for(int i=0;i<8;i++) crc=(crc&0x80)?(crc<<1)^0x07:(crc<<1);
-    }
-    return crc;
-}
-
 void MainWindow::sendControlFrame() {
-    if(mode!=CommMode::RS485||!serial->isOpen()) return;
-    serial->setDataTerminalReady(true);
-    //serial->setFlowControl(QSerialPort::HardwareControl);
-    //serial->setRequestToSend(true);
-    //serial->setFlowControl(QSerialPort::NoFlowControl);
+    if (mode != CommMode::RS485 || !serial->isOpen())
+        return;
+
     quint16 pwm1 = ui->sldPWM1->value();
     quint16 pwm2 = ui->sldPWM2->value();
-
+    quint8 mask = (ui->chkOut1->isChecked() ? 0x01 : 0x00)
+                | (ui->chkOut2->isChecked() ? 0x02 : 0x00)
+                | (ui->chkOut3->isChecked() ? 0x04 : 0x00);
 
     QByteArray f;
-    f.append(char(0x02));
-    quint8 m = (ui->chkOut1->isChecked()?1:0)
-               |(ui->chkOut2->isChecked()?2:0)
-               |(ui->chkOut3->isChecked()?4:0);
-    f.append(char(m));
-    f.append(char(pwm1 & 0xFF));        // Byte bajo
-    f.append(char((pwm1 >> 8) & 0xFF)); // Byte alto
-    f.append(char(pwm2 & 0xFF));        // Byte bajo
-    f.append(char((pwm2 >> 8) & 0xFF)); // Byte alto
+    f.append(char(0x02));               // Header
+    f.append(char(mask));               // Control bits
+    f.append(char(pwm1 & 0xFF));        // PWM1 LSB
+    f.append(char((pwm1 >> 8) & 0xFF)); // PWM1 MSB
+    f.append(char(pwm2 & 0xFF));        // PWM2 LSB
+    f.append(char((pwm2 >> 8) & 0xFF)); // PWM2 MSB
 
-    f.append(char(computeCRC8(f)));
+    // Append CRC16 (LSB first, MSB next) → trama total 8 bytes
+    quint16 crc = computeCRC16(f);
+    f.append(char(crc & 0xFF));
+    f.append(char((crc >> 8) & 0xFF));
 
-    qint64 escritos = serial->write(f);
-    if (escritos == -1) {
-        ui->statusbar->showMessage("Error al escribir: " + serial->errorString(), 3000);
-        return;
-    }
-    // Espera hasta 100 ms que termine de vaciar el buffer
-    if (!serial->waitForBytesWritten(100)) {
-        ui->statusbar->showMessage("Timeout de escritura: " + serial->errorString(), 3000);
-    }
-
-
-    //serial->setRequestToSend(false);
-    serial->setFlowControl(QSerialPort::NoFlowControl);
-
-    ui->lblValPWM1->setText(QString::number(ui->sldPWM1->value()));
-    ui->lblValPWM2->setText(QString::number(ui->sldPWM2->value()));
-
-    QString txHex;
-    for(auto b:f) txHex += QString("%1 ").arg(quint8(b),2,16,QLatin1Char('0'));
-    ui->txtRawData->append("TX: " + txHex.trimmed().toUpper());
+    serial->write(f);
 }
 
-void MainWindow::onPollTimeout()              { sendControlFrame(); }
-void MainWindow::on_chkOut1_toggled(bool)     { sendControlFrame(); }
-void MainWindow::on_chkOut2_toggled(bool)     { sendControlFrame(); }
-void MainWindow::on_chkOut3_toggled(bool)     { sendControlFrame(); }
+// Slots conectados a UI
+void MainWindow::onPollTimeout()               { sendControlFrame(); }
+void MainWindow::on_chkOut1_toggled(bool)      { sendControlFrame(); }
+void MainWindow::on_chkOut2_toggled(bool)      { sendControlFrame(); }
+void MainWindow::on_chkOut3_toggled(bool)      { sendControlFrame(); }
 void MainWindow::on_sldPWM1_valueChanged(int v){ ui->lblValPWM1->setText(QString::number(v)); sendControlFrame(); }
 void MainWindow::on_sldPWM2_valueChanged(int v){ ui->lblValPWM2->setText(QString::number(v)); sendControlFrame(); }
