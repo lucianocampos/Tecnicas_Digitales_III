@@ -1,8 +1,0 @@
-../Core/Src/bmp280_spi.c:10:13:CS_Select	1
-../Core/Src/bmp280_spi.c:14:13:CS_Unselect	1
-../Core/Src/bmp280_spi.c:18:26:BMP280_Write8	1
-../Core/Src/bmp280_spi.c:26:26:BMP280_ReadBytes	3
-../Core/Src/bmp280_spi.c:35:13:BMP280_ReadCalibration	2
-../Core/Src/bmp280_spi.c:57:6:BMP280_SPI_Init	7
-../Core/Src/bmp280_spi.c:87:7:BMP280_ReadTemperature	2
-../Core/Src/bmp280_spi.c:105:7:BMP280_ReadPressure	3
