@@ -1,0 +1,9 @@
+../Core/Src/comunicacion.c:88:6:HAL_UART_RxCpltCallback	10
+../Core/Src/comunicacion.c:144:6:HAL_UART_ErrorCallback	7
+../Core/Src/comunicacion.c:182:10:calcular_crc16	4
+../Core/Src/comunicacion.c:216:13:tim2_start_oneshot_us	7
+../Core/Src/comunicacion.c:242:24:mb_char_time_us_115200_8N1	1
+../Core/Src/comunicacion.c:251:6:mb_t35_restart	1
+../Core/Src/comunicacion.c:265:6:mb_t35_on_expire	3
+../Core/Src/comunicacion.c:288:19:RS485_SendFrame	5
+../Core/Src/comunicacion.c:328:13:HAL_UART_IDLE_Callback	3
