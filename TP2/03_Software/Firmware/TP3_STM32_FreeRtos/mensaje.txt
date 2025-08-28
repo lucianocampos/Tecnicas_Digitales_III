@@ -1,7 +1,0 @@
-BETA.
-* Se modifica el arbitraje de puertos.
-* Se agrega selección de puerto mediante pin PB0.
-* PB0 = 0 -> modbus, PB0 = 1 -> TTL.
-* Se modifica CRC: CRC8 -> CRC16.
-* Se modifica clave del CRC.
-* Las modificaciones buscan migrar uart_rs485 -> uart_modbus_rtu

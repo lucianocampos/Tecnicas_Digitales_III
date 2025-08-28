@@ -106,10 +106,10 @@ int main(void)
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
 
-  if(HAL_GPIO_ReadPin(TTL_MODBUS_GPIO_Port, TTL_MODBUS_Pin) == GPIO_PIN_RESET){	// SELECCIÓN DE PUERTO UART
+  if(HAL_GPIO_ReadPin(MODBUS_SEL_GPIO_Port, MODBUS_SEL_Pin) == GPIO_PIN_RESET){	// SELECCIÓN DE PUERTO UART
 	  modo_protocolo = MODO_TTL;
 	  HAL_UART_Receive_IT(&huart1, (uint8_t *)trama_recibida_uart_ttl, LONGITUD_TRAMA_RX);
-	  HAL_GPIO_WritePin(led_GPIO_Port, led_Pin, GPIO_PIN_SET);
+	  HAL_GPIO_WritePin(TTL_MODBUS_GPIO_Port, TTL_MODBUS_Pin, GPIO_PIN_RESET);
   }
 
   else{
@@ -117,7 +117,7 @@ int main(void)
 	  rs485_idx = 0;
 	  HAL_UART_Receive_IT(&huart3, (uint8_t*)&rs485_byte, 1);
       //HAL_UART_Receive_IT(&huart3, (uint8_t *)trama_recibida_uart_rs485, LONGITUD_TRAMA_RX);
-      HAL_GPIO_WritePin(led_GPIO_Port, led_Pin, GPIO_PIN_RESET);
+      HAL_GPIO_WritePin(TTL_MODBUS_GPIO_Port, TTL_MODBUS_Pin, GPIO_PIN_SET);
       mb_t35_restart();   // se asume actividad reciente
       busIdle = false;    // no subir DE hasta que venza t3.5
   }

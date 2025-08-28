@@ -85,8 +85,10 @@ void Error_Handler(void);
 #define SPI_MISO_GPIO_Port GPIOB
 #define SPI_MOSI_Pin GPIO_PIN_15
 #define SPI_MOSI_GPIO_Port GPIOB
-#define TTL_MODBUS_Pin GPIO_PIN_12
+#define TTL_MODBUS_Pin GPIO_PIN_11
 #define TTL_MODBUS_GPIO_Port GPIOA
+#define MODBUS_SEL_Pin GPIO_PIN_12
+#define MODBUS_SEL_GPIO_Port GPIOA
 #define DIN_01_Pin GPIO_PIN_3
 #define DIN_01_GPIO_Port GPIOB
 #define DIN_02_Pin GPIO_PIN_4

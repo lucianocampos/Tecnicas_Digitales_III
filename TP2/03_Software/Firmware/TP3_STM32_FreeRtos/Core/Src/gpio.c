@@ -54,7 +54,7 @@ void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(led_GPIO_Port, led_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, DOUT_01_Pin|DOUT_02_Pin|DOUT_03_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, DOUT_01_Pin|DOUT_02_Pin|DOUT_03_Pin|TTL_MODBUS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, RS485_DE_Pin|RS485_RE_Pin, GPIO_PIN_RESET);
@@ -92,9 +92,16 @@ void MX_GPIO_Init(void)
 
   /*Configure GPIO pin : TTL_MODBUS_Pin */
   GPIO_InitStruct.Pin = TTL_MODBUS_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(TTL_MODBUS_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : MODBUS_SEL_Pin */
+  GPIO_InitStruct.Pin = MODBUS_SEL_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(TTL_MODBUS_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(MODBUS_SEL_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : DIN_01_Pin DIN_02_Pin DIN_03_Pin */
   GPIO_InitStruct.Pin = DIN_01_Pin|DIN_02_Pin|DIN_03_Pin;
