@@ -1,0 +1,8 @@
+../Core/Src/freertos.c:120:6:vApplicationGetIdleTaskMemory	1
+../Core/Src/freertos.c:134:6:MX_FREERTOS_Init	2
+../Core/Src/freertos.c:210:6:StartDefaultTask	1
+../Core/Src/freertos.c:228:6:Start_EnvioUart_Task	7
+../Core/Src/freertos.c:299:6:StartReadInputsTask	3
+../Core/Src/freertos.c:325:6:StartLeerADC	2
+../Core/Src/freertos.c:353:6:StartLeerBMP280	1
+../Core/Src/freertos.c:391:6:Start_LeerUart	4
