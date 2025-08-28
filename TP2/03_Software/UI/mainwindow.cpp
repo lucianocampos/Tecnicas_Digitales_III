@@ -18,6 +18,8 @@ static quint16 computeCRC16(const QByteArray &data) {
     return crc;
 }
 
+static constexpr int kBaudrate = 115200;
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -31,20 +33,18 @@ MainWindow::MainWindow(QWidget *parent)
     ui->sldPWM1->setRange(0, 1024);
     ui->sldPWM2->setRange(0, 1024);
 
-    // Puertos y baudrates
+    // Puertos disponibles
     for (const QSerialPortInfo &p : QSerialPortInfo::availablePorts())
         ui->cbPort->addItem(p.portName());
-    ui->cbBaudRate->addItems({"9600","19200","38400","57600","115200"});
 
     // Conexiones
     connect(ui->cbMode, QOverload<int>::of(&QComboBox::currentIndexChanged),
             this, &MainWindow::on_cbMode_currentIndexChanged);
-    connect(ui->cbBaudRate, &QComboBox::currentTextChanged,
-            this, &MainWindow::onBaudRateChanged);
     connect(serial, &QSerialPort::readyRead, this, &MainWindow::readSerialData);
     connect(serial, &QSerialPort::errorOccurred, this, &MainWindow::handleError);
     connect(pollTimer, &QTimer::timeout, this, &MainWindow::onPollTimeout);
 
+    // Estado inicial (sin distinción por modo)
     on_cbMode_currentIndexChanged(0);
 }
 
@@ -55,23 +55,15 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::on_cbMode_currentIndexChanged(int idx) {
+    // Seguimos registrando el modo seleccionado, pero NO condicionamos la UI ni el envío.
     mode = (idx == 0 ? CommMode::RS232 : CommMode::RS485);
-    bool ctrl = (mode == CommMode::RS485);
-    ui->chkOut1->setEnabled(ctrl);
-    ui->chkOut2->setEnabled(ctrl);
-    ui->chkOut3->setEnabled(ctrl);
-    ui->sldPWM1->setEnabled(ctrl);
-    ui->sldPWM2->setEnabled(ctrl);
-}
 
-void MainWindow::onBaudRateChanged(const QString &baud) {
-    int b = baud.toInt();
-    if (serial->isOpen()) {
-        if (!serial->setBaudRate(b))
-            ui->statusbar->showMessage("Error cambiando baudrate", 3000);
-        else
-            ui->statusbar->showMessage("Baudrate=" + baud, 2000);
-    }
+    // Siempre habilitados: sin diferencias entre RS232 y RS485
+    ui->chkOut1->setEnabled(true);
+    ui->chkOut2->setEnabled(true);
+    ui->chkOut3->setEnabled(true);
+    ui->sldPWM1->setEnabled(true);
+    ui->sldPWM2->setEnabled(true);
 }
 
 void MainWindow::on_btnConnect_clicked() {
@@ -86,7 +78,7 @@ void MainWindow::on_btnConnect_clicked() {
         serial->setParity(QSerialPort::NoParity);
         serial->setStopBits(QSerialPort::OneStop);
         serial->setFlowControl(QSerialPort::NoFlowControl);
-        serial->setBaudRate(ui->cbBaudRate->currentText().toInt());
+        serial->setBaudRate(kBaudrate); // 115200 fijo
 
         if (!serial->open(QIODevice::ReadWrite)) {
             ui->statusbar->showMessage("No se pudo abrir puerto", 3000);
@@ -94,12 +86,12 @@ void MainWindow::on_btnConnect_clicked() {
         }
         serial->setDataTerminalReady(true);
         ui->btnConnect->setText("Desconectar");
-        ui->statusbar->showMessage("Conectado a " + serial->portName(), 2000);
+        ui->statusbar->showMessage(
+            QString("Conectado a %1 @ %2 bps").arg(serial->portName()).arg(kBaudrate), 3000);
 
-        if (mode == CommMode::RS485) {
-            sendControlFrame();
-            pollTimer->start(1000);
-        }
+        // Enviar y/o hacer polling en ambos modos (sin diferencias)
+        sendControlFrame();
+        pollTimer->start(1000);
     }
 }
 
@@ -165,7 +157,8 @@ void MainWindow::processFrame(const QByteArray &f) {
 }
 
 void MainWindow::sendControlFrame() {
-    if (mode != CommMode::RS485 || !serial->isOpen())
+    // Enviar en cualquier modo, siempre que el puerto esté abierto
+    if (!serial->isOpen())
         return;
 
     quint16 pwm1 = ui->sldPWM1->value();

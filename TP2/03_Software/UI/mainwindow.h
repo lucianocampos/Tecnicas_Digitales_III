@@ -19,7 +19,6 @@ public:
 
 private slots:
     void on_cbMode_currentIndexChanged(int idx);
-    void onBaudRateChanged(const QString &baud);
     void on_btnConnect_clicked();
     void readSerialData();
     void handleError(QSerialPort::SerialPortError err);
